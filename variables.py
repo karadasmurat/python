@@ -1,11 +1,11 @@
 def main():
+
+    print("__name__ : ", __name__)
     
     print("C:\some\name")  # here \n means newline!
     print(r"C:\some\name") # raw strings
 
     operator_basics()
-    
-    my_pow(2, 6)
     string_basics()
 
     str="hello, there!"
@@ -25,8 +25,6 @@ def operator_basics():
     x = 17 / 3
     y = 17 // 3 # floor division discards the fractional part
     print(f"17/3: {x}, 17//3: {y}")
-
-
 
 
 def string_basics():
@@ -94,5 +92,10 @@ def replaceFirstChar(str, c):
     return c + str[1:]
 
 
-#########
-main()
+# When a Python interpreter reads a Python file, it first sets a few special variables. 
+# Python files are called modules and they are identified by the .py file extension. 
+# A module can define functions, classes, and variables.
+# So when the interpreter runs a module, the __name__ variable will be set as  __main__ if the module that is being run is the main program.
+# But if the code is importing the module from another module, then the __name__  variable will be set to that module’s name.
+if __name__ == "__main__" :
+    main()
