@@ -1,52 +1,83 @@
 def main():
 
     print("__name__ : ", __name__)
-    
-    print("C:\some\name")  # here \n means newline!
-    print(r"C:\some\name") # raw strings
 
-    operator_basics()
-    string_basics()
+    # string_basics()
+    number_basics()
 
-    str="hello, there!"
-    str = replaceFirstChar(str, '@')
-    print(str)
-
-
-    list_basics()
-    dict_basics()
-    
-def operator_basics():
-
-    x, y = 2, 6
-    # use the ** operator to calculate power
-    print(f"{x} ** {y}: {x**y}")
-
-    x = 17 / 3
-    y = 17 // 3 # floor division discards the fractional part
-    print(f"17/3: {x}, 17//3: {y}")
+    # list_basics()
+    # dict_basics()
 
 
 def string_basics():
+
+    name = "MK"
+    print(type("MK"))
+
+    #length of a string
+    print(f"The length of string {name=} is {len(name)}")
+
+
+    x = 123456
+    x_str = str(x)
+    print(f"{x=} {x_str=}") # x=123456 x_str='123456'
+
+    # number of digits of an int
+    print("Number of digits,", x, ":", len(str(123456)))
+
+    print("\"Yes\", they said.")
+
+    print("C:\some\name")  # here \n means newline!
+    print(r"C:\some\name") # raw strings
+
+
+
     # Strings can be concatenated (glued together) with the + operator, and repeated with *
     eff = 3 * 'A' + '+'
     print(eff)
     
     # Strings can be indexed, with the first character having index 0. 
 
-# +---+---+---+---+---+---+
-# | P | y | t | h | o | n |
-# +---+---+---+---+---+---+
-# 0   1   2   3   4   5   
-#-6  -5  -4  -3  -2  -1
+    #  +---+---+---+---+---+---+
+    #  | P | y | t | h | o | n |
+    #  +---+---+---+---+---+---+
+    #   0   1   2   3   4   5   
+    #  -6  -5  -4  -3  -2  -1
 
-# Python strings cannot be changed — they are immutable. Therefore, assigning to an indexed position in the string results in an error
+    # Python strings cannot be changed — they are immutable. 
+    # Therefore, assigning to an indexed position in the string results in an error
     
-    word = "Python"
+    word = "Python 3"
     print("First char:", word[0], "Last char:", word[-1])
 
-# For non-negative indices, the length of a slice is the difference of the indices, if both are within bounds. For example, the length of word[1:3] is 2.
+    # slicing
+    # characters from position 1 (included) to 3 (excluded)
+    # For non-negative indices, the length of a slice is the difference of the indices, if both are within bounds. For example, the length of word[1:3] is 2.
     print("slice using [1:3]:", word[1:3]) # yt
+    #First 3 chars
+    print("First 3 chars:", word[:3]) # Pyt
+    #Drop first 2 chars
+    print("Drop first 2 chars:", word[2:]) # thon
+
+    greet = "hello, there!"
+    greet = replaceFirstChar(greet, '@')
+    print(greet)
+
+# Q: replace the first letter with '_' character
+def replaceFirstChar(arg, c):
+    return c + arg[1:]
+
+def number_basics():
+    f = 2.66666
+    f_int = int(f);         # 2
+    f_round = round(f);     # 3
+    f_round2 = round(f, 2); # 2.67
+
+    print(f, type(f), f_int, f_round, f_round2) # 2.66666 <class 'float'> 2 3 2.67
+
+    x = 10      # <class 'int'>
+    y = x / 1   # <class 'float'>
+    print(f"{x=}, {type(x)}, {y=}, {type(y)}")
 
 def list_basics():
     #List Lists might contain items of different types, but usually the items all have the same type.
@@ -87,9 +118,7 @@ def dict_basics():
         print(car["model"])
 
     
-# Q: replace the first letter with '_' character
-def replaceFirstChar(str, c):
-    return c + str[1:]
+
 
 
 # When a Python interpreter reads a Python file, it first sets a few special variables. 
