@@ -12,9 +12,11 @@ def main():
         print(f"roll {i}: {dice}")
 
     coin_toss()
+    banker_roulette()
 
     # Return a random element from the non-empty sequence
-    fruit = random.choice(["banana", "apple", "orange", "strawberry", "grapes"])
+    fruits = ["banana", "apple", "strawberry", "grapes"]
+    fruit = random.choice(fruits)
     print(fruit)
 
 
@@ -24,6 +26,20 @@ def coin_toss():
     x = 'Heads' if random.randint(0,1) == 0 else 'Tails'
     print(x)
 
+
+
+# Ask for the names of the table. Select a random name from a list of names. 
+# The person selected will have to pay for everybody's food bill.
+def banker_roulette():
+    names = []
+    while True:
+        user_input = input("Enter a name or [Q]uit: ")
+        if user_input.lower() in ["q", "quit"]:
+            break
+        names.append(user_input)
+
+    if(len(names) != 0):
+        print (random.choice(names), "will pay the bill today!")
 
 
 

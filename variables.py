@@ -3,9 +3,9 @@ def main():
     print("__name__ : ", __name__)
 
     # string_basics()
-    number_basics()
+    # number_basics()
 
-    # list_basics()
+    list_basics()
     # dict_basics()
 
 
@@ -85,10 +85,30 @@ def list_basics():
     print(squares)
     
     # lists can be indexed and sliced:
-    print("Element at index 0:", squares[0])
+    print("squares[0]:", squares[0])
+
+    # add new items at the end of the list
+    squares.append(36)
     
     # The built-in function len() also applies to lists:
     print("Length:", len(squares))
+
+    # lists can be indexed and sliced:
+    print(squares[2:]) # [9, 16, 25, 36]
+
+    fruits = ["banana", "apple", "strawberry", "grapes"]
+    vegetables = ["Spinach", "Carrots", "Broccoli"]
+
+    # Nested lists.
+    # Think of them as list of names, where name is a list of chars: 
+    # class[0] = first name
+    # class[0][0] = first char of first name
+    nested = [fruits, vegetables]
+    print(nested) # [['banana', 'apple', 'strawberry', 'grapes'], ['Spinach', 'Carrots', 'Broccoli']]
+    print(nested[0])    # ['banana', 'apple', 'strawberry', 'grapes']
+    print(nested[0][1]) # apple
+
+
 
 def dict_basics():
    #think of a dictionary as key:value pairs. A pair of braces creates an empty dictionary: {}
