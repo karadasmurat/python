@@ -1,0 +1,36 @@
+
+# usage
+# print(f"{colors.RED}Error: Scores should be seperated{colors.ENDC}")
+
+
+# 8 COLORS
+BLACK = "\033[30m"
+RED = "\033[31m"
+GREEN = "\033[32m"
+YELLOW = "\033[33m"
+BLUE = "\033[34m"
+MAGENTA = "\033[35m"
+CYAN = "\033[36m"
+WHITE = '\033[37m'
+
+BCKGRND_BLACK = '\033[40m'
+BCKGRND_RED = '\033[41m'
+BCKGRND_GREEN = '\033[42m'
+BCKGRND_YELLOW = '\033[43m'
+BCKGRND_BLUE = '\033[44m'
+BCKGRND_MAGENTA = '\033[45m'
+BCKGRND_CYAN = '\033[46m'
+BCKGRND_WHITE = '\033[47m'
+
+HEADER = '\033[95m'
+OKBLUE = '\033[94m'
+OKCYAN = '\033[96m'
+OKGREEN = '\033[92m'
+WARNING = '\033[93m'
+FAIL = '\033[91m'
+ENDC = '\033[0m'
+
+# Decorations
+BOLD = '\033[1m'
+UNDERLINE = '\033[4m'
+REVERSED = '\033[7m'
