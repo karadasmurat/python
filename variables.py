@@ -1,3 +1,6 @@
+from xml.dom.minidom import Element
+
+
 def main():
 
     print("__name__ : ", __name__)
@@ -100,13 +103,22 @@ def list_basics():
     vegetables = ["Spinach", "Carrots", "Broccoli"]
 
     # Nested lists.
+    # If the elements of a list are themselves type list, then we call this a nested list.
     # Think of them as list of names, where name is a list of chars: 
-    # class[0] = first name
+    # class[0] = first name (list of chars), the first element is the first list
+    # class[1] = second name (list of chars), the second element is the second list
     # class[0][0] = first char of first name
+    # matris halini de, aralarda '\n' olan isim listesi gibi düşün - a name in each row.
     nested = [fruits, vegetables]
-    print(nested) # [['banana', 'apple', 'strawberry', 'grapes'], ['Spinach', 'Carrots', 'Broccoli']]
-    print(nested[0])    # ['banana', 'apple', 'strawberry', 'grapes']
-    print(nested[0][1]) # apple
+    print(f"{nested=}")         # [['banana', 'apple', 'strawberry', 'grapes'], ['Spinach', 'Carrots', 'Broccoli']]
+    print(f"{nested[0]=}")      # ['banana', 'apple', 'strawberry', 'grapes']
+    print(f"{nested[0][0]=}")   # 'banana'
+
+    # Looping over a nested List
+    for row in nested:
+        print(row)
+        for column in row:
+            print(column)
 
 
 

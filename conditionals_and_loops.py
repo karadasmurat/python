@@ -3,11 +3,9 @@ import os
 os.system("python --version")
 
 def main():
-    infinite_menu()
-
-
-
-    #for_loop_v1()
+    
+    #infinite_menu()
+    for_loop_v1()
     #askAndCheck()
     #print(square(5))
     #askAndCheckRange()
@@ -84,11 +82,18 @@ def match_code(http_code):
     
 def for_loop_v1():
     for i in [1,2,3]:
-        print("loop", i)
+        print("loop through a list", i)
 
-    # [0, 1, 2]
-    for i in range(3):
-        print("loop", i)
+    for i in range(3): # [0, 1, 2]
+        print("loop in range", i)
+
+    fruits = ["banana", "apple", "strawberry", "melon"]
+    for fruit in fruits :
+        print("loop through a list", fruit)
+
+    # non-pythonic to manually index
+    for i in range(len(fruits)):
+        print(f"loop using index, {fruits[i]=}")
 
 def iterate_list():
     students = ["Harry", "Hermione", "Ron"]

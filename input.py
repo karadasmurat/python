@@ -1,4 +1,6 @@
-import colors
+# import colors
+RED = "\033[31m"
+ENDC = '\033[0m'
 
 def main():
     # generate_band_name()
@@ -30,7 +32,7 @@ def avg_scores():
         for score in scores:
             sum += int(score)
     except ValueError:
-        print(f"{colors.RED}Scores should be seperated by a space, i.e. 75 60 95{colors.ENDC}")
+        print(f"{RED}Scores should be seperated by a space, i.e. 75 60 95{ENDC}")
         return 0.0
     
     return round(sum / len(scores), 2)

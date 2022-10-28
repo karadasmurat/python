@@ -4,7 +4,8 @@
 # Any year that is evenly divisible by 4 is a leap year: 
 # 
 # However, there is still a small error that must be accounted for. 
-# To eliminate this error, the Gregorian calendar stipulates that a year that is evenly divisible by 100 (for example, 1900) is a leap year only if it is also evenly divisible by 400.
+# To eliminate this error, the Gregorian calendar stipulates that a year that is evenly divisible by 100 
+# (for example, 1900) is a leap year only if it is also evenly divisible by 400.
 
 
 
