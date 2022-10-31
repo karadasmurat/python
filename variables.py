@@ -66,6 +66,11 @@ def string_basics():
     greet = replaceFirstChar(greet, '@')
     print(greet)
 
+    # Iterate over characters of a string
+    name = "Bingo"
+    for letter in name:
+        print(letter)
+
 # Q: replace the first letter with '_' character
 def replaceFirstChar(arg, c):
     return c + arg[1:]
@@ -114,11 +119,17 @@ def list_basics():
     print(f"{nested[0]=}")      # ['banana', 'apple', 'strawberry', 'grapes']
     print(f"{nested[0][0]=}")   # 'banana'
 
-    # Looping over a nested List
+    # Looping over a NESTED LIST
     for row in nested:
-        print(row)
+        print(row)  # yoklama defterindeki ogrenci isim listesi gibi, once satırlar, sonra harfler.
         for column in row:
             print(column)
+
+    #List unpacking
+    team_info=["Chicago Bulls", "Chicago"]
+    team_name, team_city = team_info
+    print (f"{team_name} from {team_city}") # "Chicago Bulls from Chicago"
+
 
 
 
