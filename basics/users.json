@@ -1,0 +1,45 @@
+{
+    "users": [{
+            "userId": 1,
+            "firstName": "Bob",
+            "lastName": "First",
+            "gender": "M",
+            "birth": 1980,
+            "email": "user01@email.com",
+            "address": {
+                "streetAddress": "111",
+                "city": "San Jone",
+                "country": "USA",
+                "postalCode": "394221"
+            },
+            "phones": [{
+                "type": "home",
+                "number": "000000"
+            }, {
+                "type": "mobile",
+                "number": "111111"
+            }]
+        },
+        {
+            "userId": 1,
+            "firstName": "Alice",
+            "lastName": "Second",
+            "gender": "F",
+            "birth": 1990,
+            "email": "user02@email.com",
+            "address": {
+                "streetAddress": "222",
+                "city": "San Jone",
+                "state": "USA",
+                "postalCode": "394221"
+            },
+            "phones": [{
+                "type": "home",
+                "number": "222222"
+            }, {
+                "type": "mobile",
+                "number": "333333"
+            }]
+        }
+    ]
+}

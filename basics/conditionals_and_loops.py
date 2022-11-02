@@ -95,6 +95,11 @@ def for_loop_v1():
     for i in range(len(fruits)):
         print(f"loop using index, {fruits[i]=}")
 
+    # Iterate over characters of a string
+    name = "Bingo"
+    for letter in name:
+        print(letter)
+
 def iterate_list():
     students = ["Harry", "Hermione", "Ron"]
 
