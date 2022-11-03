@@ -23,36 +23,45 @@
 import random
 import json
 import datetime
+import os
+from threading import Timer
+
+
+lives = 3
+score = 0
+has_timeout = False
+HEADER = """
+█▀▄▀█ ▄▀█ ▀█▀ █░█
+█░▀░█ █▀█ ░█░ █▀█
+
+█▀▀ █░█ ▄▀█ █░░ █░░ ▄▀█ █▄░█ █▀▀ █▀▀
+█▄▄ █▀█ █▀█ █▄▄ █▄▄ █▀█ █░▀█ █▄█ ██▄
+
+"""
 
 
 def main():
-    LIVES = 3
-    question_num = 1
-    score = 0
 
+    #lives = LIVES
+    global lives, score
+    question_num = 1
+    
+
+    # Clear the Screen
+    clear_screen()
+
+    print(HEADER)
     player = login()
     print(f"Welcome, {player}")
 
     last_score = find_score_by_player(player)
     if last_score != -1:
-        print(f"High Score: 🏆 {last_score}\n")
+        print(f"🏆 High Score: {last_score}\n")
 
-    while (LIVES > 0):
-        # q_json = {"q": "4*2"}
-        question = get_question()
-        
-        user_answer = int(input(f"{question_num}) {question['q']} = "))
-        question_num += 1
-        try:
-            assert question['a'] == user_answer
-            score += 1
-            lives_info(LIVES, 3)
-        except AssertionError:
-            LIVES -= 1
-            lives_info(LIVES, 3)
+    while (lives > 0):
+        new_round(question_num)
 
     
-
     results = {
         "player": player,
         "score": score,
@@ -66,27 +75,74 @@ def main():
 
     print_score(is_highest, score)
 
+
+def new_round(question_num):
+
+    global lives, score, has_timeout
+    has_timeout = False
+    
+    # q_json = {"q": "4*2"}
+    question = get_question()
+    user_answer = -999
+
+    # Timer class represents an action that should be run only after a certain amount of time has passed.
+    timeout = 10
+    t = Timer(timeout, time_out)
+    t.start()
+
+    try:
+        user_answer = int(input(f"{question_num}) {question['q']} = "))
+    except ValueError:
+        print("?")
+
+    t.cancel()
+    question_num += 1
+    try:
+        assert question['a'] == user_answer
+        score += 1 if not has_timeout else 0
+    except AssertionError:
+        lives -= 1 if not has_timeout else 0
+    
+    lives_info(lives, 3)
+
+def time_out():
+    global lives, has_timeout
+    print("Timeout.")
+    has_timeout = True
+    lives -= 1
+
+def clear_screen():
+    os.system('cls' if os.name=='nt' else 'clear')
+
 def lives_info(have, max):
     print("\t\t\t", end="")
     for i in range(max - have):
-        print("🔴 ", end="")
+        print("🔴", end="")
     for i in range(have):
-        print("🟢 ", end="")
+        print("🟢", end="")
     
     print() # new line
 
+
+
 def print_score(is_highest, score):
     regular = f"🌟 {score}"
-    record = f"{regular}\n\t🏆 New highest score!"
+    record = f"{regular}\n    🏆 New highe score!"
 
     GAME_OVER = f"""
-*********************************
-\tGame Over.
-\t{record if is_highest else regular}
-*********************************
+￣￣￣￣￣￣￣￣￣￣￣￣
+    Game Over.
+    {record if is_highest else regular}
+                      
+￣￣￣￣￣￣￣￣￣￣￣￣
+     (\__/)  ||
+     (•ㅅ•)  ||
+     /  　  づ
 """
 
     print(GAME_OVER)
+
+
 
 def init_file():
     save_score({"scores":[]})
@@ -160,9 +216,16 @@ def login():
 
 def get_question():
 
-    op1 = random.randint(2, 9)
+    op1 = 1
+    op2 = 1
+    operation = random.choice(["+", "-", "*"])
+    if "-" == operation:
+        op1 = random.randint(10, 19)
+    else:
+        op1 = random.randint(2, 9)
+
     op2 = random.randint(2, 9)
-    operation = random.choice(["+", "*"])
+
 
     q_str = f"{op1} {operation} {op2}"
     answer = eval(q_str)
