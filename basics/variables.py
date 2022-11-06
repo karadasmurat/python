@@ -1,6 +1,3 @@
-from xml.dom.minidom import Element
-
-
 def main():
 
     print("__name__ : ", __name__)
@@ -52,9 +49,12 @@ def main():
     # Strings, tuples, integers, and floats are immutable types.
 
     score = 90
-    print(f"{score=} id: {id(score)}")
+    id_initial = id(score)
     score += 1
-    print(f"{score=} id: {id(score)}")
+    try:
+        assert id_initial == id(score)
+    except AssertionError:
+        print("Incrementing an int CHANGES its identity.")
 
     scores = [85, 95]
     id_old = id(scores)
@@ -80,8 +80,11 @@ def main():
 
     # string_basics()
     # number_basics()
+    # bool_basics()
 
     # list_basics()
+    # tuple_basics()
+    set_basics()
     # dict_basics()
 
 
@@ -96,15 +99,15 @@ def string_basics():
 
     x = 123456
     x_str = str(x)
-    print(f"{x=} {x_str=}") # x=123456 x_str='123456'
+    print(f"{x=} {x_str=}")     # x=123456 x_str='123456'
 
     # number of digits of an int
     print("Number of digits,", x, ":", len(str(123456)))
 
     print("\"Yes\", they said.")
 
-    print("C:\some\name")  # here \n means newline!
-    print(r"C:\some\name") # raw strings
+    print("C:\some\name")       # here \n means newline!
+    print(r"C:\some\name")      # raw strings
 
 
 
@@ -159,13 +162,50 @@ def string_basics():
     msg="""This string has double " and single quotes ' inside of it"""
     print(msg)
 
+
+    # Empty String
+    # Since an empty string behaves as falsey, you can test whether the string has content
+    some_str = ""
+    if not some_str:     # check empty string
+        print(f"{some_str=} Missing str value")
+
+    if not bool(some_str): 
+        print(f"{some_str=} Missing str value")
+
+    if len(some_str) == 0: 
+        print(f"{some_str=} Missing str value")
+
     # Common Methods
 
-    # “endswith
+    # endswith() & startswith()
     # If you have a variable holding a filename, you might want to check the extension.
     xl = 'Oct2000.xls'
-    if xl.endswith('.xls'):
+    if xl.endswith('.xls'):         # True
         print("xls file")
+
+    fname="202206_rec.dat"
+    if fname.startswith("202206"):  # True
+        print("June records")
+
+    # The .find() method allows you to find substrings inside other strings. 
+    # It returns the index (offset starting at 0) of the matched substring. If no substring is found it returns -1:
+    print("great".find("eat"))      # 2
+
+    # join()
+    # Oftentimes you have a list of items and need to insert something between them.
+    family = ["MK", "MSL", "BK"]
+    fstr = " & ".join(family)
+    print(type(fstr), fstr)    # <class 'str'> MK & MSL & BK
+
+    # lower() & upper()
+    # The .lower method returns a copy of the string converted to lowercase.
+    print("MK".lower(), "MK".upper())    # mk MK
+
+    # strip()
+    # The .strip method returns a new string that removes preceding and trailing whitespace (spaces, tabs,newlines).
+    input_str=" Jordan\nM. \n"
+    print(input_str, len(input_str))
+    print(input_str.strip(), len(input_str.strip()))
 
 
 # Q: replace the first letter with '_' character
@@ -190,16 +230,63 @@ def number_basics():
     y = x / 1   # <class 'float'>
     print(f"{x=}, {type(x)}, {y=}, {type(y)}")
 
+def bool_basics():
+    # In Python parlance, it is common to hear of objects behaving as “truthy” or “falsey” — 
+    # that means that non-boolean types can implicitly behave as though they were booleans.
+
+    print('bool("")', bool(""))             # bool("") False - an empty string is “falsey”
+    print('bool("0")', bool("0"))           # bool("0") True - non-empty string behaves as "truthy"
+    print("bool('False')", bool('False'))   # bool('False') True - non-empty string behaves as "truthy"
+
+
+    # For numbers, zero coerces to False while other numbers have “truthy” behavior
+    print("bool(0)", bool(0))               # bool(0) False
+    print("bool(-1)", bool(-1))             # bool(-1) True
+
+    # Since an empty string behaves as falsey, you can test whether the string has content
+    some_str = ""
+    if not some_str:     # check empty string
+        print(f"{some_str=} Missing str value")
+
+    # if you have a list and need to distinguish between an empty and non-empty list, this is sufficient:
+    members = []
+    if not members:                         # True - check empty list
+        print(f"{members=} List is empty")  # members=[] List is empty
+
 def list_basics():
+
+    # There are two ways to create empty lists
+    names = []
+    surnames = list()
+
+    # If you want to have prepopulated lists, you can provide the values in between the square brackets, using the literal syntax:
+    members = ['Fred', 'Charles']
+
     #List Lists might contain items of different types, but usually the items all have the same type.
+
+    # Note that range does not materialize the list, but rather gives you an iterable that will return those numbers when iterated over. 
+    # By passing the result into list you can see the numbers it would generate:
+    # The “up to but not including” construct is more formally known as the "half-open interval" convention.
+    nums = range(5)     
+    print( type(nums), len(nums), list(nums) )     # <class 'range'> 5 [0, 1, 2, 3, 4]
+
+    even = list(range(0, 11, 2))
+    print(even)     # [0, 2, 4, 6, 8, 10]
+
     squares = [1, 4, 9, 16, 25]
-    print(squares)
     
     # lists can be indexed and sliced:
+    # A list is one of the sequence types in Python. Sequences hold ordered collections of objects.
+    # Counting beginning with zero is called "zero-based indexing".
     print("squares[0]:", squares[0])
 
-    # add new items at the end of the list
+    # List insertion and deletion
+    # To append items to the end of a list use the .append method:
     squares.append(36)
+    members.append('Amy')
+
+    # To remove an item, use the .remove method
+    members.remove('Charles')
     
     # The built-in function len() also applies to lists:
     print("Length:", len(squares))
@@ -224,6 +311,44 @@ def list_basics():
     # Option 3: using the __len__() function
     if empty_list.__len__() == 0:
         print(f"checked '<list_name>.__len__() -> empty: {empty_list}")
+
+
+    # SORTING
+    # The .sort() method sorts the list in place. 
+    # It DOESN'T return a new, sorted copy of the list, rather it updates the list with the items reordered
+    # list.sort(reverse=True|False, key=myFunc)
+    # Parameter 'key' is Optional. A function to specify the sorting criteria(s) (run for every item in the list)
+
+    members.sort()      # ascending by default.
+    print(members)
+
+    # Sort descending
+    cars = ['Ford', 'BMW', 'Mitsubishi', 'Volvo']
+    print( cars.sort(reverse = True) ) # prints None! (but mutates the list anyway) 
+    print(cars)         # ['Volvo', 'Mitsubishi', 'Ford', 'BMW']
+
+    # Sort the list by the length of the values:
+    cars.sort(key = lambda x: len(x))
+    print(cars)         # ['BMW', 'Ford', 'Volvo', 'Mitsubishi']
+
+    # Sort a list by dict value, i.e. newest to oldest
+    cars = [
+        {'car': 'Ford', 'year': 2005},
+        {'car': 'Mitsubishi', 'year': 2000},
+        {'car': 'BMW', 'year': 2019},
+        {'car': 'VW', 'year': 2011}
+    ]
+    cars.sort(key = lambda x : x['year'], reverse=True)
+    print(cars)     # [{'car': 'BMW', 'year': 2019}, {'car': 'VW', 'year': 2011}, {'car': 'Ford', 'year': 2005}, {'car': 'Mitsubishi', 'year': 2000}]
+
+
+    # A more general option for sorting sequences is the sorted function. 
+    # The sorted function works with any sequence. It returns a NEW list that is ordered
+    old = [5, 3, -2, 1]
+    nums_sorted = sorted(old)
+    print(f"sorted({old}): {nums_sorted}")
+
+
 
     # Nested lists.
     # If the elements of a list are themselves type list, then we call this a nested list.
@@ -263,6 +388,90 @@ def list_basics():
     # Unpacking range object
     a, b, c = range(0, 3)
     print(f"{a=} {b=} {c=}") # a=0 b=1 c=2
+
+
+def tuple_basics():
+
+    # Tuples are IMMUTABLE sequences. You should think of them as ordered records. 
+    # Once you create them, you CANNOT CHANGE them.
+
+    # There are two ways to create an empty tuple: using either the tuple function or the literal syntax:
+    empty = tuple()
+    empty = ()
+    print(empty) # ()
+        
+    # Create a tuple with one item in it:
+    one = (1,)
+    print(one) # (1,)
+
+    # For tuples with only one item, you need to put a comma (,) following the item:
+    d = (3)
+    e = (3,)
+    print(d, type(d))       # 3 <class 'int'>
+    print(e, type(e))       # (3,) <class 'tuple'>
+
+    # Because tuples are immutable you cannot append to them:
+    # e.append(4)           # “AttributeError: 'tuple' object has no attribute 'append”
+
+    """
+    Why the distinction between tuples and lists?
+        * The main difference between the objects is mutability. As tuples are immutable, they are able to serve as keys in dictionaries.
+        * Tuples are used for returning multiple items from a function. 
+        * Tuples are often used to represent a record of data such as the row of a database query, which may contain heterogeneous types of objects.
+            person = ('Matt', '123 North 456 East', 24)
+        * Tuples also use less memory than lists. If you have sequences that you are not mutating, consider using tuples to conserve memory.
+    """
+
+def set_basics():
+    # A set is an UNORDERED collection that DOESN'T contain duplicates.
+    # Therefore, a set is great for removing duplicates, and
+    # if the order is important, a set is not the data type to use.
+    
+    
+    # A set can be created with a literal syntax using { }
+    digit_set = {0, 1, 2 ,3 ,4, 6, 7, 8, 9}
+
+    # Sets can be specified by passing in a sequence into the set class
+    digits = [0, 1, 4, 2, 3, 3, 7, 5, 6, 9, 0, 8, 9]
+    digit_set = set(digits)
+    print(digit_set)    # {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+
+    # To check for membership, use the in operation
+    if 9 in digit_set:
+        print(f"9 is in {digit_set}")
+
+    # “Sets provide set operations, such as union (|), intersection (&), difference (-), and xor (^).
+    odd = {1, 3, 5, 7, 9}
+
+    # difference (-)
+    even = digit_set - odd
+    print(f"{even=}")
+
+    
+    first_five = set(range(5))          # {0, 1, 2, 3, 4} 
+    two_to_six = set([2, 3, 4, 5, 6])
+
+    # union (|)
+    union_ = first_five | two_to_six
+    print(f" {first_five} | {two_to_six}: {union_}")   # {0, 1, 2, 3, 4, 5, 6}
+
+    # intersection (&)
+    intersect_ = first_five & two_to_six
+    print(f" {first_five} & {two_to_six}: {intersect_}")   # {2, 3, 4}
+
+    # Xor (^) returns a set of items that only are found in one set or the other, but not both
+    in_one_or_the_other = first_five ^ two_to_six
+    print(f"{in_one_or_the_other=}")    # {0, 1, 5, 6}
+
+
+
+
+
+
+    # Because sets must be able to compute a hash value for each item in the set, 
+    # sets can only contain items that are hashable. 
+    # In Python, mutable items are not hashable. 
+    # This means that you cannot hash a list or dictionary. 
 
 
 

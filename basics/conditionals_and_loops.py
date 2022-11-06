@@ -1,3 +1,7 @@
+# Python, unlike those other languages, uses two things to denote blocks:
+#   a colon (:)
+#   indentation
+
 import os
 
 os.system("python --version")
@@ -62,7 +66,7 @@ def exam_result(score):
     
 def askAndCheckRange():
     x = int(input("Enter Test Score: "))
-    if 90 <= x <= 100:
+    if 90 <= x <= 100:          # RANGE COMPARISON, instead of if score >= 90 and score <= 100:
         print("Congrats. A")
     else:
         print("Sorry, not an A")
