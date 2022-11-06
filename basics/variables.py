@@ -5,10 +5,83 @@ def main():
 
     print("__name__ : ", __name__)
 
+    # Rules and conventions for naming in Python come from a document named “PEP 8 – Style Guide for Python Code” 8.
+    # PEP stands for Python Enhancement Proposal, which is a community process
+
+    # A variable should not have the name of a keyword.
+    import keyword
+    print(keyword.kwlist)
+
+    # break = 'foo' # SyntaxError: invalid syntax
+
+    # “not start with numbers”
+    # 1st_num = 0 # SyntaxError
+
+    # A. Identity
+    name1 = "MK"
+    print("name1:", id(name1))
+
+    # It is possible for two variables to refer to the same object. 
+    # When you bind a variable to an existing variable. They both point to the same object. “Running id on either of the two variables will return the same id. 
+    # Note that this DOESN'T COPY the object the variable points to!
+    name2 = name1
+    print("name2:", id(name2))
+
+    # “The 'is' operator checks for identity equality
+    if name1 is name2:              # True
+        print("name1 is name2")
+
+    assert id(name1) == id(name2)   # OK
+
+    # you can take a variable and point it to a new object. 
+    # You will see that the identity of the variable has changed. But first is still the same 
+    # (NOT LIKE C POINTERS!, the case is only about assigning a variable to another)
+    name1 = "MSL"
+    print(f"{name1=} {name2=}")     # name1='MSL' name2='MK'
+
+
+    # B. Type
+    print(type(name1)) # <class 'str'>
+
+    # C. Mutability
+    # Mutable objects can change their value in place.
+    # In other words, you can alter their state, but their identity stays the same.
+    # Objects that are immutable do not allow you to change their value. 
+    # Instead, you can change their variable reference to a new object, but this will change the identity of the variable as well.
+    # In Python, dictionaries and lists are mutable types. 
+    # Strings, tuples, integers, and floats are immutable types.
+
+    score = 90
+    print(f"{score=} id: {id(score)}")
+    score += 1
+    print(f"{score=} id: {id(score)}")
+
+    scores = [85, 95]
+    id_old = id(scores)
+    scores.append(90)
+    if id_old == id(scores):        # True
+        print("Appending to a list does not change its identity.")
+
+    # Coercion
+    # If you have an operation involving two numerics, coercion generally does the right thing. 
+
+    # For operations involving an integer and a float, the integer is coerced to a float. 
+    x = 10
+    y = 0.5
+    z = x + y
+    print(f"{x=} type: {type(x)}")
+    print(f"{y=} type: {type(y)}")
+    print(f"{z=} type: {type(z)}")
+
+    # If the left operand is a string and you use the multiplication operator, *, Python performs repetition
+    x = "money"
+    print(3 * x)
+
+
     # string_basics()
     # number_basics()
 
-    list_basics()
+    # list_basics()
     # dict_basics()
 
 
@@ -71,11 +144,41 @@ def string_basics():
     for letter in name:
         print(letter)
 
+    # split and unpack
+    full_name = "Jordan,Michael"
+    surname, name = full_name.split(",")
+    print(f"split {full_name=}: {name=} {surname=}")
+
+    # split and use the index
+    price_tag = "USD 55"
+    currency = price_tag.split(" ")[0]
+    print(f"split {price_tag=}: {currency=}")
+
+
+    # A nice benefit of using triple-quoted strings is that you can embed single and double quotes inside it without escaping them
+    msg="""This string has double " and single quotes ' inside of it"""
+    print(msg)
+
+    # Common Methods
+
+    # “endswith
+    # If you have a variable holding a filename, you might want to check the extension.
+    xl = 'Oct2000.xls'
+    if xl.endswith('.xls'):
+        print("xls file")
+
+
 # Q: replace the first letter with '_' character
 def replaceFirstChar(arg, c):
     return c + arg[1:]
 
 def number_basics():
+
+    # Do integers and floats have methods? Yes, again, everything in Python is and object and objects have methods. 
+    # dir() lists all the attributes of the object passed into it.
+    # This is easy to verify by invoking dir on an integer (or a variable holding an integer):”
+    print("\ndir(<int>):\n", dir(100))
+
     f = 2.66666
     f_int = int(f);         # 2
     f_round = round(f);     # 3
@@ -107,6 +210,21 @@ def list_basics():
     fruits = ["banana", "apple", "strawberry", "grapes"]
     vegetables = ["Spinach", "Carrots", "Broccoli"]
 
+    # empty list
+    empty_list = []
+
+    # Option 1: evaluating empty list object to False
+    if not empty_list:
+        print(f"checked 'not <list_name>' -> empty: {empty_list=}")  
+
+    # Option 2: Checking whether the list size is equal to 0
+    if len(empty_list) == 0:
+        print(f"checked 'len(<list_name>) -> empty: {empty_list}")
+
+    # Option 3: using the __len__() function
+    if empty_list.__len__() == 0:
+        print(f"checked '<list_name>.__len__() -> empty: {empty_list}")
+
     # Nested lists.
     # If the elements of a list are themselves type list, then we call this a nested list.
     # Think of them as list of names, where name is a list of chars: 
@@ -125,10 +243,26 @@ def list_basics():
         for column in row:
             print(column)
 
-    #List unpacking
-    team_info=["Chicago Bulls", "Chicago"]
+    # Iterable Unpacking. 
+    # Assign values to multiple variables from a single expression
+    a, b, c = [10, 20, 30]
+    print(f"{a=} {b=} {c=}")    # a=10 b=20 c=30
+
+    team_info = ["Chicago Bulls", "Chicago"]
     team_name, team_city = team_info
     print (f"{team_name} from {team_city}") # "Chicago Bulls from Chicago"
+
+    odd = [1, 3, 5, 7, 9]
+    print(*odd)     # 1 3 5 7 9
+
+    # List unpacking - only first and second element. Remaining all elements to be captured in a list
+    num = [2, 4, 6, 8, 10]
+    a, b, *c = num
+    print(f"{a=} {b=} {c=}") # a=2 b=4 c=[6, 8, 10]
+
+    # Unpacking range object
+    a, b, c = range(0, 3)
+    print(f"{a=} {b=} {c=}") # a=0 b=1 c=2
 
 
 
