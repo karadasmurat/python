@@ -78,13 +78,13 @@ def main():
     print(3 * x)
 
 
-    # string_basics()
+    string_basics()
     # number_basics()
     # bool_basics()
 
     # list_basics()
     # tuple_basics()
-    set_basics()
+    # set_basics()
     # dict_basics()
 
 
@@ -96,6 +96,11 @@ def string_basics():
     #length of a string
     print(f"The length of string {name=} is {len(name)}")
 
+    # unicode
+    # https://unicode.org/charts/nameslist/index.html
+    print('\N{UPSIDE-DOWN FACE}')
+    print("\U0001F60E")
+
 
     x = 123456
     x_str = str(x)
@@ -106,9 +111,9 @@ def string_basics():
 
     print("\"Yes\", they said.")
 
-    print("C:\some\name")       # here \n means newline!
-    print(r"C:\some\name")      # raw strings
-
+    # “Windows paths use \ as a separator, which can be problematic. ”
+    print("C:\test\new_folder")         # here \t \n means tab and newline!
+    print(r"C:\test\new_folder")        # raw strings C:\test\new_folder
 
 
     # Strings can be concatenated (glued together) with the + operator, and repeated with *
@@ -477,34 +482,70 @@ def set_basics():
 
 
 def dict_basics():
-   #think of a dictionary as key:value pairs. A pair of braces creates an empty dictionary: {}
 
-    #A. think as a collection
+    # You can compare a Python dictionary to an English dictionary. 
+    # An English dictionary has words and definitions. 
+    # The purpose of a dictionary is to allow fast lookup of the word in order to find the definition. 
+    # You can quickly lookup any word by doing a binary search 
+    # (open up the dictionary to the midpoint, and determine which half the word is in, and repeat).
+
+    # A Python dictionary also has words and definitions, but you call them keys and values respectively
+    # The purpose of a dictionary is to provide fast lookup of the keys.
+
+    # think of a dictionary as key:value pairs. 
+    # A pair of braces creates an empty dictionary: {}
+    empty = {}
+    print(f"{empty=}: {type(empty)}")   # empty={}: <class 'dict'>
+
+    #A. think as the representation of a simple object (excel row)
+    person = {"name": "MK", "born":81, "gender":"M"}
+    
+    #B. think as a collection of data for one attribute, i.e. excel column
     born = {"MK":81, "MSL":14, "BK":83 }
 
-    #B. think as the representation of a simple object 
-    car = {"year":2019, "make": "Volkswagen", "model": "T-ROC"}
 
+    car = {"year":2019, "make": "Volkswagen", "model": "T-ROC", "color":"Orange"}
     print(car)
 
-    # extracting the value given the key
-    print(car["model"])
+    # look up the value for the value given the key by performing a lookup with an index operation
+    print( car["model"] )
 
-    # iterate over keys
-    for byear in born:
-        print(byear, ":", born[byear])
+    # if you try to access a key that does not exist, Python will throw an exception:
+    # print( car['imaginary_key'])    # KeyError
 
+    # Deleting keys
+    del car['color']
+
+    # Adding keys
+    car['horsepower'] = 130
+
+    print("delete the key 'color' and add 'horsepower':", car)       # {'year': 2019, 'make': 'Volkswagen', 'model': 'T-ROC', 'horsepower': 130}
+
+    # in operator
+    # check if a key is in the dictionary
+    if 'make' in car:       # True
+        print("key found! corresponding value is:", car['make'])
+
+    # in also works with sequences. You can use the in statement with a list, set, or string to check for membership
+    if 5 in [1, 2, 3, 4, 5]:
+        print("value found!")
+
+
+
+    # Iterate over a dictionary
+    # By default, when you iterate over a dictionary, you get back the keys
+    # Python will throw an Error, if you add to or remove from a dictionary while looping over it. 
+    for key in person:
+        print(key, person[key])
+        # del person[key]     # RuntimeError: dictionary changed size during iteration
+    
+    
     # list of dicts
     cars = [
          {"year":2019, "make": "Volkswagen", "model": "T-ROC"},
          {"year":2007, "make": "Kia", "model": "Sorento"}
     ]
-
-    for car in cars:
-        print(car["model"])
-
     
-
 
 
 # When a Python interpreter reads a Python file, it first sets a few special variables. 

@@ -8,11 +8,11 @@ os.system("python --version")
 
 def main():
     
-    #infinite_menu()
-    for_loop_v1()
-    #askAndCheck()
-    #print(square(5))
-    #askAndCheckRange()
+    # infinite_menu()
+    # for_loop_v1()
+    # askAndCheck()
+    # print(square(5))
+    # askAndCheckRange()
 
     minx = min_of_three(110, 90, 99)
     print("\nmin:", minx)
@@ -21,8 +21,11 @@ def main():
     res= exam_result(score)
     print(score, ":", res)
 
-    #match_code("408")
-    #iterate_list()
+    # match_code("408")
+    # iterate_list()
+
+    print(sum_all_positive_numbers([1, 9, -5, 10, -1, 5]))  # 25
+    print(sum_all_positive_numbers(range(-4, 5)))           # 10
 
 def infinite_menu():
 
@@ -112,7 +115,17 @@ def iterate_list():
 
     for i in range(len(students)):
         print(i+1, students[i])
-       
+    
+def sum_all_positive_numbers(arg):
+    '''summing all positive numbers in the sequence'''
+    sum = 0
+    for n in arg:
+        if n < 0:
+            continue        # Skipping over items in a loop
+        sum += n
+
+    return sum
+
 def min_of_three(x, y, z):
     min=x
     if y < min:
