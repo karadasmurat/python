@@ -1,7 +1,9 @@
 # Objective of Game
 # Provide the right answer for the question.
+# The player's goal is to score as many points as possible with their limited number of lives.
 
-# The game comes to an end after a fixed number of lives.
+# Mode: Single Player
+
 # The players will tally their points. The player with the most points, wins the game.
 # each question has a different points maybe?
 
