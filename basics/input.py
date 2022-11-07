@@ -1,5 +1,6 @@
 # import colors
 RED = "\033[31m"
+GREEN = "\033[32m"
 ENDC = '\033[0m'
 
 def main():

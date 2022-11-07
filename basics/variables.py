@@ -78,14 +78,14 @@ def main():
     print(3 * x)
 
 
-    string_basics()
+    # string_basics()
     # number_basics()
     # bool_basics()
 
     # list_basics()
     # tuple_basics()
     # set_basics()
-    # dict_basics()
+    dict_basics()
 
 
 def string_basics():
@@ -522,7 +522,7 @@ def dict_basics():
     print("delete the key 'color' and add 'horsepower':", car)       # {'year': 2019, 'make': 'Volkswagen', 'model': 'T-ROC', 'horsepower': 130}
 
     # in operator
-    # check if a key is in the dictionary
+    # check if a KEY is in the dictionary
     if 'make' in car:       # True
         print("key found! corresponding value is:", car['make'])
 
@@ -533,18 +533,33 @@ def dict_basics():
 
 
     # Iterate over a dictionary
-    # By default, when you iterate over a dictionary, you get back the keys
+    # By default, when you iterate over a dictionary, you get back the KEYS
     # Python will throw an Error, if you add to or remove from a dictionary while looping over it. 
     for key in person:
         print(key, person[key])
         # del person[key]     # RuntimeError: dictionary changed size during iteration
     
+    # Nesting lists and dicts
+    # list as a dict value {key: []}
+    travel_log={
+        "France":["Paris", "Cannes"], 
+        "Germany":["Berlin", "Hamburg", "Köln" ]
+    }
+    print(travel_log["Germany"])    # ['Berlin', 'Hamburg', 'Köln']
     
-    # list of dicts
+    # dict as a dict value {key: {}}
+    travel_log_v2={
+        "France":{"cities_visited":["Paris", "Cannes"], "total_visits":4}, 
+        "Germany":{"cities_visited":["Berlin", "Hamburg", "Köln" ], "total_visits":2}
+    }
+    print(travel_log_v2['Germany']['cities_visited'][0])    # Berlin
+
+    # list of dicts- [{}, {}, {}]
     cars = [
          {"year":2019, "make": "Volkswagen", "model": "T-ROC"},
          {"year":2007, "make": "Kia", "model": "Sorento"}
     ]
+    print(cars[0]['model'])     #T-ROC
     
 
 

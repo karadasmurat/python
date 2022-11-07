@@ -8,6 +8,11 @@ os.system("python --version")
 
 def main():
     
+    # Generate a sequence of numbers
+    # Syntax range([start,] stop [, step]) -> range object
+    x = range(5)    # [0, 1, 2, 3, 4] - len=5
+    print(type(x), x, list(x))  # <class 'range'> range(0, 5) [0, 1, 2, 3, 4]
+
     # infinite_menu()
     # for_loop_v1()
     # askAndCheck()

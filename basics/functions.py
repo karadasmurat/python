@@ -17,8 +17,9 @@ def main():
     # invoke functions by adding parentheses following the function name.
     greet()
 
-    greet_with_name("MK")       # positional arguments
-    greet_with_name(name="DJ")  # the same function signature, called using a keyword argument
+    # greet_with("MK")       # TypeError: greet_with() missing 1 required positional argument: 'location'
+    greet_with("Madagaskar", "Alex")    # wrong order of positional arguments !
+    greet_with(location="Madagaskar", name="Alex")  # the same function signature, called using a keyword argument
 
     scope_demo()
 
@@ -31,11 +32,10 @@ def greet():
     # a string immediately after the :, this string is called a DOCSTRING, used solely for documentation.
     # docstrings are invaluable to anyone trying to use your code - 
 
-
     print("Hi!")
 
-def greet_with_name(name):
-    print("Hi! This is", name)
+def greet_with(name, location):
+    print(f"Hi! This is {name} from {location}")
 
 def scope_demo():
     x = 5               # Variables defined inside of a function or method will be local.
@@ -48,11 +48,12 @@ def scope_demo():
     for key in global_variables:
         print(key, global_variables[key])       # capacity printed as 10!
 
+
 # default parameters allow you to specify the default values for function parameters. 
 # The default parameters are then optional.
 # Note that “Default parameters must be declared after non-default parameters. Otherwise, SyntaxError
 def change_case(camel, seperator = "_"):
-    '''Take camel case string and return snake case'''
+    '''Take camel case string and return each word seperated by seperator'''
     other_case = camel[:1].lower()      # begin with the first letter lower case.
     for letter in camel[1:]:            # loop for letters from index 1 to the end
         if letter.isupper():
