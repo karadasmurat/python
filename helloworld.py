@@ -1,11 +1,16 @@
 # run 
 # $ python helloworld.py 
 
-# $ which python
-# /usr/local/bin/python
+# installation generates symlinks
+# $ which python3
+# /Library/Frameworks/Python.framework/Versions/3.10/bin/python3
 
-# $ ls -l /usr/local/bin/python
-# lrwxr-xr-x  1 root  wheel  65 Oct 25 19:57 /usr/local/bin/python -> /Library/Frameworks/Python.framework/Versions/3.10/bin/python3.10
+# $ which pip3
+# /Library/Frameworks/Python.framework/Versions/3.10/bin/pip3
+
+# ls -l /usr/local/bin/pip3
+# lrwxrwxr-x  1 root  admin  67 Oct 24 14:54 /usr/local/bin/pip3 -> ../../../Library/Frameworks/Python.framework/Versions/3.10/bin/pip3
+
 
 
 print("hello, there!")

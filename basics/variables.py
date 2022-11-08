@@ -16,25 +16,37 @@ def main():
 
     # A. Identity
     name1 = "MK"
-    print("name1:", id(name1))
+    list1 = ["SAT", "SUN"]
 
     # It is possible for two variables to refer to the same object. 
     # When you bind a variable to an existing variable. They both point to the same object. “Running id on either of the two variables will return the same id. 
-    # Note that this DOESN'T COPY the object the variable points to!
+    # Note that changing object through one variable is visible through the other this if the referred object is mutable
     name2 = name1
-    print("name2:", id(name2))
+    list2 = list1
+    list3 = list(list1)     # explicit copy, new object!
+
+    print("name1:", id(name1), name1)   # name1: 4380654384 MK
+    print("name2:", id(name2), name2)   # name2: 4380654384 MK
+    print("list1:", id(list1), list1)   # list1: 4381154432 ['SAT', 'SUN']
+    print("list2:", id(list2), list2)   # list2: 4381154432 ['SAT', 'SUN']
+    print("list3:", id(list3), list3)   # list3: 4310155968 ['SAT', 'SUN']
 
     # “The 'is' operator checks for identity equality
-    if name1 is name2:              # True
-        print("name1 is name2")
+    if name1 is name2:                  # True
+        print("IDENTITY equality check: name1 IS name2")
 
-    assert id(name1) == id(name2)   # OK
+    assert id(name1) == id(name2)       # OK
 
-    # you can take a variable and point it to a new object. 
-    # You will see that the identity of the variable has changed. But first is still the same 
-    # (NOT LIKE C POINTERS!, the case is only about assigning a variable to another)
-    name1 = "MSL"
-    print(f"{name1=} {name2=}")     # name1='MSL' name2='MK'
+    # you can take a variable and point it to a new object, or mutate the variable if it is mutable (i.e lists)
+    # pointing to a new immutable, you will see that the identity of the variable changes. 
+    # changing the state of a mutable (i.e. list.append() will not change the identity
+    name1 = "MSL"           # str is immutable. name1 will refer a new object, changing identity.
+    list1.append("FRI")     # list is mutable. identity will be the same.                 
+
+    print("name1:", id(name1), name1)   # name1: 4380884912 MSL
+    print("name2:", id(name2), name2)   # name2: 4380654384 MK  (not affected)
+    print("list1:", id(list1), list1)   # list1: 4381154432 ['SAT', 'SUN', 'FRI']
+    print("list2:", id(list2), list2)   # list2: 4381154432 ['SAT', 'SUN', 'FRI']   (affected!)
 
 
     # B. Type
@@ -47,45 +59,45 @@ def main():
     # Instead, you can change their variable reference to a new object, but this will change the identity of the variable as well.
     # In Python, dictionaries and lists are mutable types. 
     # Strings, tuples, integers, and floats are immutable types.
+    
+
+    code = "CODE01"
+    print("code:", id(code), code)  # code: 4368368240 CODE01
+    code = "CODE02"  
+    print("code:", id(code), code)  # code: 4368368368 CODE02   (id changes!)
+
+    #                    +--------+
+    #     name +--xxx--> |  "MK"  |  (X) will be garbage collected if not referenced by other
+    #          |         +--------+ 
+    #          |
+    #          |         +--------+
+    #          +-------> | "MSL"  |
+    #                    +--------+ 
+    
 
     score = 90
     id_initial = id(score)
     score += 1
     try:
-        assert id_initial == id(score)
+        assert id_initial == id(score)      # NOK
     except AssertionError:
         print("Incrementing an int CHANGES its identity.")
 
     scores = [85, 95]
     id_old = id(scores)
     scores.append(90)
-    if id_old == id(scores):        # True
+    if id_old == id(scores):                # True
         print("Appending to a list does not change its identity.")
-
-    # Coercion
-    # If you have an operation involving two numerics, coercion generally does the right thing. 
-
-    # For operations involving an integer and a float, the integer is coerced to a float. 
-    x = 10
-    y = 0.5
-    z = x + y
-    print(f"{x=} type: {type(x)}")
-    print(f"{y=} type: {type(y)}")
-    print(f"{z=} type: {type(z)}")
-
-    # If the left operand is a string and you use the multiplication operator, *, Python performs repetition
-    x = "money"
-    print(3 * x)
 
 
     # string_basics()
     # number_basics()
     # bool_basics()
 
-    # list_basics()
+    list_basics()
     # tuple_basics()
     # set_basics()
-    dict_basics()
+    # dict_basics()
 
 
 def string_basics():
@@ -180,9 +192,12 @@ def string_basics():
     if len(some_str) == 0: 
         print(f"{some_str=} Missing str value")
 
-    # Common Methods
+    # Common String Methods
+    # str.count()
+    w = "internationalization"
+    print(f"Count of 'a' in {w}: {w.count('a')}")     # Count of 'a' in internationalization: 3
 
-    # endswith() & startswith()
+    # str.endswith() & startswith()
     # If you have a variable holding a filename, you might want to check the extension.
     xl = 'Oct2000.xls'
     if xl.endswith('.xls'):         # True
@@ -196,7 +211,7 @@ def string_basics():
     # It returns the index (offset starting at 0) of the matched substring. If no substring is found it returns -1:
     print("great".find("eat"))      # 2
 
-    # join()
+    # str.join()
     # Oftentimes you have a list of items and need to insert something between them.
     family = ["MK", "MSL", "BK"]
     fstr = " & ".join(family)
@@ -317,6 +332,13 @@ def list_basics():
     if empty_list.__len__() == 0:
         print(f"checked '<list_name>.__len__() -> empty: {empty_list}")
 
+
+    # index of the first occurrence
+    print(f"Index of first ocurrence 'apple' in {fruits}: {fruits.index('apple')}")     # 1
+
+    # total number of occurrences
+    multi_n = [1, 2, 1, 3, 1, 4, 2, 1, 3]
+    print(f"Total num. of ocurrences '1' in {multi_n}: {multi_n.count(1)}")     # 4
 
     # SORTING
     # The .sort() method sorts the list in place. 
