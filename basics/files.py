@@ -12,16 +12,17 @@ import json
 import csv
 
 FILENAME = "names.txt"
+filename_csv = "data/grades.csv"
 
 def main():
     
-    print("Please provide details to save: ")
-    name = input("Name? ")
+    # print("Please provide details to save: ")
+    # name = input("Name? ")
   
-    print(f"Saving {name} to {FILENAME} ..")
-    write_to_file(FILENAME, name)
+    # print(f"Saving {name} to {FILENAME} ..")
+    # write_to_file(FILENAME, name)
     
-    names = read_file("names.txt")
+    # names = read_file("names.txt")
     #print(names)
 
     # create a dictionary with key value pairs
@@ -31,10 +32,11 @@ def main():
     #students = read_dict_from_file("houses.txt")
 
     # Read from a csv file using csv module
-    # students = read_file_csv("Hogwarts.csv")
+    students = read_csv(filename_csv)
+    # print(students)               # list of dictionaries
 
-    # print(students)
- 
+    # first dict in the list, value for the key 'Project' = first row, Project column
+    print(type(students[0]['Project']), students[0]['Project'])     # <class 'str'> 40.0 
 
   
 def write_to_file(fname, content, mode="a"):
@@ -74,19 +76,26 @@ def read_dict_from_file(fname):
 
     return students
 
-def read_file_csv(fname):
+def read_csv(fname, delimiter=','):
     ''' Using csv module, return a list of dictionaries (object notation) by auto unpacking each line
-    Jordan, Bulls -> {"name": "Jordan", "team":"Bulls"}    
+    
+    name,team
+    Jordan,Bulls     -->   {"name": "Jordan", "team":"Bulls"} 
+
     '''
     print(f"Reading from csv file: {fname} ...")
 
     students = []
     with open(fname) as file:
-        reader = csv.DictReader(file)   # when we iterate over reader, each row will be of type dict.
+        reader = csv.DictReader(file, delimiter=delimiter)   # when we iterate over reader, each row will be of type dict.
         for row in reader: 
-            # if we know csv column names in first row, unpack column names (keys) directly   
-            # Create a dict (object notation) from each line and append to a list.
-            students.append({"name":row['name'], "home":row['home']})
+            # print(type(row) ,row)    # <class 'dict'> {'Lastname': 'Alfalfa', 'Firstname': 'Aloysius', 'SSN': '123-45-6789', 'Test1': '40.0', 'Test2': '90.0', 'Test3': '100.0', 'Test4': '83.0', 'Final': '49.0', 'Grade': 'D-'}
+            # The first row of csv is containing column names - column names are the keys.
+            # To print a cell, row['column_name']
+            # print(row['Lastname'])
+            
+            # append each row (dict) to a list.
+            students.append(row)
 
     return students
 

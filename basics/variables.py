@@ -94,10 +94,10 @@ def main():
     # number_basics()
     # bool_basics()
 
-    list_basics()
+    # list_basics()
     # tuple_basics()
     # set_basics()
-    # dict_basics()
+    dict_basics()
 
 
 def string_basics():
@@ -250,6 +250,23 @@ def number_basics():
     y = x / 1   # <class 'float'>
     print(f"{x=}, {type(x)}, {y=}, {type(y)}")
 
+    # Formatting Integers, local unaware
+    num = 1000000
+    print(f"{num:,}")
+
+    # Formatting Floats
+    x = 12345.789
+    print(f"{x:.2f}")         # 12345.79      - 2 decimals + dot = 3 digits for decimal, 8 - 3 = 5 digits for whole part
+    print(f"{x:012.2f}")      # 000012345.79  - 12 digits including dot, 2 decimals and prefix padding 0.
+
+    import locale
+    locale.setlocale(locale.LC_ALL, "en_US")
+    print(locale.format_string('%.2f', x, grouping=True))   # 12,345.79
+
+    # Formatting currency
+    print(locale.currency(x, grouping=True))                # $12,345.79
+
+
 def bool_basics():
     # In Python parlance, it is common to hear of objects behaving as “truthy” or “falsey” — 
     # that means that non-boolean types can implicitly behave as though they were booleans.
@@ -341,7 +358,7 @@ def list_basics():
     print(f"Total num. of ocurrences '1' in {multi_n}: {multi_n.count(1)}")     # 4
 
     # SORTING
-    # The .sort() method sorts the list in place. 
+    # The list.sort() method sorts the list IN PLACE. 
     # It DOESN'T return a new, sorted copy of the list, rather it updates the list with the items reordered
     # list.sort(reverse=True|False, key=myFunc)
     # Parameter 'key' is Optional. A function to specify the sorting criteria(s) (run for every item in the list)
@@ -374,6 +391,8 @@ def list_basics():
     old = [5, 3, -2, 1]
     nums_sorted = sorted(old)
     print(f"sorted({old}): {nums_sorted}")
+
+
 
 
 
@@ -515,6 +534,8 @@ def dict_basics():
     # The purpose of a dictionary is to provide fast lookup of the keys.
 
     # think of a dictionary as key:value pairs. 
+    # keys are UNIQUE and IMMUTABLE (ie. a list cannot be a key!)
+
     # A pair of braces creates an empty dictionary: {}
     empty = {}
     print(f"{empty=}: {type(empty)}")   # empty={}: <class 'dict'>
@@ -522,8 +543,9 @@ def dict_basics():
     #A. think as the representation of a simple object (excel row)
     person = {"name": "MK", "born":81, "gender":"M"}
     
-    #B. think as a collection of data for one attribute, i.e. excel column
+    #B. think as a collection of data for ONE attribute, i.e. 1 excel column
     born = {"MK":81, "MSL":14, "BK":83 }
+    city_population = {"Antalya":1430539, "Balikesir":1069260, "Istanbul":11076840, "Izmir":3431204}
 
 
     car = {"year":2019, "make": "Volkswagen", "model": "T-ROC", "color":"Orange"}
@@ -536,9 +558,9 @@ def dict_basics():
     # print( car['imaginary_key'])    # KeyError
 
     # Deleting keys
-    del car['color']
+    del(car['color'])
 
-    # Adding keys
+    # Adding a new key-value pair
     car['horsepower'] = 130
 
     print("delete the key 'color' and add 'horsepower':", car)       # {'year': 2019, 'make': 'Volkswagen', 'model': 'T-ROC', 'horsepower': 130}
@@ -561,20 +583,28 @@ def dict_basics():
         print(key, person[key])
         # del person[key]     # RuntimeError: dictionary changed size during iteration
     
-    # Nesting lists and dicts
+
+
+    # NESTING lists and dicts
     # list as a dict value {key: []}
     travel_log={
         "France":["Paris", "Cannes"], 
         "Germany":["Berlin", "Hamburg", "Köln" ]
     }
     print(travel_log["Germany"])    # ['Berlin', 'Hamburg', 'Köln']
+
+    countries = ['United States', 'Australia', 'Japan', 'India', 'Russia']
+    countries_dict = {'country':countries}
+    print(countries_dict)       # {'country': ['United States', 'Australia', 'Japan', 'India', 'Russia']}
     
     # dict as a dict value {key: {}}
-    travel_log_v2={
-        "France":{"cities_visited":["Paris", "Cannes"], "total_visits":4}, 
-        "Germany":{"cities_visited":["Berlin", "Hamburg", "Köln" ], "total_visits":2}
-    }
-    print(travel_log_v2['Germany']['cities_visited'][0])    # Berlin
+    europe = { 
+        'Spain': { 'capital':'madrid', 'population':46.77 },
+        'France': { 'capital':'paris', 'population':66.03 },
+        'Germany': { 'capital':'berlin', 'population':80.62 },
+        'Norway': { 'capital':'oslo', 'population':5.084 } 
+        }
+    print(europe['Germany']['capital'])    # berlin
 
     # list of dicts- [{}, {}, {}]
     cars = [
@@ -582,6 +612,13 @@ def dict_basics():
          {"year":2007, "make": "Kia", "model": "Sorento"}
     ]
     print(cars[0]['model'])     #T-ROC
+
+
+    # create 2 lists from the keys and values of a dict:
+    car = cars[0]
+    print("Dictionary:", car)                               # {'year': 2019, 'make': 'Volkswagen', 'model': 'T-ROC'}
+    print("List of keys:", [key for key in car])            # ['year', 'make', 'model']
+    print("List of values:", [car[key] for key in car])     # [2019, 'Volkswagen', 'T-ROC']
     
 
 

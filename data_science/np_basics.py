@@ -6,6 +6,11 @@
 import numpy as np
 
 # Python list
+numbers = list(range(5))
+np_numbers = np.array(numbers)
+print(numbers, np_numbers, np_numbers * 10)     # [0, 1, 2, 3, 4] [0 1 2 3 4] [ 0 10 20 30 40]
+
+
 height_cm = [180, 215, 210, 210, 188]
 weight_kg = [100, 90, 90, 90, 78]
 
@@ -31,6 +36,15 @@ print("LIGHT", type(light), light)
 # Print out BMIs of all baseball players whose BMI is below 21
 # print(bmi[light])
 print( "bmi[bmi<21]", bmi[bmi < 21] )
+
+
+# Compare two NumPy arrays element-wise. 
+my_house = np.array([18.0, 20.0, 10.75, 9.50])
+your_house = np.array([14.0, 24.0, 14.25, 9.0])
+
+# Which areas in my_house are smaller than the ones in your_house?
+print("Compare arrays:", my_house[my_house<your_house])
+
 
 
 # NumPy Side Effects
