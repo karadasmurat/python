@@ -6,8 +6,8 @@
 import numpy as np
 
 # Python list
-height_cm = [180, 215, 210, 210, 188, 176, 209, 200]
-weight_kg = [100, 90, 90, 90, 78, 76, 109, 65]
+height_cm = [180, 215, 210, 210, 188]
+weight_kg = [100, 90, 90, 90, 78]
 
 # Create a numpy array from list
 np_height_m = np.array(height_cm) / 100
@@ -19,16 +19,18 @@ print(type(np_height_m), np_height_m)   # <class 'numpy.ndarray'> [180 215 210 2
 
 # Calculate bmi
 bmi = np_weight_kg / (np_height_m ** 2)
-print(type(bmi), bmi) 
+print("BMI", type(bmi), bmi) 
 
 # Create a boolean numpy array: the element should be True if the corresponding BMI is below 21. 
 light = bmi < 21
 
 # Print out light
-print(type(light), light) 
+print("LIGHT", type(light), light) 
 
+# Filter:
 # Print out BMIs of all baseball players whose BMI is below 21
-print(bmi[light])
+# print(bmi[light])
+print( "bmi[bmi<21]", bmi[bmi < 21] )
 
 
 # NumPy Side Effects
@@ -74,6 +76,8 @@ np_city = np.column_stack((height, weight))
 # print(np_city)
 print("City Statistics")
 print("Average weight:", np.mean(np_city[:, 1]))
+
+
 
 
 
