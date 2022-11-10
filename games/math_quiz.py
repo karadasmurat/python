@@ -41,13 +41,11 @@ HEADER = """
 
 """
 
-
 def main():
 
     #lives = LIVES
     global lives, score
     question_num = 1
-    
 
     # Clear the Screen
     clear_screen()
@@ -62,7 +60,7 @@ def main():
 
     while (lives > 0):
         new_round(question_num)
-
+        question_num += 1
     
     results = {
         "player": player,
@@ -129,7 +127,7 @@ def lives_info(have, max):
 
 def print_score(is_highest, score):
     regular = f"🌟 {score}"
-    record = f"{regular}\n    🏆 New highe score!"
+    record = f"{regular}\n    🏆 New high score!"
 
     GAME_OVER = f"""
 ￣￣￣￣￣￣￣￣￣￣￣￣

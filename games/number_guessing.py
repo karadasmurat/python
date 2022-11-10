@@ -22,7 +22,9 @@ def main():
         
 
 def live_info(round, lives):
-    return (f"{GREEN + '♥️' * (lives - (round+1)) + RED + '♥️' * (round+1) + ENDC}")
+    # return (f"{GREEN + '♥️' * (lives - (round+1)) + RED + '♥️' * (round+1) + ENDC}")
+    return (f"{'🟢' * (lives - (round+1))}{'🔴'* (round+1)}")
+    
 
 if __name__ == "__main__":
     main()
