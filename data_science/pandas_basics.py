@@ -1,9 +1,11 @@
-# High level data manipulation built on NumPy
+# pandas is a Python package providing fast, flexible, and expressive data structures 
+# designed to make working with “relational” or “labeled” data both easy and intuitive.
 
 import pandas as pd
 
 # Manually build DataFrame
-# Option 1 - data, as a list of lists - each member list representing a row
+# Option 1 - 
+# data, as a list of lists - each member list representing a ROW
 country_codes = pd.DataFrame(
     [[90, 'Turkey', 'Ankara'], [44, 'United Kingdom', 'London'], [1, 'United States', 'Washington']], 
     index=['TR', 'UK', 'US'], 
@@ -15,37 +17,59 @@ TR    90          Turkey      Ankara
 UK    44  United Kingdom      London
 US     1   United States  Washington
 '''
-print(country_codes)
+# print(country_codes)
 
 # Option 2 - 
-# A seperate list representing each column
-names = ['United States', 'Australia', 'Japan', 'India', 'Russia', 'Morocco', 'Egypt']
-dr =  [True, False, False, False, True, True, True]
-cpc = [809, 731, 588, 18, 200, 70, 45]
+# A seperate list representing each COLUMN
+lastnames = ['Booker', 'Grey', 'Johnson', 'Jenkins', 'Smith']
+emails =  ['bo@example.com', 'gr@example.com', 'jo@example.com', 'je@example.com', 'sm@example.com']
+usernames = ['booker12', 'grey07', 'johnson81', 'jenkins46', 'smith79']
+
 # A dictionary where keys are the "column names" and values are the lists:
-cars_dict = { 'country':names, 'drives_right':dr, 'cars_per_cap':cpc }
+users_dict = { 'LastName':lastnames, 'Email':emails, 'Username':usernames }
 
 # Create a DataFrame from a Python dict:
-cars = pd.DataFrame(cars_dict)
-# print(cars)
+# df = pd.DataFrame({'col1':[], 'col2':[]})
+df_users = pd.DataFrame(users_dict)
+# print(df_users)
+
+'''
+{
+    'LastName':['Booker', 'Grey', 'Johnson', 'Jenkins', 'Smith'],
+    'Email': ['bo@example.com', 'gr@example.com', 'jo@example.com', 'je@example.com', 'sm@example.com'],
+    'Username': ['booker12', 'grey07', 'johnson81', 'jenkins46', 'smith79']
+}
+
+  LastName           Email   Username
+0   Booker  bo@example.com   booker12
+1     Grey  gr@example.com     grey07
+2  Johnson  jo@example.com  johnson81
+3  Jenkins  je@example.com  jenkins46
+4    Smith  sm@example.com    smith79
+'''
 
 # import a csv file, as a DataFrame
 # The DataFrame is one of Pandas' most important data structures. 
 brics = pd.read_csv("data/brics.csv", index_col=0)
-print(brics)
+
+print(brics.info())             # summary of the dataframe
+print(brics.shape)              # a tuple representing dimensionality
+# print(brics)
+# print(brics.head(2))          # The first n rows
+# print(brics.tail(2))          # The last n rows
 
 # slice to get the first observation(row) from the DataFrame
-print(brics[0:1])
+# print(brics[0:1])
 
-# Column Access - Square brackets [[]]
-print(brics[['country', 'capital']])
+# Column Access as a DataFrame- Square brackets [[]]
+# print(brics[['country', 'capital']])
 
 # With DataFrame.loc and iloc you can do practically any data selection operation on DataFrames
 # Row Access - loc (label-based)
-print(brics.loc[['RU', "CH"]])
+# print(brics.loc[['RU', "CH"]])
 
 # Column Acccess: loc (label-based)
-print(brics.loc[:, ['country', 'capital']])
+# print(brics.loc[:, ['country', 'capital']])
 
 # Row & Column Access
-print(brics.loc[['RU', 'CH'], ['country', 'capital']])
+# print(brics.loc[['RU', 'CH'], ['country', 'capital']])
