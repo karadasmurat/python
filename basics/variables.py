@@ -1,3 +1,8 @@
+"""
+Where in many other programming languages the indentation in code is for readability only, 
+the indentation in Python is very important.
+"""
+
 def main():
 
     print("__name__ : ", __name__)
@@ -5,21 +10,56 @@ def main():
     # Rules and conventions for naming in Python come from a document named “PEP 8 – Style Guide for Python Code” 8.
     # PEP stands for Python Enhancement Proposal, which is a community process
 
-    # A variable should not have the name of a keyword.
+    # A variable name cannot be any of the Python keywords:
     import keyword
     print(keyword.kwlist)
 
     # break = 'foo' # SyntaxError: invalid syntax
 
-    # “not start with numbers”
+    # “do not start with numbers”
     # 1st_num = 0 # SyntaxError
+
+
+    # Note that variables do not need to be declared with any particular type, and can even change type after they have been set.
+
+ 
+    # intro()
+    # string_basics()
+    # number_basics()
+    # bool_basics()
+
+    list_basics()
+    # tuple_basics()
+    # set_basics()
+    # dict_basics()
+
+def intro():
+
+    # Camel Case
+    myVariableName = "Harry"
+    # Pascal Case
+    MyVariableName = "Hermione"
+    # Snake Case
+    my_variable_name = "Ron"
+
+
+    # Create a variable named score and assign the value 50 to it.
+    score = 50
+
+    # You can assign the same value to multiple variables in one line:
+    c1 = c2 = c3 = "Black Pink"
+
+    # Assign values to multiple variables in one line:
+    x, y, z = "Orange", "Banana", "Cherry";
+    print(f"{x=} {y=} {z=}")    # x='Orange' y='Banana' z='Cherry'
 
     # A. Identity
     name1 = "MK"
     list1 = ["SAT", "SUN"]
 
     # It is possible for two variables to refer to the same object. 
-    # When you bind a variable to an existing variable. They both point to the same object. “Running id on either of the two variables will return the same id. 
+    # When you bind a variable to an existing variable, they both point to the same object. 
+    # Running id on either of the two variables will return the same id. 
     # Note that changing object through one variable is visible through the other this if the referred object is mutable
     name2 = name1
     list2 = list1
@@ -35,7 +75,7 @@ def main():
     if name1 is name2:                  # True
         print("IDENTITY equality check: name1 IS name2")
 
-    assert id(name1) == id(name2)       # OK
+    assert id(name1) == id(name2)       # OK - No AssertionError
 
     # you can take a variable and point it to a new object, or mutate the variable if it is mutable (i.e lists)
     # pointing to a new immutable, you will see that the identity of the variable changes. 
@@ -62,9 +102,15 @@ def main():
     
 
     code = "CODE01"
-    print("code:", id(code), code)  # code: 4368368240 CODE01
-    code = "CODE02"  
-    print("code:", id(code), code)  # code: 4368368368 CODE02   (id changes!)
+    id_v0 = id(code);
+    print("code:", id_v0, code) # code: 4368368240 CODE01
+
+    code = "CODE02"             # update the value of the variable
+    id_v1 = id(code);
+    print("code:", id_v1, code) # code: 4368368368 CODE02   (id changes!)
+
+    assert id_v0 != id_v1;      # OK - No AssertionError
+    
 
     #                    +--------+
     #     name +--xxx--> |  "MK"  |  (X) will be garbage collected if not referenced by other
@@ -77,7 +123,7 @@ def main():
 
     score = 90
     id_initial = id(score)
-    score += 1
+    score += 1                  # update the value of the variable
     try:
         assert id_initial == id(score)      # NOK
     except AssertionError:
@@ -90,20 +136,13 @@ def main():
         print("Appending to a list does not change its identity.")
 
 
-    # string_basics()
-    # number_basics()
-    # bool_basics()
-
-    # list_basics()
-    # tuple_basics()
-    # set_basics()
-    dict_basics()
 
 
 def string_basics():
 
+    # String variables can be declared either by using single or double quotes:
     name = "MK"
-    print(type("MK"))
+    print(name, ":", type("MK"))   # MK : <class 'str'>
 
     #length of a string
     print(f"The length of string {name=} is {len(name)}")
@@ -115,10 +154,10 @@ def string_basics():
 
 
     x = 123456
-    x_str = str(x)
+    x_str = str(x)  # casting
     print(f"{x=} {x_str=}")     # x=123456 x_str='123456'
 
-    # number of digits of an int
+    # number of digits of an int: cast to a str and find the length
     print("Number of digits,", x, ":", len(str(123456)))
 
     print("\"Yes\", they said.")
@@ -140,7 +179,7 @@ def string_basics():
     #   0   1   2   3   4   5   
     #  -6  -5  -4  -3  -2  -1
 
-    # Python strings cannot be changed — they are immutable. 
+    # Python strings CAN'T be changed — they are immutable. 
     # Therefore, assigning to an indexed position in the string results in an error
     
     word = "Python 3"
@@ -148,7 +187,8 @@ def string_basics():
 
     # slicing
     # characters from position 1 (included) to 3 (excluded)
-    # For non-negative indices, the length of a slice is the difference of the indices, if both are within bounds. For example, the length of word[1:3] is 2.
+    # For non-negative indices, the length of a slice is the difference of the indices, if both are within bounds. 
+    # For example, the length of word[1:3] is 2.
     print("slice using [1:3]:", word[1:3]) # yt
     #First 3 chars
     print("First 3 chars:", word[:3]) # Pyt
@@ -269,7 +309,17 @@ def number_basics():
 
 def bool_basics():
     # In Python parlance, it is common to hear of objects behaving as “truthy” or “falsey” — 
-    # that means that non-boolean types can implicitly behave as though they were booleans.
+    # that means that non-boolean types can implicitly behave as though they were booleans. 
+    # In other words, Python lets you use any value where it expects a Boolean. 
+    # The following are all “falsy”: 
+        # False
+        # None
+        # []    (empty list)
+        # {}    (empty dict)
+        # ""    (empty string)
+        # set()
+        # 0
+        # 0.0
 
     print('bool("")', bool(""))             # bool("") False - an empty string is “falsey”
     print('bool("0")', bool("0"))           # bool("0") True - non-empty string behaves as "truthy"
@@ -292,14 +342,25 @@ def bool_basics():
 
 def list_basics():
 
+    # A list is one of the sequence types in Python. Sequences hold ordered collections of objects.
+
     # There are two ways to create empty lists
     names = []
     surnames = list()
 
-    # If you want to have prepopulated lists, you can provide the values in between the square brackets, using the literal syntax:
+    # You can provide the values in between the square brackets, using the literal syntax:
     members = ['Fred', 'Charles']
 
-    #List Lists might contain items of different types, but usually the items all have the same type.
+    # lists can have items with the same value:
+    scores = [70, 85, 70, 90, 70]
+    # number of times x appears in the list.
+    print(f"#70: {scores.count(70)}")   # 3
+
+    # The number of items in a container - the built-in function len() also applies to lists
+    print("The number of scores:", len(scores)) # 5
+
+    #List might contain items of different types, but usually the items all have the same type.
+    list1 = ["abc", 34, True, "male"]
 
     # Note that range does not materialize the list, but rather gives you an iterable that will return those numbers when iterated over. 
     # By passing the result into list you can see the numbers it would generate:
@@ -312,27 +373,57 @@ def list_basics():
 
     squares = [1, 4, 9, 16, 25]
     
-    # lists can be indexed and sliced:
-    # A list is one of the sequence types in Python. Sequences hold ordered collections of objects.
-    # Counting beginning with zero is called "zero-based indexing".
+    # Accessing Elements
+    # You can refer to an element by its index (subscript) - uses "zero-based indexing"
     print("squares[0]:", squares[0])
+    # print("squares[100]:", squares[100])    # IndexError: list index out of range
 
-    # List insertion and deletion
-    # To append items to the end of a list use the .append method:
-    squares.append(36)
+    # Negative indexing means start from the end
+    # -1 refers to the last item, -2 refers to the second last item etc.
+    print(f"The last item: {squares[-1]}"); # 25
+
+    
+    # ADD item to the END of a list:
+    squares.append(49)      # [1, 4, 9, 16, 25, 49]
+
+    # INSERT an item at the specified index, and shift the rest:
+    squares.insert(5, 36)   # [1, 4, 9, 16, 25, 36, 49]
+    print(squares[5])       # 36
+
+    
+    fruits = ["banana", "apple", "strawberry", "grapes"]
+    tropical = ["mango", "pineapple"]
+
+    # Append elements from any other iterable to the current list:
+    fruits.extend(tropical) # ['banana', 'apple', 'strawberry', 'grapes', 'mango', 'pineapple']
+    print(fruits)   
+
+
     members.append('Amy')
 
-    # To remove an item, use the .remove method
+    # REMOVE the first ocurrence of value: (Find and erase)
     members.remove('Charles')
-    
-    # The built-in function len() also applies to lists:
-    print("Length:", len(squares))
 
-    # lists can be indexed and sliced:
+    # Remove and return a specific index (default -1, the last)
+    poppedFruit = fruits.pop();  
+    print(f"Removed: {poppedFruit}, fruits: {fruits}")  # Removed: pineapple, fruits: ['banana', 'apple', 'strawberry', 'grapes', 'mango']
+    poppedFruit = fruits.pop(2);
+    print(f"Removed: {poppedFruit}, fruits: {fruits}")  # Removed: strawberry, fruits: ['banana', 'apple', 'grapes', 'mango']
+
+    # The del keyword also removes the specified index:
+    del fruits[0]   # ['apple', 'grapes', 'mango']
+    print(fruits)
+
+    # Remove all items from the list. - The list still remains, but it has no content.
+    # Equivalent to del mylist[:]
+    vegetables = ["Spinach", "Carrots", "Broccoli"]
+    vegetables.clear()
+    assert len(vegetables) == 0     # OK
+
+    # lists can be sliced:
     print(squares[2:]) # [9, 16, 25, 36]
 
-    fruits = ["banana", "apple", "strawberry", "grapes"]
-    vegetables = ["Spinach", "Carrots", "Broccoli"]
+
 
     # empty list
     empty_list = []
@@ -350,23 +441,39 @@ def list_basics():
         print(f"checked '<list_name>.__len__() -> empty: {empty_list}")
 
 
-    # index of the first occurrence
-    print(f"Index of first ocurrence 'apple' in {fruits}: {fruits.index('apple')}")     # 1
+    # Search for an item - index()
+    # return the index of the first occurrence, raises a ValueError if there is no such item.
+    # q_key = 'aVeryDifferentFruit'
+    q_key = 'grapes'
+    try:
+        found_index = fruits.index(q_key)
+        print(f"Index of first ocurrence {q_key} in {fruits}: {fruits.index(q_key)}") 
+    except ValueError:
+        print(f"Value not found: {q_key}")
 
     # total number of occurrences
     multi_n = [1, 2, 1, 3, 1, 4, 2, 1, 3]
     print(f"Total num. of ocurrences '1' in {multi_n}: {multi_n.count(1)}")     # 4
 
     # SORTING
+    # --------
+    # Every Python list has a sort method that sorts it in place. 
+    # If you don’t want to mess up your list, you can use the sorted function, which returns a new list.
     # The list.sort() method sorts the list IN PLACE. 
     # It DOESN'T return a new, sorted copy of the list, rather it updates the list with the items reordered
+    #
     # list.sort(reverse=True|False, key=myFunc)
     # Parameter 'key' is Optional. A function to specify the sorting criteria(s) (run for every item in the list)
+
+    x = [4, 1, 2, 3]
+    y = sorted(x)     # y is [1, 2, 3, 4], x is unchanged
+    x.sort()          # x is [1, 2, 3, 4]
 
     members.sort()      # ascending by default.
     print(members)
 
     # Sort descending
+    # If you want elements sorted from largest to smallest, you can specify a reverse=True parameter.
     cars = ['Ford', 'BMW', 'Mitsubishi', 'Volvo']
     print( cars.sort(reverse = True) ) # prints None! (but mutates the list anyway) 
     print(cars)         # ['Volvo', 'Mitsubishi', 'Ford', 'BMW']
@@ -423,8 +530,11 @@ def list_basics():
     team_name, team_city = team_info
     print (f"{team_name} from {team_city}") # "Chicago Bulls from Chicago"
 
+
+    # Send a list as an input to a function with arbitrary arguments *args:
     odd = [1, 3, 5, 7, 9]
-    print(*odd)     # 1 3 5 7 9
+    print(*odd)                 # *args vs *list_name       1 3 5 7 9
+    arbitrary_arguments(*odd)   # arguments:  (1, 3, 5, 7, 9) -> unpack a list as a tuple ?
 
     # List unpacking - only first and second element. Remaining all elements to be captured in a list
     num = [2, 4, 6, 8, 10]
@@ -434,6 +544,9 @@ def list_basics():
     # Unpacking range object
     a, b, c = range(0, 3)
     print(f"{a=} {b=} {c=}") # a=0 b=1 c=2
+
+    values = [10, 20, 30]
+    print(*values)          
 
 
 def tuple_basics():
@@ -469,6 +582,7 @@ def tuple_basics():
     """
 
 def set_basics():
+    # Set represents a collection of DISTINCT elements. 
     # A set is an UNORDERED collection that DOESN'T contain duplicates.
     # Therefore, a set is great for removing duplicates, and
     # if the order is important, a set is not the data type to use.
@@ -476,17 +590,29 @@ def set_basics():
     
     # A set can be created with a literal syntax using { }
     digit_set = {0, 1, 2 ,3 ,4, 6, 7, 8, 9}
+    primes_below_10 = {2, 3, 5, 7}
 
+    # However, that doesn’t work for empty sets, as {} already means “empty dict.” 
+    # In that case you’ll need to use set()
+    s = set()
+    s.add(1)       # s is now {1}
+    s.add(2)       # s is now {1, 2}
+    s.add(2)       # s is still {1, 2}
+    x = len(s)     # equals 2
+
+    # find the distinct items in a collection
     # Sets can be specified by passing in a sequence into the set class
     digits = [0, 1, 4, 2, 3, 3, 7, 5, 6, 9, 0, 8, 9]
+    print("A List can contain duplicates.", len(digits), digits) 
     digit_set = set(digits)
-    print(digit_set)    # {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+    print("A Set represents a collection of DISTINCT elements.", len(digit_set), digit_set)    # {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
 
-    # To check for membership, use the in operation
+    # To check for membership, use the in operation.
+    # in is a very fast operation on sets.
     if 9 in digit_set:
         print(f"9 is in {digit_set}")
 
-    # “Sets provide set operations, such as union (|), intersection (&), difference (-), and xor (^).
+    # Sets provide set operations, such as union (|), intersection (&), difference (-), and xor (^).
     odd = {1, 3, 5, 7, 9}
 
     # difference (-)
@@ -518,8 +644,6 @@ def set_basics():
     # sets can only contain items that are hashable. 
     # In Python, mutable items are not hashable. 
     # This means that you cannot hash a list or dictionary. 
-
-
 
 
 def dict_basics():
@@ -565,10 +689,11 @@ def dict_basics():
 
     print("delete the key 'color' and add 'horsepower':", car)       # {'year': 2019, 'make': 'Volkswagen', 'model': 'T-ROC', 'horsepower': 130}
 
-    # in operator
+    # IN operator
     # check if a KEY is in the dictionary
-    if 'make' in car:       # True
-        print("key found! corresponding value is:", car['make'])
+    q_key = 'make'
+    if q_key in car:       # True
+        print("key found! corresponding value is:", car[q_key])
 
     # in also works with sequences. You can use the in statement with a list, set, or string to check for membership
     if 5 in [1, 2, 3, 4, 5]:
@@ -621,6 +746,9 @@ def dict_basics():
     print("List of values:", [car[key] for key in car])     # [2019, 'Volkswagen', 'T-ROC']
     
 
+
+def arbitrary_arguments(*args):
+    print(f"arguments: ", args)
 
 # When a Python interpreter reads a Python file, it first sets a few special variables. 
 # Python files are called modules and they are identified by the .py file extension. 
