@@ -4,7 +4,7 @@
 # Function is an abstraction, providing an interface hiding the implementation details.
 # An advantage of a function is that it enables CODE REUSE. Once a function is defined, you can call it multiple times.
 
-
+# def keyword introduces a function definition.
 
 
 # Global Scope
@@ -27,6 +27,11 @@ def main():
     print( change_case("ThisIsCamelCased") )
     print( change_case("ThisIsCamelCased", seperator="%") )
 
+    # Arbitrary Arguments
+    sum_1 = add(1)                      # unnamed args: (1,)
+    sum_4 = add(1,2,3,4)                # unnamed args: (1, 2, 3, 4)
+    say_hi_to_all(mom="BK", dad="MK")   # keyword args: {'mom': 'BK', 'dad': 'MK'}
+
 
     # basic built-in functions (https://docs.python.org/3/library/functions.html)
     # ------------------------
@@ -41,6 +46,10 @@ def main():
     print(num1, round(num1), round(num1, 2))    # 2.675     3       2.67
     print(num2, round(num2), round(num2, 2))    # 0.5       0       0.5
     print(num3, round(num3), round(num3, 2))    # -2.675    -3      -2.67
+
+    lambda_basics()
+
+
 
 # a function with no argument
 def greet():
@@ -77,6 +86,74 @@ def change_case(camel, seperator = "_"):
         other_case += letter.lower()
 
     return str(other_case)
+
+
+# Arbitrary Arguments, *args
+# If you do not know how many arguments that will be passed into your function, add a * before the parameter name in the function definition. 
+# This way the function will receive a tuple of arguments
+def add(*args):
+    print("unnamed args:", args)
+    sum=0
+    for arg in args:
+        sum += arg
+
+    return sum
+
+# Arbitrary Keyword Arguments, **kwargs
+# If you do not know how many keyword arguments that will be passed into your function, add two asterisk: ** before the parameter name in the function definition.
+# This way the function will receive a dictionary of arguments
+def say_hi_to_all(**kwargs):
+    print("keyword args:", kwargs)
+    for key in kwargs:
+        #print(key, kwargs[key])
+        print(f"hi, {kwargs[key]}!")
+        
+def lambda_basics():
+    """
+
+    In functional programming, computations are done by combining functions that take arguments and return a concrete value (or values) as a result. 
+    These functions don’t modify their input arguments and don’t change the program’s state. They just provide the result of a given computation. 
+    These kinds of functions are commonly known as pure functions.
+
+    Lambda expressions (sometimes called lambda forms) are used to create anonymous functions.
+
+    The expression 
+
+        lambda parameters: expression 
+
+    yields a function object. The unnamed object behaves like a function object defined with:
+
+        def <lambda>(parameters):
+            return expression
+
+    Lambda functions are similar to user-defined functions but without a name.
+
+    Lambda functions are frequently used with higher-order functions, 
+    which take one or more functions as arguments or return one or more functions.
+
+    """
+    printTitle("lambda basics")
+
+    print(doubleIt(10))             # regular function call
+    print( (lambda x: x * 2)(10) )  # define and then immediately call the lambda function
+
+    # As a lambda function is an expression, it can be named:
+    f = lambda x: x * 2
+    print(f(3))                     # call a named lambda expression
+
+    # Multiple arguments
+    # The definition of the lambda lists the arguments with no parentheses
+    full_name = lambda first, last, title="Mr.": f"Full name: {title} {first.title()} {last.title()}"
+    print( full_name("alan", "turing") )    # Mr. Alan Turing
+
+
+def doubleIt(x):
+  return x * 2
+
+def printTitle(title):
+    print(f"\n{title}")
+    print("-" * len(title))
+
 
 
 

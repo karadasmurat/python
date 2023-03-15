@@ -1,7 +1,7 @@
-"""
-Where in many other programming languages the indentation in code is for readability only, 
-the indentation in Python is very important.
-"""
+import random
+from util import is_positive, is_even
+
+from functools import reduce
 
 def main():
 
@@ -154,7 +154,7 @@ def string_basics():
 
 
     x = 123456
-    x_str = str(x)  # casting
+    x_str = str(x)  # casting (think of it as a constructor)
     print(f"{x=} {x_str=}")     # x=123456 x_str='123456'
 
     # number of digits of an int: cast to a str and find the length
@@ -344,6 +344,8 @@ def list_basics():
 
     # A list is one of the sequence types in Python. Sequences hold ordered collections of objects.
 
+    printTitle("List Basics")
+
     # There are two ways to create empty lists
     names = []
     surnames = list()
@@ -360,13 +362,13 @@ def list_basics():
     print("The number of scores:", len(scores)) # 5
 
     #List might contain items of different types, but usually the items all have the same type.
-    list1 = ["abc", 34, True, "male"]
+    hybridList = ["abc", 34, True, "male"]
 
     # Note that range does not materialize the list, but rather gives you an iterable that will return those numbers when iterated over. 
     # By passing the result into list you can see the numbers it would generate:
     # The “up to but not including” construct is more formally known as the "half-open interval" convention.
     nums = range(5)     
-    print( type(nums), len(nums), list(nums) )     # <class 'range'> 5 [0, 1, 2, 3, 4]
+    print(type(nums), len(nums), list(nums))     # <class 'range'> 5 [0, 1, 2, 3, 4]
 
     even = list(range(0, 11, 2))
     print(even)     # [0, 2, 4, 6, 8, 10]
@@ -501,8 +503,6 @@ def list_basics():
 
 
 
-
-
     # Nested lists.
     # If the elements of a list are themselves type list, then we call this a nested list.
     # Think of them as list of names, where name is a list of chars: 
@@ -546,7 +546,166 @@ def list_basics():
     print(f"{a=} {b=} {c=}") # a=0 b=1 c=2
 
     values = [10, 20, 30]
-    print(*values)          
+    print(*values)     
+
+    # Iterate over a list:
+    iterate_list()   
+
+    # Functional programming style processing
+    processList_FP()
+
+    # list comprehension:
+    list_comprehension()  
+
+
+def iterate_list():
+    students = ["Harry", "Hermione", "Ron"]
+
+    # v1 - no access to indexes
+    print("no access to indexes")
+    for s in students:
+       print(s)
+
+    # v2 - access to indexes
+    print("access to indexes - using enumerate(list)")
+    for index, value in enumerate(students):
+        print(f"{index=} {value=}")
+
+    # v3 - older approach
+    print("access to indexes - older approach using range(len(list)): ")
+    for i in range(len(students)):
+        print(i+1, students[i])
+
+def processList_FP():
+    """
+    In functional programming, computations are done by combining functions that take arguments and return a concrete value (or values) as a result. 
+    These functions don’t modify their input arguments and don’t change the program’s state. They just provide the result of a given computation. 
+    These kinds of functions are commonly known as pure functions.
+
+    Functional programming typically uses lists, and other iterables to represent the data along with a set of functions that operate on that data and transform it. 
+    When it comes to processing data with a functional style, there are at least three commonly used techniques:
+    
+    1. Mapping consists of applying a "transformation function" to an iterable to produce a "new iterable".
+    Items in the new iterable are produced by calling the transformation function on each item in the original iterable.
+    
+    2. Filtering consists of applying a predicate or Boolean-valued function to an iterable to generate a new iterable. 
+    Items in the new iterable are produced by filtering out any items in the original iterable that make the predicate function return false.
+    
+    3. Reducing consists of applying a reduction function to an iterable to produce a single cumulative value.
+
+    """
+
+    printTitle("Functional Programming Style")
+
+    numbers = [1, 2, 3, 4, 5]
+    squared = []
+
+    # v1 - loop over list, transform each item, append to a new list:
+    for n in numbers:
+        squared.append(n*n)
+    
+    print(squared)  # [1, 4, 9, 16, 25]
+
+    # v2 - use built-in map function
+    # Sometimes you might face situations in which you need to "perform the same operation on all the items" of an input iterable to build a new iterable. 
+    # The quickest and most common approach to this problem is to use a Python for loop. However, you can also tackle this problem by using map()
+    # The operation that map() performs is commonly known as a mapping because it maps every item in an input iterable to a new item in a resulting iterable.
+    # The first argument to map() is a "transformation function". A common pattern is to use a lambda function as the first argument.
+    # in Python 3.x, map() returns a map object, which is an iterator that yields items on demand - call list() to create the desired list object.
+    cubed = map(lambda x: x**3, numbers)
+    print("Numbers:", numbers)
+    print("Mapped:",list(cubed))
+
+
+    # Filtering
+    # The first argument, function, must be a single-argument function. Typically, you provide a predicate (Boolean-valued) function to this argument. 
+    # In other words, you provide a function that returns either True or False according to a specific condition.
+    # This function plays the role of a decision function, also known as a "filtering function", because it provides the criteria to filter out unwanted values from the input iterable and to keep those values that you want in the resulting iterable. 
+    # Note that the term unwanted values refers to those values that evaluate to false when filter() processes them using function.
+    print(is_positive(-3));    # False - unwanted, will be filtered.
+
+    numbers = [-3, -2, -1, 0, 1, 2, 3]
+    positive_numbers = filter(is_positive, numbers) 
+    print("Numbers:", numbers)
+    print("Positives:", list(positive_numbers))
+
+
+    # use lambda function as a filtering function:
+    scores = [60, 40, 90, 80, 30, 70]
+    passed = filter(lambda x: x>=60, scores)    # [60, 90, 80, 70]
+    print("Scores:", scores)
+    print("Passed:", list(passed))
+
+    # Reduce
+    # Python’s reduce() implements a mathematical technique commonly known as folding or reduction.
+    # The idea behind Python’s reduce() is to take an existing function, apply it cumulatively to all the items in an iterable, and generate a single final value.
+    # The first argument to Python’s reduce() is a two-argument function.
+    # The call to reduce() in the this example applies lambda function to the first two items in numbers (1 and 2) and gets 3 as the result. 
+    # Then reduce() calls lambda function using 3 and the next item in numbers (which is 3) as arguments, getting 6 as the result. 
+    # The process is repeated until numbers runs out of items and reduce() returns a final result of 15.
+    numbers = [1, 2, 3, 4, 5]
+    total = reduce(lambda x,y: x+y, numbers)
+    print("Numbers:", numbers)
+    print("Total:", total)
+
+
+
+def list_comprehension():
+
+    printTitle("List Comprehension")
+
+    # List comprehension offers a shorter syntax when you want to create a new list based on the values of an existing list.
+    # Frequently, you’ll want to transform a list into another list by choosing only certain elements, by transforming elements, or both.  
+    # The Pythonic way to do this is with list comprehensions
+
+    scores = [33, 99, 44, 55, 88, 77, 22, 66]
+    passed = [x for x in scores if x > 60]  # [99, 88, 77, 66]
+    print(passed)
+
+    even_numbers = [x for x in range(5) if x % 2 == 0]  # [0, 2, 4]     (x For x in iF format)
+    squares = [x * x for x in range(5)]                 # [0, 1, 4, 9, 16]
+
+    print(f"{even_numbers=} {squares=} ")
+
+    # Randomness
+    # The random module actually produces pseudorandom (that is, deterministic) numbers 
+    # based on an internal state that you can set with random.seed if you want to get reproducible results
+    random.seed(123)  # this ensures we get the same results every time
+
+    # Also, run a funtion n times and store results in a list
+    four_uniform_randoms = [random.randint(1, 6) for _ in range(4)]     # [6, 6, 2, 3]
+
+    print(f"{four_uniform_randoms=}")
+
+    numbers = range(10)
+
+    first_5 = [num for num in numbers if num < 5]
+    print(*numbers)
+    print(*first_5)     # *args *list_name
+
+    results = [
+        {"name":"Bob", "score":33},
+        {"name":"Foo", "score":90},
+        {"name":"Bar", "score":85},
+        {"name":"Baz", "score":100}
+    ]
+
+    # filter the results
+    # ------ version 1 ---------
+    grades_A = []
+    for result in results:
+        if result['score'] >= 85:
+            grades_A.append(result['name'])
+    print(f"{grades_A=}")
+
+    # ------ version 2 ---------
+    grades_F = [result['name'] for result in results if result['score'] < 60]
+    print(f"{grades_F=}")
+
+
+
+
+
 
 
 def tuple_basics():
@@ -749,6 +908,10 @@ def dict_basics():
 
 def arbitrary_arguments(*args):
     print(f"arguments: ", args)
+
+def printTitle(title):
+    print(f"\n{title}")
+    print("-" * len(title))
 
 # When a Python interpreter reads a Python file, it first sets a few special variables. 
 # Python files are called modules and they are identified by the .py file extension. 

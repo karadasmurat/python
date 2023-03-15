@@ -1,13 +1,5 @@
 """  
-Python is a powerful object-oriented programming language.
 
-https://docs.python.org/3/
-
-Interpreted languages do not compile directly to machine code, 
-instead, there is a layer above, an interpreter that performs this function.
-There are pros and cons to this approach. As you can imagine, on the fly translating can be time
-consuming. Interpreted code like Python programs tend to run on the order of 10–100 times slower than C
-programs. On the flip side, writing code in Python optimizes for developer time.
 
 On many systems Python comes pre-installed. 
 Try running the python command to start the Python interpreter to check and see if it is already installed:
