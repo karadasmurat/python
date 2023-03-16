@@ -52,10 +52,25 @@
 # $ pip3 install "SomeProject==1.4"
 
 
+# CREATE A PACKAGE
+# -----------------
+#  __init__.py file will tell Python to treat directories as modules (or sub-modules).
+
+
 
 
 # import package
 import numpy as np
+
+# import module (utils.py file in the same directory)
+# import utils;   utils.introduce()             # filename.methodname()
+# from utils import introduce;    introduce()     # methodname()
+
+# import sub-directory
+# import mk01.mk0101;    mk01.mk0101.introduce()      # import dir.filename
+import mk01.mk0101 as mk;    mk.introduce()         # give an alias
+
+
 
 # import a specific part(s) of a package
 # from numpy import array

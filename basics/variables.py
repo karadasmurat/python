@@ -1,18 +1,27 @@
+"""
+
+Variables do not need to be declared with any particular type, and can even change type after they have been set.
+
+    x = 4           # x is of type int
+    x = "Sally"     # x is now of type str
+
+Rules and conventions for naming in Python come from a document named “PEP 8 – Style Guide for Python Code” 8.
+PEP stands for Python Enhancement Proposal, which is a community process
+
+"""
+
 import random
+import math
+from util import printTitle
 from util import is_positive, is_even
 
 from functools import reduce
 
 def main():
 
-    print("__name__ : ", __name__)
-
-    # Rules and conventions for naming in Python come from a document named “PEP 8 – Style Guide for Python Code” 8.
-    # PEP stands for Python Enhancement Proposal, which is a community process
-
     # A variable name cannot be any of the Python keywords:
-    import keyword
-    print(keyword.kwlist)
+    # import keyword
+    # print(keyword.kwlist)
 
     # break = 'foo' # SyntaxError: invalid syntax
 
@@ -21,14 +30,18 @@ def main():
 
 
     # Note that variables do not need to be declared with any particular type, and can even change type after they have been set.
+    x = 4               # variable x is int, Literal[4]
+    print(x, type(x))   # 4 <class 'int'>
 
+    x = "MK"            # variable x is now str, Literal['MK']
+    print(x, type(x))   # MK <class 'str'>
  
     # intro()
-    # string_basics()
+    string_basics()
     # number_basics()
     # bool_basics()
 
-    list_basics()
+    # list_basics()
     # tuple_basics()
     # set_basics()
     # dict_basics()
@@ -136,29 +149,59 @@ def intro():
         print("Appending to a list does not change its identity.")
 
 
+    
+    # Do integers and floats have methods? Yes, again, everything in Python is and object and objects have methods. 
+    # dir() lists all the attributes of the object passed into it.
+    # This is easy to verify by invoking dir on an integer (or a variable holding an integer):”
+    print("\ndir(<int>):\n", dir(100))
 
 
 def string_basics():
+    """
+    Text Sequence Type — str
+    Textual data in Python is handled with str objects, or strings. 
+    Strings are immutable sequences of Unicode code points.
+
+    String literals are written in a variety of ways:
+
+        Single quotes: 'allows embedded "double" quotes'
+        Double quotes: "allows embedded 'single' quotes".
+        Triple quoted: Three single quotes and Three double quotes (may span multiple lines)
+
+    Strings may also be created from other objects using the str constructor.
+
+
+
+    """
+
+    printTitle("Strings")
 
     # String variables can be declared either by using single or double quotes:
-    name = "MK"
-    print(name, ":", type("MK"))   # MK : <class 'str'>
+    name = "Harry"
+    house = 'Gryffindor'
+    print(name, ":", type(name))    # MK : <class 'str'>
+
+    # String concatenation - operator+ is overloaded
+    z = name + "," + house          # Harry,Gryffindor
+
+    # You can insert a variable into a string using f-strings.
+    std = f"Hi! This is {name}, from {house}."    # Hi! This is Harry, from Gryffindor.
+    print(std)
 
     #length of a string
     print(f"The length of string {name=} is {len(name)}")
+    
+    # number of digits, as the length of a string
+    x = 123456
+    x_str = str(x)  # casting (think of it as a constructor)
+    digits = len(str(x))
+    print(f"{x=} {x_str=} {digits=}")     # x=123456 x_str='123456' digits=6  
 
     # unicode
     # https://unicode.org/charts/nameslist/index.html
     print('\N{UPSIDE-DOWN FACE}')
     print("\U0001F60E")
 
-
-    x = 123456
-    x_str = str(x)  # casting (think of it as a constructor)
-    print(f"{x=} {x_str=}")     # x=123456 x_str='123456'
-
-    # number of digits of an int: cast to a str and find the length
-    print("Number of digits,", x, ":", len(str(123456)))
 
     print("\"Yes\", they said.")
 
@@ -204,15 +247,24 @@ def string_basics():
     for letter in name:
         print(letter)
 
-    # split and unpack
-    full_name = "Jordan,Michael"
-    surname, name = full_name.split(",")
+    # split - return a list from a string, using a delimiter:
+    nums_str = "one two three four five"
+    nums = nums_str.split() # Return a list of the words in the string, using sep=None as the delimiter string.
+    print(nums)     # ['one', 'two', 'three', 'four', 'five']
+
+    # Notice that 'District of Columbia' has spaces
+    states_str = 'Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware, District of Columbia, Florida, Georgia, Hawaii'
+    states = states_str.split(sep = ',')
+    print(states)
+
+    full_name = "Jordan-Michael"
+    surname, name = full_name.split('-')
     print(f"split {full_name=}: {name=} {surname=}")
 
     # split and use the index
     price_tag = "USD 55"
-    currency = price_tag.split(" ")[0]
-    print(f"split {price_tag=}: {currency=}")
+    currency = price_tag.split()[0]
+    print(f"{currency=}")
 
 
     # A nice benefit of using triple-quoted strings is that you can embed single and double quotes inside it without escaping them
@@ -251,8 +303,9 @@ def string_basics():
     # It returns the index (offset starting at 0) of the matched substring. If no substring is found it returns -1:
     print("great".find("eat"))      # 2
 
-    # str.join()
+    # JOIN - Concatenate any number of strings. The string whose method is called is inserted in between.
     # Oftentimes you have a list of items and need to insert something between them.
+    # see shuffle_characters_of_a_string()
     family = ["MK", "MSL", "BK"]
     fstr = " & ".join(family)
     print(type(fstr), fstr)    # <class 'str'> MK & MSL & BK
@@ -267,32 +320,60 @@ def string_basics():
     print(input_str, len(input_str))
     print(input_str.strip(), len(input_str.strip()))
 
+    shuffle_characters_of_a_string("Hagrid")
+
 
 # Q: replace the first letter with '_' character
 def replaceFirstChar(arg, c):
     return c + arg[1:]
 
+def shuffle_characters_of_a_string(arg):
+    ''' We can first convert the string to a list of characters, shuffle the list using the shuffle() function from the random module, and then convert the shuffled list back to a string. '''
+    char_list = list(arg)               # list of chars
+    random.shuffle(char_list)           # shuffle the list IN PLACE, and return None.
+    arg_shuffled = "".join(char_list)   # join chars in the list back into a string
+    print(arg_shuffled)
+
 def number_basics():
+
+    printTitle("Numbers")
 
     # Do integers and floats have methods? Yes, again, everything in Python is and object and objects have methods. 
     # dir() lists all the attributes of the object passed into it.
     # This is easy to verify by invoking dir on an integer (or a variable holding an integer):”
-    print("\ndir(<int>):\n", dir(100))
+    # print("\ndir(<int>):\n", dir(100))
 
-    f = 2.66666
-    f_int = int(f);         # 2
-    f_round = round(f);     # 3
-    f_round2 = round(f, 2); # 2.67
+    x = 1234        # int
+    print(f"{x=}, {type(x)=}")              # x=1234, type(x)=<class 'int'>
 
-    print(f, type(f), f_int, f_round, f_round2) # 2.66666 <class 'float'> 2 3 2.67
+    f = 2.66666     # float
+
+    print(f"{f=}, {type(f)=}")              # f=2.66666, type(f)=<class 'float'>
+    print(f"{int(f)=}, {math.floor(f)=}")   # int(f)=2, math.floor(f)=2
+    print(f"{round(f)=}, {round(f, 2)=}")   # round(f)=3, round(f, 2)=2.67
 
     x = 10      # <class 'int'>
     y = x / 1   # <class 'float'>
     print(f"{x=}, {type(x)}, {y=}, {type(y)}")
 
+    #casting
+    one_str = "1"               # str
+    one_int = int(one_str)      # int
+    print(f"{one_str=}, {type(one_str)}, {one_int=}, {type(one_int)}")
+
+    # number of digits, as the length of a string
+    x = 123456
+    x_str = str(x)  # casting (think of it as a constructor)
+    digits = len(str(x))
+    print(f"{x=} {x_str=} {digits=}")     # x=123456 x_str='123456' digits=6  
+
+
     # Formatting Integers, local unaware
+    fnum = 1_234_567        
+    print(fnum)         # 1234567
+
     num = 1000000
-    print(f"{num:,}")
+    print(f"{num:,}")   # 1,000,000
 
     # Formatting Floats
     x = 12345.789
@@ -360,6 +441,10 @@ def list_basics():
 
     # The number of items in a container - the built-in function len() also applies to lists
     print("The number of scores:", len(scores)) # 5
+
+    # Some other built-in functions for iterables: min, max, sum
+    print(f"{max(scores)=}, {min(scores)=}, {sum(scores)=}")    # max(scores)=90, min(scores)=70, sum(scores)=385
+
 
     #List might contain items of different types, but usually the items all have the same type.
     hybridList = ["abc", 34, True, "male"]
@@ -443,10 +528,15 @@ def list_basics():
         print(f"checked '<list_name>.__len__() -> empty: {empty_list}")
 
 
-    # Search for an item - index()
-    # return the index of the first occurrence, raises a ValueError if there is no such item.
-    # q_key = 'aVeryDifferentFruit'
+    # Search for an item
     q_key = 'grapes'
+    # q_key = 'aVeryDifferentFruit'
+    # v1 - Membership Operator (in)
+    if q_key in fruits: 
+        print(f"{q_key} is IN {fruits}")
+
+    # v2 - index()
+    # return the index of the first occurrence, raises a ValueError if there is no such item.
     try:
         found_index = fruits.index(q_key)
         print(f"Index of first ocurrence {q_key} in {fruits}: {fruits.index(q_key)}") 
@@ -503,13 +593,31 @@ def list_basics():
 
 
 
-    # Nested lists.
+    # Nested lists:
     # If the elements of a list are themselves type list, then we call this a nested list.
-    # Think of them as list of names, where name is a list of chars: 
-    # class[0] = first name (list of chars), the first element is the first list
-    # class[1] = second name (list of chars), the second element is the second list
-    # class[0][0] = first char of first name
-    # matris halini de, aralarda '\n' olan isim listesi gibi düşün - a name in each row.
+    #
+    #   [[first_row], [second_row], [third_row]]    # members are like the rows of a 2-d matrix
+    #
+    #   [[first_row], 
+    #    [second_row], 
+    #    [third_row]]
+    #
+    #
+    #   [[00,01,02], [11,12,13], [21,22,23]]
+    #   
+    #   [[00,01,02], 
+    #    [11,12,13], 
+    #    [21,22,23]]
+    #
+    #    nested_list[0] is the first row.
+    #    nested_list[0][0] is the first member of the first row.
+    #   
+    # To simplify, think of them as list of names, where name is a list of chars: [Harry, Hermione, Ron]  
+    # class[0] = Harry (list of chars), the first element is the first list
+    # class[1] = Hermione (list of chars), the second element is the second list
+    # class[0][0] = H (first char of first name)
+    # matris halini de, aralarda '\n' ile basılmış isim listesi gibi düşün - an item in each row:
+
     nested = [fruits, vegetables]
     print(f"{nested=}")         # [['banana', 'apple', 'strawberry', 'grapes'], ['Spinach', 'Carrots', 'Broccoli']]
     print(f"{nested[0]=}")      # ['banana', 'apple', 'strawberry', 'grapes']
@@ -649,7 +757,6 @@ def processList_FP():
     print("Total:", total)
 
 
-
 def list_comprehension():
 
     printTitle("List Comprehension")
@@ -703,15 +810,18 @@ def list_comprehension():
     print(f"{grades_F=}")
 
 
-
-
-
-
-
 def tuple_basics():
 
-    # Tuples are IMMUTABLE sequences. You should think of them as ordered records. 
-    # Once you create them, you CANNOT CHANGE them.
+    """
+    Why the distinction between tuples and lists?
+        * The main difference between the objects is mutability. As tuples are immutable, they are able to serve as keys in dictionaries.
+        * Tuples are used for returning multiple items from a function. 
+        * Tuples are often used to represent a record of data such as the row of a database query, which may contain heterogeneous types of objects.
+            person = ('Matt', '123 North 456 East', 24)
+        * Tuples also use less memory than lists. If you have sequences that you are not mutating, consider using tuples to conserve memory.
+    """
+
+    printTitle("Tuples")
 
     # There are two ways to create an empty tuple: using either the tuple function or the literal syntax:
     empty = tuple()
@@ -731,14 +841,17 @@ def tuple_basics():
     # Because tuples are immutable you cannot append to them:
     # e.append(4)           # “AttributeError: 'tuple' object has no attribute 'append”
 
-    """
-    Why the distinction between tuples and lists?
-        * The main difference between the objects is mutability. As tuples are immutable, they are able to serve as keys in dictionaries.
-        * Tuples are used for returning multiple items from a function. 
-        * Tuples are often used to represent a record of data such as the row of a database query, which may contain heterogeneous types of objects.
-            person = ('Matt', '123 North 456 East', 24)
-        * Tuples also use less memory than lists. If you have sequences that you are not mutating, consider using tuples to conserve memory.
-    """
+    one = 1
+    two = 2
+
+    # Tuple swap 
+    (one, two) = (two, one)
+    print(f"one: {one}, two: {two}")
+
+    # Tuple swap, w/o paranthesis
+    one, two = two, one
+    print(f"one: {one}, two: {two}")
+
 
 def set_basics():
     # Set represents a collection of DISTINCT elements. 
@@ -909,9 +1022,7 @@ def dict_basics():
 def arbitrary_arguments(*args):
     print(f"arguments: ", args)
 
-def printTitle(title):
-    print(f"\n{title}")
-    print("-" * len(title))
+
 
 # When a Python interpreter reads a Python file, it first sets a few special variables. 
 # Python files are called modules and they are identified by the .py file extension. 
