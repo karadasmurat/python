@@ -19,14 +19,15 @@ HEADER = """
 
 """
 
-categories = ['Isim', 'Esya', 'Hayvan']
-selected_category = categories[2]
+categories = ['İsim', 'Eşya', 'Hayvan']
+# selected_category = categories[2]
 MASK = '-'
+MAX_LIVES = 6
 
 def main():
 
     win = False
-    lives = 3
+    lives = MAX_LIVES
     # guesses = set()    # set
     guesses = []
 
@@ -38,8 +39,10 @@ def main():
     # print(f"Welcome, {player}")
 
     # TODO oynanan kelime tekrar etmesin.
+    selected_category = get_input("Please select category:", categories)
+    print(f"{selected_category=}")
     secret = get_secret_word(selected_category)
-    print("? =", secret)
+    # print("? =", secret)
     masked_secret = mask_word(secret)
     print(format_masked_list(masked_secret))
 
@@ -63,10 +66,41 @@ def main():
         print(format_masked_list(masked_secret), "\t\t",health_info(lives, guesses))
         # break
     
-    if win:
-        print("Yaay !")
-    else:
-        print("Game Over.")
+    print_score(win, secret)
+
+
+def print_score(win, secret):
+    win_desc = f"🌟 Yaay !"
+    loose_desc = f"Game Over.\nThe secret word: {secret}\n"
+
+    scoreboard = f"""
+￣￣￣￣￣￣￣￣￣￣￣￣
+    
+    {win_desc if win else loose_desc}
+                      
+￣￣￣￣￣￣￣￣￣￣￣￣
+     (\__/)  ||
+     (•ㅅ•)  ||
+     /  　  づ
+"""
+
+    print(scoreboard)
+
+
+def get_input(question, options):
+    # surround first char of option with [ ]
+    # print(f"{options=}")
+    ops = ""
+    for option in options:
+        option = ' [' + option[:1].upper() + ']' + option[1:]
+        ops += option
+    
+    choice = input(f"{question} {ops}: ").upper()
+    print(f"{choice=}")
+    for option in options:
+        # print(f"{option=}")
+        if choice == option or choice == option[:1].upper():
+            return option
 
 
 # List passed by reference ?
@@ -109,11 +143,12 @@ def format_masked_list(masked_list):
     return str
 
 def health_info(lives, guesses):
-    return (f"{'🟢' * lives} {guesses}")   # 🔴
+    return (f"{'🟢' * lives}{'🔴' * (MAX_LIVES-lives)} {guesses}")   # 
 
 def get_secret_word(category=None):
 
     all_words = read_csv("data/words.csv")
+    # print(f"{all_words=}")
     sub_list = []
     if category:
         for entry in all_words:

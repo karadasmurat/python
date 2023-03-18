@@ -42,7 +42,6 @@ def get_input(question, options):
     return input(f"{question} {ops}: ")
 
 def encode_letter(letter, shift):
-
     # first check the cache if the letter has already been mapped before
     # if key in dict
     if letter in cache:
@@ -51,13 +50,17 @@ def encode_letter(letter, shift):
 
     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
     length_of_base = len(letters)
+
+    # loop through indices, and calculate a new index - the item at calculated index is the encoded letter.
     for i in range(length_of_base):
         if letters[i] == letter:
-            # put in cache first, for later reuse
+            
             mapped_letter = letters[(i + shift) % length_of_base]
-            cache[letter] = mapped_letter
 
+            # put in cache, for later reuse
+            cache[letter] = mapped_letter
             print("calculated and cached mapping: ", mapped_letter)
+
             return mapped_letter
 
 

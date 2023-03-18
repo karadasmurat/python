@@ -33,6 +33,23 @@ Use : and indentation
     # One line if-else:
     print("A") if a > b else print("B")
 
+
+    While Loop: 
+    Run a block code until a certain condition is met.
+    If the condition of a loop is always True, the loop runs for infinite times
+    Basic syntax:
+
+        while condition:
+            # body of while loop
+
+    Example:
+
+        while not at_goal():
+            if wall_in_front():
+                jump()
+            else:
+                move()
+
 """
 
 import os
@@ -161,10 +178,23 @@ def loop_basics():
 
     iterate_list()
 
+    # Looping through a dictionary
+    student_scores = { "Harry": 81, "Ron": 78, "Hermione": 99, "Draco": 74, "Neville": 62}
+    iterate_dict(student_scores)
+
     # Iterate over characters of a string
     name = "Bingo"
     for letter in name:
         print(letter)
+
+
+    # while loop
+    i = 0
+    while i < 5:
+        print("while loop body", i)
+        i += 1
+
+    
 
 
 def iterate_list():
@@ -182,12 +212,17 @@ def iterate_list():
     for i in range(len(students)):
         print(i+1, students[i])
 
-def iterate_dict(dict_to_iterate):
-    # Iterate over a dictionary
+def iterate_dict(dctnry):
+    # Option 1:
     # By default, when you iterate over a dictionary, you get back the KEYS
     # Python will throw an Error, if you add to or remove from a dictionary while looping over it. 
-    for key in dict_to_iterate:
-        print(key, dict_to_iterate[key])
+    for key in dctnry:
+        print(key, dctnry[key])
+
+    # Option 2: 
+    # The key and corresponding value can be retrieved at the same time using the items() method.
+    for k, v in dctnry.items():
+        print(k, v)
     
 def sum_all_positive_numbers(arg):
     '''summing all positive numbers in the sequence'''

@@ -125,5 +125,30 @@ def generatePassword():
     pwd_str = "".join(pwd_list)     # join chars in the list back into a string
     print("Here is shuffled:", pwd_str )
 
+
+
+
+
+# write a function that checks whether if the number passed into it is a prime number or not.
+# A prime number (or a prime) is a natural number greater than 1 that is not a product of two smaller natural numbers.
+# A prime number is a positive integer that has exactly two distinct whole number factors (or divisors), namely 1 and the number itself.
+def prime_checker(number):
+    if number < 2:
+        print("It's not a prime number.")
+        return
+
+    is_prime = True
+    for i in range(2, number//2 + 1):
+        if number % i == 0:
+            is_prime = False
+            break   # break immediately after composite detection
+
+    if is_prime: 
+        print("It's a prime number.")
+    else:
+        print("It's not a prime number.")
+
+
+
 if __name__ == "__main__":
     main()

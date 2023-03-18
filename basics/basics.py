@@ -1,6 +1,11 @@
 """
 Python is a powerful object-oriented programming language.
 
+Python is a high-level, interpreted language developed in the late 1980s by Guido van Rossum 
+at the National Research Institute for Mathematics and Computer Science in the Netherlands. 
+The name Python, by the way, derives not from the snake, but from the British comedy troupe Monty Python’s Flying Circus, 
+of which Guido was, and presumably still is, a fan.
+
 https://docs.python.org/3/
 
 Interpreted languages do not compile directly to machine code, 
@@ -9,8 +14,96 @@ There are pros and cons to this approach. As you can imagine, on the fly transla
 consuming. Interpreted code like Python programs tend to run on the order of 10–100 times slower than C
 programs. On the flip side, writing code in Python optimizes for developer time.
 
+Because Python code is interpreted and not compiled into native machine instructions, 
+code written for one platform will work on any other platform that has the Python interpreter installed.
 
-Indentation
+"""
+
+"""  
+On many systems Python comes pre-installed. 
+Try running the python command to start the Python interpreter to check and see if it is already installed:
+To open the interactive interpreter or REPL (Read Evaluate Print Loop) that you can use
+to write small functions, to test out code samples, or even to function as a calculator:
+
+        $ python
+        Python 3.10.8 ...
+        Type "help", "copyright", "credits" or "license" for more information.
+        >>> 
+
+        $ which python
+        /usr/local/bin/python 
+
+        $ which python3
+        /Library/Frameworks/Python.framework/Versions/3.10/bin/python3
+
+If you don't see this, you will need to install Python on your system.
+
+To run the program:
+        $ python helloworld.py 
+
+
+Jupyter Notebooks
+------------------
+Jupyter Notebooks are a community standard for communicating and performing interactive computing.
+They are a document that blends computations, outputs, explanatory text, mathematics, images, and rich media representations of objects.
+JupyterLab is a next-generation web-based user interface for Project Jupyter.
+
+    $ which jupyter
+    /Library/Frameworks/Python.framework/Versions/3.10/bin/jupyter
+
+Start JupyterLab:
+
+    $ jupyter lab
+
+# http://localhost:8889/lab
+
+
+
+
+Creating Virtual Environments
+------------------------------
+Avoid System Pollution
+Linux and macOS come preinstalled with a version of Python that the operating system uses for internal tasks.
+If you install packages to your operating system’s global Python, these packages will mix with the system-relevant packages. 
+This mix-up could have unexpected side effects on tasks crucial to your operating system’s normal behavior.
+
+Sidestep Dependency Conflicts
+Imagine you have an application that needs version 1 of LibFoo, but another application requires version 2. 
+If you have only one place to install packages, then you can’t work with two different versions of the same library. 
+How can you use both these applications? 
+
+Python “Virtual Environments” allow Python packages to be installed in an isolated location for a particular application, 
+rather than being installed globally.
+
+    $ python3 -m venv /path/to/new/virtual/environment
+    $ python3 -m venv /Users/mk/dev/python/environments/mkenv3.10
+
+to activate
+    $ source /path/to/venv/bin/activate
+    (mkenv3.10) $ which python    (prompt changes)
+    /Users/mk/dev/python/environments/mkenv3.10/bin/python
+
+After creating and activating your virtual environment, you can now install any external dependencies that you need for your project:
+Note: Before installing a package, look for the name of your virtual environment within parentheses just before your command prompt. 
+
+    (mkenv3.10) $ python3 -m pip install <package-name>
+    (mkenv3.10) $ python3 -m pip list
+
+to deactivate
+    (mkenv3.10) $ deactivate
+    $
+    
+
+
+Syntax:
+-------
+* No Statement Terminators (;)
+In many popular programming languages, you need to add a semi-colon at the end of every statement. 
+Programmers with a background in Java, C++, and PHP habitually put a terminator at the end of every line.
+But this is not true for Python.
+
+* Colon (:) and Indentation
+Spaces are the preferred indentation method (over tabs) - Use 4 spaces for indentation (PEP 8 Style Guide)
 Python relies on indentation (whitespace at the beginning of a line) to define scope in the code. 
 Other programming languages often use curly-brackets for this purpose.
 

@@ -37,14 +37,14 @@ def main():
     print(x, type(x))   # MK <class 'str'>
  
     # intro()
-    string_basics()
+    # string_basics()
     # number_basics()
     # bool_basics()
 
     # list_basics()
     # tuple_basics()
     # set_basics()
-    # dict_basics()
+    dict_basics()
 
 def intro():
 
@@ -920,44 +920,55 @@ def set_basics():
 
 def dict_basics():
 
-    # You can compare a Python dictionary to an English dictionary. 
-    # An English dictionary has words and definitions. 
-    # The purpose of a dictionary is to allow fast lookup of the word in order to find the definition. 
-    # You can quickly lookup any word by doing a binary search 
-    # (open up the dictionary to the midpoint, and determine which half the word is in, and repeat).
+    """
+    It is best to think of a dictionary as a set of key: value pairs, with the requirement that the keys are UNIQUE (within one dictionary). 
 
-    # A Python dictionary also has words and definitions, but you call them keys and values respectively
-    # The purpose of a dictionary is to provide fast lookup of the keys.
+    A pair of braces creates an empty dictionary: {}
+    Placing a comma-separated list of key:value pairs within the braces adds initial key:value pairs to the dictionary:
 
-    # think of a dictionary as key:value pairs. 
-    # keys are UNIQUE and IMMUTABLE (ie. a list cannot be a key!)
+        tel = {'jack': 4098, 'guido': 4139}
 
+    Unlike sequences, which are indexed by a range of numbers, dictionaries are indexed by keys, (subscript icinde rakam yerine 'key' kullan)
+    which can be any immutable type; strings and numbers can always be keys, whereas a list cannot be a key!
+    Keys are UNIQUE and IMMUTABLE 
+
+    You can compare a Python dictionary to an English dictionary. 
+    An English dictionary has words and definitions. 
+    The purpose of a dictionary is to allow fast lookup of the word in order to find the definition. 
+    You can quickly lookup any word by doing a binary search 
+    (open up the dictionary to the midpoint, and determine which half the word is in, and repeat).
+
+    A Python dictionary also has words and definitions, but you call them keys and values respectively
+    The purpose of a dictionary is to provide fast lookup of the keys.
+
+
+    """
     # A pair of braces creates an empty dictionary: {}
     empty = {}
     print(f"{empty=}: {type(empty)}")   # empty={}: <class 'dict'>
 
-    #A. think as the representation of a simple object (excel row)
-    person = {"name": "MK", "born":81, "gender":"M"}
+    # A. think as the representation of a simple object (excel row)
+    person = {'name': 'MK', 'born': 81, 'gender': 'M'}
     
-    #B. think as a collection of data for ONE attribute, i.e. 1 excel column
-    born = {"MK":81, "MSL":14, "BK":83 }
-    city_population = {"Antalya":1430539, "Balikesir":1069260, "Istanbul":11076840, "Izmir":3431204}
+    # B. think as a collection of data for ONE attribute, i.e. 1 excel column
+    born = {"MK": 81, "MSL": 14, "BK": 83 }
+    city_population = {"Antalya": 1430539, "Balikesir": 1069260, "Istanbul": 11076840, "Izmir": 3431204}
 
 
-    car = {"year":2019, "make": "Volkswagen", "model": "T-ROC", "color":"Orange"}
+    car = {'year': 2019, 'make': 'Volkswagen', 'model': 'T-ROC', 'color': 'Orange'}
     print(car)
 
-    # look up the value for the value given the key by performing a lookup with an index operation
-    print( car["model"] )
+    # Access an item using the key by performing a lookup with an index operation:
+    print( f"{car['model']=}" )
 
-    # if you try to access a key that does not exist, Python will throw an exception:
+    # !!! if you try to access a key that does not exist, Python will throw an exception:
     # print( car['imaginary_key'])    # KeyError
+
+    # Adding a NEW key-value pair
+    car['horsepower'] = 130
 
     # Deleting keys
     del(car['color'])
-
-    # Adding a new key-value pair
-    car['horsepower'] = 130
 
     print("delete the key 'color' and add 'horsepower':", car)       # {'year': 2019, 'make': 'Volkswagen', 'model': 'T-ROC', 'horsepower': 130}
 
@@ -974,27 +985,33 @@ def dict_basics():
 
 
     # Iterate over a dictionary
+    # Option 1:
     # By default, when you iterate over a dictionary, you get back the KEYS
     # Python will throw an Error, if you add to or remove from a dictionary while looping over it. 
     for key in person:
         print(key, person[key])
         # del person[key]     # RuntimeError: dictionary changed size during iteration
     
+    # Option 2: 
+    # The key and corresponding value can be retrieved at the same time using the items() method.
+    for k, v in person.items():
+        print(k, v)
+    
 
 
-    # NESTING lists and dicts
-    # list as a dict value {key: []}
+    # NESTING Lists and Dictionaries
+    # Sample 1 - list as a dict value {key: []}
     travel_log={
-        "France":["Paris", "Cannes"], 
-        "Germany":["Berlin", "Hamburg", "Köln" ]
+        "France": ["Paris", "Cannes"], 
+        "Germany": ["Berlin", "Hamburg", "Köln" ]
     }
     print(travel_log["Germany"])    # ['Berlin', 'Hamburg', 'Köln']
 
     countries = ['United States', 'Australia', 'Japan', 'India', 'Russia']
-    countries_dict = {'country':countries}
+    countries_dict = {'country': countries}
     print(countries_dict)       # {'country': ['United States', 'Australia', 'Japan', 'India', 'Russia']}
     
-    # dict as a dict value {key: {}}
+    # Sample 2 - dict as a dict value {key: {}}
     europe = { 
         'Spain': { 'capital':'madrid', 'population':46.77 },
         'France': { 'capital':'paris', 'population':66.03 },
@@ -1003,7 +1020,25 @@ def dict_basics():
         }
     print(europe['Germany']['capital'])    # berlin
 
-    # list of dicts- [{}, {}, {}]
+    # Sample 3 - A list of dicts: [{}, {}, {}]
+    travel_list = [
+    {
+        "country": "France",
+        "visits": 12,
+        "cities": ["Paris", "Lille", "Dijon"]
+    },
+    {
+        "country": "Germany",
+        "visits": 5,
+        "cities": ["Berlin", "Hamburg", "Stuttgart"]
+    },
+    ]
+
+    print(f"{travel_list[0]['cities']=}")   # ['Paris', 'Lille', 'Dijon']
+
+
+
+
     cars = [
          {"year":2019, "make": "Volkswagen", "model": "T-ROC"},
          {"year":2007, "make": "Kia", "model": "Sorento"}
