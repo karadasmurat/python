@@ -57,18 +57,25 @@
 #  __init__.py file will tell Python to treat directories as modules (or sub-modules).
 
 
+# Import Module (the entire file)
+# add module name to the current namespace. Using the module name you can access the functions:
+import random 
+random.randint(1, 5)
 
-
-# import package
+# import package using an alias
+# Using the module name you can access the functions
 import numpy as np
 
-# import module (utils.py file in the same directory)
-# import utils;   utils.introduce()             # filename.methodname()
-# from utils import introduce;    introduce()     # methodname()
+
+# a variant of the import statement that imports names directly into the importing module’s namespace:
+from util import is_even
+x = is_even(10)     # no <modulename> prefix
+print(x)
 
 # import sub-directory
 # import mk01.mk0101;    mk01.mk0101.introduce()      # import dir.filename
-import mk01.mk0101 as mk;    mk.introduce()         # give an alias
+import mk01.mk0101 as mk
+mk.introduce()         # give an alias
 
 
 

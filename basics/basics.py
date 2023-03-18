@@ -125,14 +125,18 @@ In other words, Python, unlike those other languages, uses two things to denote 
 # Python code in one module gains access to the code in another module by the process of importing it.
 #
 # Method 1. Import Module (the entire file)
-#   import random           # dice1 = random.randint(1, 6)
+# 
+#   import random           # add module name to the current namespace. Using the module name you can access the functions:
+#                           # dice1 = random.randint(1, 6)
+
 #   import random as rnd    # dice1 = rnd.randint(1, 6)
 #
 #
 # Method 2. Import the specific function(s) you want from file.py:
 #  
-#   from file import function
-
+#   from <file> import <function>   # a variant of the import statement that imports names directly into the importing module’s namespace:
+#   from util import is_even
+#   x = is_even(10)                 # no <modulename> prefix
 
 import random
 import util
