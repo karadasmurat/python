@@ -17,18 +17,11 @@ programs. On the flip side, writing code in Python optimizes for developer time.
 Because Python code is interpreted and not compiled into native machine instructions, 
 code written for one platform will work on any other platform that has the Python interpreter installed.
 
-"""
 
-"""  
 On many systems Python comes pre-installed. 
 Try running the python command to start the Python interpreter to check and see if it is already installed:
 To open the interactive interpreter or REPL (Read Evaluate Print Loop) that you can use
 to write small functions, to test out code samples, or even to function as a calculator:
-
-        $ python
-        Python 3.10.8 ...
-        Type "help", "copyright", "credits" or "license" for more information.
-        >>> 
 
         $ which python
         /usr/local/bin/python 
@@ -36,7 +29,24 @@ to write small functions, to test out code samples, or even to function as a cal
         $ which python3
         /Library/Frameworks/Python.framework/Versions/3.10/bin/python3
 
+        $ python
+        Python 3.10.8 ...
+        Type "help", "copyright", "credits" or "license" for more information.
+        >>> 
+
+It is possible to write Python code straight into this shell, but as soon as
+you hit [Return] at the end of a line, it will run that line of code.
+
+        >>> 3 * 5
+        15
+        >>> help()
+        Welcome to Python 3.10's help utility!
+        >>> quit()
+
+
 If you don't see this, you will need to install Python on your system.
+
+
 
 To run the program:
         $ python helloworld.py 
@@ -120,9 +130,17 @@ In other words, Python, unlike those other languages, uses two things to denote 
 
 
 """
-# The import system
+
+# MODULES
+# A module is a file containing Python executable statements as well as function definitions.
+# The file name is the module name with the suffix .py appended.
+# Each module has its own private namespace.
+
+# THE IMPORT SYSTEM
+# Modules can import other modules - Python code in one module gains access to the code in another module by the process of importing it.
+# It is customary but not required to place all import statements at the beginning of a module.
 # You can think of packages as the directories on a file system and modules as files within directories - but don’t take this analogy too literally.
-# Python code in one module gains access to the code in another module by the process of importing it.
+
 #
 # Method 1. Import Module (the entire file)
 # 
@@ -149,8 +167,8 @@ def main():
 
     # print_basics()
     # input_basics()
-    # operator_basics()
-    random_basics()
+    operator_basics()
+    # random_basics()
 
     
 
@@ -252,6 +270,18 @@ def operator_basics():
         print("Not Between 5-10.")
     else:
         print("Between 5-10.")
+
+    friendly_divider()
+
+
+def friendly_divider():
+    a = 7   # int(input("Enter dividend (first number) "))
+    b = 3   # int(input("Enter divisor (second number) "))
+
+    quotient = a // b
+    remainder = a % b
+
+    print(f"{a} divided by {b} is {quotient} with {remainder} remaining")
 
 def random_basics():
 

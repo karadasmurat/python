@@ -1,29 +1,49 @@
+import math
 import random
 
 RED = "\033[31m"
 GREEN = "\033[32m"
 ENDC = '\033[0m'
 
-def main():
-    print("Welcome.")
-    secret = random.randint(1, 100)
+UPPER_LIMIT = 100
+LIVES = math.ceil(math.log2(UPPER_LIMIT)) # based on divide and conquer, eliminating half at each round, so number of rounds is log2(n)
 
-    for _round in range(7):
-        guess = int(input("Make a guess [1-100]: "))
+WIN_MESSAGE = f"""
+￣￣￣￣￣￣￣￣￣￣
+    🌟 You win!
+                      
+￣￣￣￣￣￣￣￣￣￣
+     (\__/) ||
+     (•ㅅ•) ||
+     /    づ
+"""
+
+def main():
+    print("Welcome to the number guessing game!")
+    secret = random.randint(1, UPPER_LIMIT)
+    winner = False
+    wrong_guesses = 0
+
+    for _round in range(LIVES):
+        guess = int(input(f"Make a guess [1-{UPPER_LIMIT}]: "))
         if guess == secret:
-            print("🌟 You win!")
+            print(WIN_MESSAGE)
+            winner = True
             break
         elif guess > secret:
-            print(f"{live_info(_round, 7)} Nope. Try a smaller guess.")
+            wrong_guesses += 1
+            print(f"{live_info(wrong_guesses)} Nope. Try a smaller guess.")
         else:
-            print(f"{live_info(_round, 7)} Nope. Try a larger guess.")
+            wrong_guesses += 1
+            print(f"{live_info(wrong_guesses)} Nope. Try a larger guess.")
 
-    print(f"Game over. How about {secret}?")
+    if not winner:
+        print(f"\n ❌ Game over. How about {secret}?")
         
 
-def live_info(round, lives):
-    # return (f"{GREEN + '♥️' * (lives - (round+1)) + RED + '♥️' * (round+1) + ENDC}")
-    return (f"{'🟢' * (lives - (round+1))}{'🔴'* (round+1)}")
+def live_info(wrong_guesses):
+    return (f"{'🟢' * (LIVES - wrong_guesses)}{'🔴'* wrong_guesses}")
+
     
 
 if __name__ == "__main__":

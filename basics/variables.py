@@ -425,6 +425,17 @@ def list_basics():
 
     # A list is one of the sequence types in Python. Sequences hold ordered collections of objects.
 
+    # 2 versions, one with item value and the other with the indices:
+    # append(item)          : Adds item to the end of the list.
+    # insert(index, item)   : Insert item at index, and pushe everything else along to make space.
+
+    # remove(value)         : Removes (the first instance) an item from the list. (raise ValueError if the value is not present)
+    # pop(index)            : Removes (and returns) the item at index. (Default -1, the last)
+    # del list[index]       : Deletes the item at index.
+
+    # if item in list       : Search for an item, check if it exists
+    # index(item)           : Returns the index of the first occurrence of the specified value.
+
     printTitle("List Basics")
 
     # There are two ways to create empty lists
@@ -488,15 +499,22 @@ def list_basics():
 
     members.append('Amy')
 
-    # REMOVE the first ocurrence of value: (Find and erase)
+    # REMOVE value:
+    # remove the first ocurrence of value: (Find and erase) raise ValueError if the value is not present
     members.remove('Charles')
+    # members.remove('NotAMember')    # ValueError: list.remove(x): x not in list
 
-    # Remove and return a specific index (default -1, the last)
+    # Remove by index - Option 1:
+    # Remove and return value at a specific index (default -1, the last), raise IndexError if the index is out of range.
     poppedFruit = fruits.pop();  
     print(f"Removed: {poppedFruit}, fruits: {fruits}")  # Removed: pineapple, fruits: ['banana', 'apple', 'strawberry', 'grapes', 'mango']
+    
     poppedFruit = fruits.pop(2);
     print(f"Removed: {poppedFruit}, fruits: {fruits}")  # Removed: strawberry, fruits: ['banana', 'apple', 'grapes', 'mango']
+    
+    # poppedFruit = fruits.pop(333);  # IndexError: pop index out of range
 
+    # Remove by index - Option 2:
     # The del keyword also removes the specified index:
     del fruits[0]   # ['apple', 'grapes', 'mango']
     print(fruits)
@@ -549,8 +567,8 @@ def list_basics():
 
     # SORTING
     # --------
-    # Every Python list has a sort method that sorts it in place. 
-    # If you don’t want to mess up your list, you can use the sorted function, which returns a new list.
+    # Every Python list has a sort method that sorts it "in place". 
+    # If you don’t want to mess up your list, you can use the "sorted()" function, which returns a new list.
     # The list.sort() method sorts the list IN PLACE. 
     # It DOESN'T return a new, sorted copy of the list, rather it updates the list with the items reordered
     #
@@ -833,13 +851,27 @@ def tuple_basics():
     print(one) # (1,)
 
     # For tuples with only one item, you need to put a comma (,) following the item:
-    d = (3)
-    e = (3,)
+    d = (3)     # int
+    e = (3,)    # tuple
     print(d, type(d))       # 3 <class 'int'>
     print(e, type(e))       # (3,) <class 'tuple'>
 
     # Because tuples are immutable you cannot append to them:
     # e.append(4)           # “AttributeError: 'tuple' object has no attribute 'append”
+
+
+    countries = ('Germany', 'France', 'Canada', 'Italy', 'Sweden')
+    # Access items
+    print("The first country is", countries[0])
+    
+    # Search an item
+    q = 'France'
+    if q in countries:
+        print(f"{q} is found!")
+        q_index = countries.index('France')     # the index of the first occurrence of the specified value
+        print(f"countries[{q_index}] = {q}")
+    
+    
 
     one = 1
     two = 2
@@ -1036,7 +1068,18 @@ def dict_basics():
 
     print(f"{travel_list[0]['cities']=}")   # ['Paris', 'Lille', 'Dijon']
 
-
+    # Sample - dict as a dict value {key: {}}
+    # Grades indexed by students:
+    grades_v1 = {'Mike': {'Math': 78, 'En': 70, 'Hist':71},
+              'Susan': {'Math': 88, 'En': 80, 'Hist':81},
+              'Tim': {'Math': 98, 'En': 90, 'Hist':91}}
+    print(f"Grades indexed by student: {grades_v1['Mike']['Math']=}")
+    
+    # Grades indexed by courses:
+    grades_v2 = {'Math': {'Mike': 78, 'Susan': 88, 'Tim':98},
+                 'En': {'Mike': 70, 'Susan': 80, 'Tim':90},
+                 'Hist': {'Mike': 71, 'Susan': 81, 'Tim':91}}
+    print(f"Grades indexed by courses: {grades_v2['Math']['Mike']=}")
 
 
     cars = [

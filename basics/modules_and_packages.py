@@ -17,24 +17,68 @@
 # pip        22.3.1
 # setuptools 63.2.0
 
-# Creating Virtual Environments
-# ------------------------------
-# Imagine you have an application that needs version 1 of LibFoo, but another application requires version 2. 
-# How can you use both these applications? 
-# Python “Virtual Environments” allow Python packages to be installed in an isolated location for a particular application, 
-# rather than being installed globally.
 
-# $ python3 -m venv /path/to/new/virtual/environment
-# $ python3 -m venv /Users/mk/dev/python/environments/mkenv3.10
+# MODULES
+# A module is a file containing Python definitions and statements. 
+# The file name is the module name with the suffix .py appended.
 
-# to activate
-# $ source /path/to/venv/bin/activate
-# (mkenv3.10) $ which python    (prompt changes)
-# /Users/mk/dev/python/environments/mkenv3.10/bin/python
+# Import Module (the entire file)
+# add module name to the current namespace. Using the module name you can access the functions:
+import random 
+random.randint(1, 5)    # referenced with its full name
 
-#to deactivate
-# (mkenv3.10) $ deactivate
-# $
+# import using an alias
+# Using the alias you can access the functions
+import numpy as np
+
+
+# a variant of the import statement that imports names directly into the importing module’s namespace:
+# import specific part(s)
+# no <modulename>. prefix before members
+from util import is_even
+x = is_even(10)     # no <modulename>. prefix before members
+print(x)
+
+
+
+# Packages
+# Packages are a way of structuring Python’s module namespace by using “dotted module names”. 
+# Suppose you want to design a collection of modules (a “package”) for the uniform handling of sound files and sound data:
+
+#       sound/                            Top-level package
+#               __init__.py               Initialize the sound package
+#               formats/                  Subpackage for file format conversions
+#                       __init__.py
+#                       wavread.py
+#                       wavwrite.py
+#                       auread.py
+#                       auwrite.py
+#                       ...
+#               effects/                  Subpackage for sound effects
+#                       __init__.py
+#                       echo.py
+#                       surround.py
+#                       ...
+#               filters/                  Subpackage for filters
+#                       __init__.py
+#                       equalizer.py
+#                       karaoke.py
+#                       ...
+
+# Users of the package can import individual modules from the package, for example:
+# 
+#       import sound.effects.echo
+
+# This loads the submodule sound.effects.echo. It must be referenced with its full name.
+
+#       sound.effects.echo.echofilter(input, output, delay=0.7, atten=4)
+
+# An alternative way of importing the submodule is:
+
+#       from sound.effects import echo
+# This also loads the submodule echo, and makes it available without its package prefix, so it can be used as follows:
+
+#       echo.echofilter(input, output, delay=0.7, atten=4)
 
 
 
@@ -57,27 +101,9 @@
 #  __init__.py file will tell Python to treat directories as modules (or sub-modules).
 
 
-# Import Module (the entire file)
-# add module name to the current namespace. Using the module name you can access the functions:
-import random 
-random.randint(1, 5)
 
-# import package using an alias
-# Using the module name you can access the functions
-import numpy as np
-
-
-# a variant of the import statement that imports names directly into the importing module’s namespace:
-from util import is_even
-x = is_even(10)     # no <modulename> prefix
-print(x)
 
 # import sub-directory
 # import mk01.mk0101;    mk01.mk0101.introduce()      # import dir.filename
 import mk01.mk0101 as mk
 mk.introduce()         # give an alias
-
-
-
-# import a specific part(s) of a package
-# from numpy import array

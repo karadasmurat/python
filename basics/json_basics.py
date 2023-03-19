@@ -1,18 +1,32 @@
+"""
+Python has a built-in package called json, which can be used to work with JSON data.
+
+If you have a Python object, you can convert it into a JSON string by using the "json.dumps()" method.
+If you have a JSON string, you can parse it by using the "json.loads()" method. The result is a Python dictionary.
+"""
+
 import json
 
 
 def main():
-    # assign a JSON string to a variable
-    # (property name enclosed in double quotes)
-    mj_str = '{"name": "Michael", "surname": "Jordan", "hobbies": ["basketball", "acting"]}'
-    print(f"{mj_str=}")
+    # Sample JSON string:
+    # (key and value strings enclosed in double quotes, by convention)
+    jordan_json_str = '{"name": "Michael", "surname": "Jordan", "hobbies": ["basketball", "acting"]}'
+    print(f"{jordan_json_str=}")
 
-    # json.loads() return a dictionary from JSON string
-    mj_dict = json.loads(mj_str)
+    # Parse a JSON string, and return a Python dictionary:
+    mj_dict = json.loads(jordan_json_str)
     print(f"{mj_dict=}")
 
-    # mj_dict and mj_str prints almost the same
-    # mj_str prints mj_dict in between quotation marks ! Well, it is a string :)
+    # a Python object (dict) to string:
+    x = { "name": "John", "age": 30, "city": "New York"}
+    print(f"{x=}")
+    x_json_str = json.dumps(x)  # string
+    print(f"{x_json_str=}")
+    x_json_str_pretty = json.dumps(x, sort_keys=True, indent=4)
+    print(f"{x_json_str_pretty=}")
+
+    # Note that x and x_json_str prints almost the same (x_json_str prints keys with double quotes)
 
     # create a dict from user input
     make = input("Make? ")
@@ -22,8 +36,9 @@ def main():
     car = {"make": make, "model": model, "year": year}
 
     # save into a file
-    with open("cars.json", "w") as file:
-        json.dump(car, file)
+    # with open("data/cars.json", "a") as file:
+    #     json.dump(car, file)
+    write_to_file_json("data/cars.json", car)
 
     data_dict = read_file_json("users.json")
     print("Type:", type(data_dict))
@@ -44,6 +59,10 @@ def main():
 def parse_JSON_str(json_str):
     '''return a dictionary from JSON string'''
     return json.loads(json_str)
+
+def write_to_file_json(fname, content, mode="w"):
+    with open(fname, mode) as file:
+        json.dump(content, file) # Serialize obj as a JSON formatted stream to fp
 
 
 def read_file_json(fname):

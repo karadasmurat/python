@@ -35,7 +35,8 @@ Use : and indentation
 
 
     While Loop: 
-    Run a block code until a certain condition is met.
+    -----------
+    A while loop allows a block of code to be repeated (an unknown number of times) as long as a condition is being met.
     If the condition of a loop is always True, the loop runs for infinite times
     Basic syntax:
 
