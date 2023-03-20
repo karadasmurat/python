@@ -1,12 +1,16 @@
+import csv
 from enum import Enum
 from functools import reduce
+import json
 import math
 import random
+
+from domain import Book, Author
 
 
 def main():
 
-    exercise2_1()
+    exercise10_1()
     # printOnesDigit(1357)
     # printDigits(1357)
     # sumEvenNumbers_v0()
@@ -199,6 +203,102 @@ def exercise9():
 
         elif op == 'Quit':
             break
+
+# Write a program to organize books.
+# The user can 'Browse Books', 'Add Book', 'Remove Book'
+# Save information in a json formatted file.
+def exercise10_1():
+    print("Welcome to the Book List App")
+
+    books = get_books()
+
+    while True:
+        op = menu(['Browse Books', 'Add Book', 'Remove Book', 'Quit'])
+
+        if op == 'Browse Books':
+            books = get_books()
+            for book in books:
+                print(book)
+
+        elif op == 'Add Book':
+            title = input("\nTitle: ").capitalize()
+            author = input("Author: ").capitalize()
+            isbn = input("ISBN: ")
+            g = input("Comma seperated list of Genres: ")
+            genres = g.strip().split(',')   # Note that genres is List[str]
+            book = Book(title, Author(author), isbn, genres)
+
+            books = get_books()
+            if book not in books:
+                books.append(book)
+                # construct a list of dicts, as books is a list of book instances.
+                books_dicts = []
+                for book in books:
+                    # print("Book to save: ", book)
+                    books_dicts.append(book.to_dict())
+
+                save_books(books_dicts)
+
+            else:
+                print("We already have that book.")
+
+        elif op == 'Remove Book':
+            q = input("\nISBN: ")
+
+            books = get_books()
+            # Linear search
+            # iterate all the books, and look for their ISBN attribute
+            found = False
+            for book in books:
+                if book.ISBN == q:
+                    found = True
+                    books.remove(book)
+                    break
+
+            # construct a list of dicts, as books is a list of book instances.
+            books_dicts = []
+            for book in books:
+                # print("Book to save: ", book)
+                books_dicts.append(book.to_dict())
+
+            save_books(books_dicts)
+
+            print("Removed book from the list.")
+
+            if not found:
+                print("This book is not in the list. Typo?")
+
+        elif op == 'Quit':
+            break
+        else:
+            print("Not a valid menu option. Please try again.")
+
+def get_books():
+    with open("data/books.json") as file:
+        books = []
+        data = json.load(file)  # whole contents of file as a dict type, in this case [{book1}, {book2}]
+        
+        # return data 
+
+        # construct a list of books from a list of dictionaries:
+        for book_dict in data:
+            book = Book.from_dict(book_dict)
+            books.append(book)
+
+        return books    
+    
+def find_book_by_ISBN(books, q):
+    for book in books:
+        if book['ISBN'] == q:
+            return book
+
+
+    
+def save_books(data):
+    with open("data/books.json", "w") as file:
+        json.dump(data, file, indent=4)  # whole contents of file as a dict type.
+
+
 
 # Write a program to store groceries list.
 # The user can add/remove items as much as they want. 

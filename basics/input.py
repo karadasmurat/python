@@ -9,6 +9,7 @@ def main():
     print(f"{avg=}")
 
 
+
 def avg_scores():
     scores = input("Input list of scores, seperated by a space (i.e. 75 60 95): ").split()
     if len(scores) == 0:

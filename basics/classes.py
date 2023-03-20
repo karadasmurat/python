@@ -1,21 +1,28 @@
 # Classes provide a means of bundling data and functionality together. 
-# One definition of “Object-Oriented Programming” is using structures 
-# to group together data (state) and methods (functions to alter state)
+# One definition of “Object-Oriented Programming” is using structures to group together data (state) and methods (functions to alter state)
 
 # Creating a new class creates a new type of object, allowing new instances of that type to be made. 
 # Generally when people say object they mean an instance of a class.
 
 # As in Modula-3, there are no shorthands for referencing the object’s members from its methods: 
 # the method function is declared with an explicit first argument representing the object, 
-# which is provided implicitly by the call. 
+# which is provided implicitly by the call if called using an object ( object.method() )
+#
+#   def calculate_payroll(self):
+#       return self.hours_worked * self.hour_rate
 
 # Class names should normally use the CapWords convention. (Note that there is a separate convention for builtin names.)
+
 
 # “Private” instance variables that cannot be accessed except from inside an object DON'T exist in Python.
 # However, there is a convention that is followed by most Python code: 
 # a name prefixed with an underscore (e.g. _spam) should be treated as a non-public part of the API 
 # (whether it is a function, a method or a data member). It should be considered an implementation detail and subject to change without notice.
 
+# No privacy, so to set an attribute, we do not need a setter method. 
+# Use instance.attribute = value
+#
+#       book1.hardcover = True
 
 # DUNDER methods
 # Start (and end) with double underscores (Double UNDERscores). 
@@ -23,6 +30,11 @@
 # Special methods determine what happens under the covers when operations are performed on an object. 
 # For example, when you use the + or % operator on a string, the .__add__ or .__mod__ method is invoked respectively. 
 # When you start implementing your own classes and want them to react to operations such as + or %, you can define them.
+
+# typing — Support for type hints (new in version 3.5)
+#
+#       def greeting(name: str) -> str:
+#           return 'Hello ' + name
 
 
 from abc import abstractmethod
@@ -50,12 +62,12 @@ class Box:
      return f"Box(capacity:{self.capacity} size:{self.size})"
     
 
-class Car:
+class SimpleCar:
 
     wheels = 4      # class attribute: shared by all instances of this class
 
-    def setYear(car_instance, year):
-        car_instance.year = year        # Not defined over self?
+    def setYear(cls, year):
+        cls.year = year        # Not defined over self?
 
 class Person:
 
@@ -178,8 +190,8 @@ def main():
     print(box02)
 
 
-    car1 = Car()
-    car2 = Car()
+    car1 = SimpleCar()
+    car2 = SimpleCar()
 
     print(type(car1))       # <class '__main__.Car'>
 
@@ -195,13 +207,13 @@ def main():
     print(car2.model, car2.wheels)  # Sorento 4
     # print(car1.model)     # AttributeError: 'Car' object has no attribute 'model'
 
-    car3 = Car()
+    car3 = SimpleCar()
     function_from_outside_class(car3, "Volvo", "XC60") # not a method in the a class definition!
     print(f"{car3.make=}, {car3.model=}")   # Note that class definition does not mention make or model attributes!
 
-    car4 = Car()
-    car5 = Car()
-    Car.setYear(car4, 2022) # Option 1 - a method in the class definition, called by "class name" and "instance as argument"
+    car4 = SimpleCar()
+    car5 = SimpleCar()
+    SimpleCar.setYear(car4, 2022) # Option 1 - a method in the class definition, called by "class name" and "instance as argument"
     car5.setYear(2007)      # Option 2 - as the method is called on instance, the first variable is automatically assigned as that instance, car5. 
     print(f"{car4.year=} {car5.year=}")
 
