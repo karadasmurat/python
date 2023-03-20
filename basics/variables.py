@@ -41,10 +41,10 @@ def main():
     # number_basics()
     # bool_basics()
 
-    # list_basics()
+    list_basics()
     # tuple_basics()
     # set_basics()
-    dict_basics()
+    # dict_basics()
 
 def intro():
 
@@ -751,9 +751,14 @@ def processList_FP():
     print(is_positive(-3));    # False - unwanted, will be filtered.
 
     numbers = [-3, -2, -1, 0, 1, 2, 3]
+    # Option 1 - filter()
     positive_numbers = filter(is_positive, numbers) 
     print("Numbers:", numbers)
-    print("Positives:", list(positive_numbers))
+    print("Positives by filtering:", list(positive_numbers))
+
+    # Option 2 - the same could be achieved by list comprehension
+    positives = [n for n in numbers if n > 0]
+    print("Positives by list comprehension:", positives)
 
 
     # use lambda function as a filtering function:

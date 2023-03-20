@@ -69,8 +69,12 @@ class Book:
         return {'title':self.title, 'author': self.author.to_dict(), 'ISBN': self.ISBN, 'genres':self.genres} 
 
     def __str__(self):
-        # Note that author also has a __str__() method
+        # Note that author also has a __str__() method, which is called implicitly
         return f"Book(title: {self.title}, author: {self.author}, ISBN: {self.ISBN}, Genres: {self.genres})"
+    
+    # Container’s __str__ uses contained objects’ __repr__
+    def __repr__(self):
+        return self.__str__()
 
 
 class HogwartsStudent:

@@ -213,7 +213,7 @@ def exercise10_1():
     books = get_books()
 
     while True:
-        op = menu(['Browse Books', 'Add Book', 'Remove Book', 'Quit'])
+        op = menu(['Browse Books', 'Add Book', 'Remove Book', 'Search Title', 'Quit'])
 
         if op == 'Browse Books':
             books = get_books()
@@ -268,6 +268,18 @@ def exercise10_1():
             if not found:
                 print("This book is not in the list. Typo?")
 
+        elif op == 'Search Title':
+            books = get_books()
+            q = input("Title: ").lower()
+            # search_results = filter(lambda book: q in book.title.lower(), books)
+            search_results = [book for book in books if q in book.title.lower()]
+            if(len(search_results) > 0):
+                print(len(search_results), "books found.")
+                print(search_results)
+            else:
+                print(q, "not found.")
+
+        
         elif op == 'Quit':
             break
         else:

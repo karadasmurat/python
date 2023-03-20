@@ -1,0 +1,25 @@
+[
+    {
+        "title": "Book 1",
+        "author": {
+            "fullname": "Author one"
+        },
+        "ISBN": "1111",
+        "genres": [
+            "Genre1",
+            "Genre11"
+        ]
+    },
+    {
+        "title": "Book 2",
+        "author": {
+            "fullname": "Author two"
+        },
+        "ISBN": "2222",
+        "genres": [
+            "Genre2",
+            " Genre 22",
+            " Genre 2 2 2"
+        ]
+    }
+]

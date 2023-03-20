@@ -81,8 +81,8 @@ def main():
     # A class, which has an attribute of user defined type:
     author = Author("J. R. R. Tolkien")
     print(json.dumps(author.to_dict()))     # {"fullname": "J. R. R. Tolkien"}
-    book = Book("Hobbit", author, "978-0261103344")
-    print(json.dumps(book.to_dict())) 
+    book = Book("Hobbit", author, "978-0261103344", ['fiction'])
+    print(json.dumps(book.to_dict()))       # book -> dict -> str
 
     data_dict = read_file_json("users.json")
     print("Type:", type(data_dict))
