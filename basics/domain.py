@@ -1,6 +1,15 @@
 import json
 from typing import List # type hints
 
+class MenuItem:
+    '''Wrap any class, with a text.
+    If the wrapped object is str, then text will have an equal default value'''
+
+    # MenuItem('Menu Item 1')           -> text = 'Menu Item 1'
+    # MenuItem(object, 'Menu Item 2')   -> text = 'Menu Item 2' 
+    def __init__(self, value, text="default"):
+        self.value = value
+        self.text = text if text != "default" else value
 
 class Car:
     def __init__(self, make, model, year):
@@ -26,7 +35,14 @@ class Car:
     # to compute the “informal” or nicely printable string representation of an object.
     def __str__(self):
         return f"Car('make':{self.make}, 'model': {self.model}, 'year':{self.year})" 
-    
+
+SQL_CREATE_TABLE_AUTHOR = """CREATE TABLE IF NOT EXISTS Author (
+    AuthorID INTEGER NOT NULL,
+    FullName TEXT NOT NULL,
+    PRIMARY KEY(AuthorID AUTOINCREMENT));"""
+
+SQL_INSERT_AUTHOR = "INSERT INTO Author(FullName) VALUES(?);"
+
 class Author:
     def __init__(self, fullname: str): 
         self.fullname = fullname
@@ -43,6 +59,15 @@ class Author:
     def __str__(self):
         return f"Author(fullname: {self.fullname})"
 
+SQL_CREATE_TABLE_BOOK = """CREATE TABLE IF NOT EXISTS Book (
+    BookID INTEGER NOT NULL,
+    Title TEXT NOT NULL,
+    AuthorID INTEGER NOT NULL,
+    ISBN INTEGER,
+    PRIMARY KEY(BookID AUTOINCREMENT)
+    FOREIGN KEY (AuthorID) REFERENCES Department(DEPARTMENT_ID));"""
+
+SQL_INSERT_BOOK = "INSERT INTO Book(Title, AuthorID, ISBN) VALUES(?, ?, ?);"
 class Book:
     # type hints: from typing import List
     # def __init__(self, title, authors, year, publisher):
@@ -76,7 +101,34 @@ class Book:
     def __repr__(self):
         return self.__str__()
 
+class Department:
 
+    def __init__(self, name):
+        self.name = name
+        self.id = -1         # default id, will be assigned by database.
+
+    def __str__(self):
+        return f"Department(id: {self.id}, name: {self.name})"
+    
+    # Container’s __str__ uses contained objects’ __repr__
+    def __repr__(self):
+        return self.__str__()
+    
+class Employee:
+
+    def __init__(self, lastname: str, salary: float, department: Department):
+        self.lastname = lastname
+        self.salary = salary
+        self.department = department    # instance of Department    
+        self.id = -1                    # default id, will be assigned by database.
+
+    def __str__(self):
+        return f"Employee(id: {self.id}, lastname: {self.lastname}, salary: {self.salary}, department: {self.department})"
+    
+    # Container’s __str__ uses contained objects’ __repr__
+    def __repr__(self):
+        return self.__str__()
+    
 class HogwartsStudent:
 
     def __init__(self, name, house):

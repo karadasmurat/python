@@ -243,6 +243,10 @@ def exercise10_1():
                 print("We already have that book.")
 
         elif op == 'Remove Book':
+            # In Python, it is not easy to directly delete a record from a .csv file. 
+            # Instead we read the file into a temporary list, make the changes on this list 
+            # and then overwrite the original file with the temporary list.
+
             q = input("\nISBN: ")
 
             books = get_books()

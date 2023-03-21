@@ -82,6 +82,10 @@ print(x)
 
 
 
+# from exercises import menu  # we can import a function from a module !
+
+
+
 # INSTALL a package
 # ------------------
 # The two main tools that install Python packages are pip and conda. 

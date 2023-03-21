@@ -16,6 +16,9 @@ Use : and indentation
     if a > b and c > a:
         print("Both conditions are True")
 
+    # One line if statement:
+    if a > b: print("a is greater than b")
+
 
     # If-Else
     if b > a:
@@ -25,13 +28,14 @@ Use : and indentation
     else:
         print("a is greater than b")
 
-
-    # One line if statement:
-    if a > b: print("a is greater than b")
-
     
+    # One line if-else expression, evaluating to a single value: 'cls' or 'clear'
+    os.system('cls' if os.name == 'nt' else 'clear')
+
     # One line if-else:
     print("A") if a > b else print("B")
+
+
 
 
     While Loop: 
