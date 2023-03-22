@@ -97,6 +97,10 @@ def main():
     # Recursion
     # recursion_gone_wrong()  # RecursionError: maximum recursion depth exceeded
     countdown(5)
+    print(factorial(10))
+    print(factorial_recursive(5))
+    print(fibonacci(40))
+    print(fibonacci_memoization(40))
 
 
 
@@ -258,6 +262,59 @@ def countdown(n: int):
     else:
         print(n)        # do something
         countdown(n-1)  # recursive call - get nearer to base case
+
+def factorial(n: int):
+
+    if n < 0:
+        #print("Factorial is not defined for negative integers.")
+        # return None
+        raise ValueError("Factorial is not defined for negative integers.")
+        
+    if n == 0:
+        return 1
+    
+    fact = 1
+    for i in range(1, n+1):
+        fact *= i
+    
+    return fact
+
+
+def factorial_recursive(n: int):
+    if n == 0:          # base case - no more recursive calls here!
+        return 1
+    else:
+        return n * factorial_recursive(n-1)
+
+
+def fibonacci (n: int):
+    if n == 0:
+        return 0
+    elif n == 1:
+        return 1
+    
+    else:
+        return fibonacci(n-1) + fibonacci(n-2)
+    
+# we can improve the efficiency of the Fibonacci function by using memoization, 
+# which is a technique that involves storing the results of expensive function calls and returning the cached result when the same inputs occur again. 
+def fibonacci_memoization(n, memo={}):
+    if n in memo:       # return the cached result when the same inputs occur again
+        print(n, "found in cache, will not compute again.")
+        return memo[n]
+    
+    elif n == 0:
+        memo[0] = 0     # store the result in the memo dictionary before returning it.
+        return 0
+    
+    elif n == 1:
+        memo[1] = 1     # store the result in the memo dictionary before returning it.
+        return 1
+    
+    else:
+        result = fibonacci_memoization(n-1, memo) + fibonacci_memoization(n-2, memo)
+        memo[n] = result
+        return result
 
 
 
