@@ -87,12 +87,16 @@ def main():
     print(num3, round(num3), round(num3, 2))    # -2.675    -3      -2.67
 
     # Default Argument Values
-    ask_ok("Close File?");
+    # ask_ok("Close File?");
 
     # function as an input to another function
-    higher_order_executor(multiply, 10, 2)
+    # higher_order_executor(multiply, 10, 2)
 
-    lambda_basics()
+    # lambda_basics()
+
+    # Recursion
+    # recursion_gone_wrong()  # RecursionError: maximum recursion depth exceeded
+    countdown(5)
 
 
 
@@ -238,8 +242,22 @@ def printTitle(title):
     print("-" * len(title))
 
 
+# Recursion
+# It is legal for one function to call another; it is also legal for a function to call itself.
+# RecursionError: maximum recursion depth exceeded
+def recursion_gone_wrong():
+    x = 10
+    recursion_gone_wrong()
 
-
+# Recursion
+# It is legal for one function to call another; it is also legal for a function to call itself.
+def countdown(n: int):
+    if n <= 0:          # base case - no more recursive calls here!
+        print("Blastoff!")
+        return          
+    else:
+        print(n)        # do something
+        countdown(n-1)  # recursive call - get nearer to base case
 
 
 
