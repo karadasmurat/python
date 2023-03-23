@@ -11,6 +11,8 @@
 #   def calculate_payroll(self):
 #       return self.hours_worked * self.hour_rate
 
+# (When we call a method, Python looks up the method in the class and calls it on the p instance.)
+
 # Class names should normally use the CapWords convention. (Note that there is a separate convention for builtin names.)
 
 
@@ -31,13 +33,32 @@
 # For example, when you use the + or % operator on a string, the .__add__ or .__mod__ method is invoked respectively. 
 # When you start implementing your own classes and want them to react to operations such as + or %, you can define them.
 
+
+# The __str__ and __repr__ methods in Python are used to provide string representations of objects, but they serve different purposes:
+#
+#   __str__(self)   used to define the informal or nicely printable string representation of an object. 
+#                   Primarily used for displaying information to end-users.
+#   __repr__(self)  used to define the official or unambiguous string representation of an object. 
+#                   This method is called by the built-in repr() function and should return a string that, when passed to the eval() function, will recreate the original object. 
+#
+#       p = Person("John", 35)
+#       print(str(p))         # John, 35 years old
+#       print(repr(p))        # Person(name=John, age=35)
+#
+#       calling eval on the __repr__ string
+#       p2 = eval(repr(p))
+
+
 # typing — Support for type hints (new in version 3.5)
 #
 #       def greeting(name: str) -> str:
 #           return 'Hello ' + name
 
 
+
 from abc import abstractmethod
+
+from domain import Book, Author
 
 
 class MyClass:
@@ -74,12 +95,26 @@ class Person:
     # Many classes like to create objects with instances customized to a specific initial state. 
     # Therefore a class may define a special method named __init__()
     # The attributes that are unique to an instance are put in the constructor.
-    def __init__(self, name, surname): # signature is like a function out of this class, taking self as argument
+    def __init__(self, name: str, surname: str): # signature is like a function out of this class, taking self as argument
         self.name = name        # instance variable unique to each instance
         self.surname = surname
 
-    def say_hi():
-        return "Hi!"
+    def say_hi(self):
+        print(f"Hi, my name is {self.name}!")
+
+    # Creating a to_dict() method can give you more control over the serialization process. 
+    # You can choose which attributes to include in the dictionary, convert them to a specific format, or exclude certain attributes altogether. 
+    def to_dict(self):
+        return {"customNewAttribute" : "MK", "surname": self.surname}
+    
+    def __str__(self):
+        return f"{self.surname}, {self.name}"
+    
+    def __repr__(self):
+        # note !r {self.name!r}
+        # return f"Person(name={self.name}, surname={self.surname})"    # i.e, Person(name=John, surname=Steinbeck)
+        return f"Person(name={self.name!r}, surname={self.surname!r})"  # i.e, Person(name='John', surname='Steinbeck')
+
     
 
 # INHERITANCE
@@ -180,6 +215,7 @@ def main():
     box02 = Box(20)
 
     # Calling a method on a class
+    # (When we call a method, Python looks up the method in the class and calls it on the instance.)
     # Option 1 - call the method on instance, the first variable is automatically assigned as that instance (box01) 
     box01.load(2)
     box01.load(1)
@@ -232,10 +268,56 @@ def main():
     print(person1.say_hi.__class__) # <class 'method'>
 
 
+    string_representation_of_objects()
+
+    serialization_basics()
+
 
     # Duck Typing
     duck_typing()
 
+
+def string_representation_of_objects():
+    p = Person("John", "Steinbeck")
+    print(p)
+    print(str(p))         # John, 35 years old
+    print(repr(p))        # Person(name=John, age=35)
+    
+    #calling eval() on the __repr__ string
+    p2 = eval(repr(p))
+    p2.name = "Harry"
+    print(p2)
+
+def serialization_basics():
+
+    # Serialization of an object into a dictionary:
+    # Question: Should i create a method such as to_dict() or use __dict__ attribute to serialize an object into a dictionary?
+
+    # It depends on your specific use case and preferences.
+
+    # Using the __dict__ attribute to serialize an object into a dictionary is a quick and easy way to convert an object into a dictionary representation. 
+    # However, this approach has some limitations. 
+    # For example, it will only serialize the object's instance variables and not any other attributes or methods defined in the class.
+
+    # On the other hand, creating a to_dict() method can give you more control over the serialization process. 
+    # You can choose which attributes to include in the dictionary, convert them to a specific format, or exclude certain attributes altogether. 
+    # Additionally, having a to_dict() method provides a more explicit and readable way to serialize an object.
+
+    # So, if you have a simple object and just need to quickly convert it into a dictionary, using __dict__ may be sufficient. 
+    # However, if you need more control over the serialization process or want a more explicit approach, creating a to_dict() method may be a better option.
+
+
+    p = Person('Harry', 'Potter')
+    print(p.__dict__)   # {'name': 'Harry', 'surname': 'Potter'}
+
+    p.city = 'London'
+    print(p.__dict__)   # {'name': 'Harry', 'surname': 'Potter', 'city': 'London'}
+
+    print(p.to_dict())  # {'customNewAttribute': 'MK', 'surname': 'Potter'}
+
+
+    book = Book("Of Mice and Men", Author("John Steinbeck"), "1111", ['Literary Fiction', 'Historical Fiction'])
+    print(book.__dict__) 
 
 
 
