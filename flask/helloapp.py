@@ -16,11 +16,11 @@ $ source venv/bin/activate
 
 Run App:
 To run the application, use the "flask" command or "python -m flask". 
-You need to tell the Flask where your application is with the --app option.
+You need to tell the Flask where your application is with the --app option. (filename.py)
 As a shortcut, if the file is named app.py or wsgi.py, you don't have to use --app. 
 To enable debug mode, use the --debug option:
 
-$ python -m flask --app helloworld run --debug
+$ python -m flask --app helloapp run --debug
  * Serving Flask app 'helloworld'
  * Debug mode: on
 WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
@@ -35,6 +35,21 @@ Dynamic web applications also need static files. That's usually where the CSS an
 Just create a folder called static in your package or next to your module and it will be available at /static on the application.
 http://127.0.0.1:5000/static/hello.js
 url_for('static', filename='hello.js')
+
+Rendering Templates
+Generating HTML from within Python is not fun, and actually pretty cumbersome because you have to do the HTML escaping on your own to keep the application secure. 
+Because of that Flask configures the Jinja2 template engine for you automatically.
+Templates can be used to generate any type of text file. 
+For web applications, you'll primarily be generating HTML pages, but you can also generate markdown, plain text for emails, any anything else.
+
+
+About Responses
+The return value from a view function is automatically converted into a response object for you. 
+If the return value is a string it's converted into a response object with the string as response body, a 200 OK status code and a text/html mimetype. 
+If the return value is a dict or list, jsonify() is called to produce a response. 
+If you want to get hold of the resulting response object inside the view you can use the make_response() function.
+
+API with JSON
 
 """
 from flask import Flask, render_template, request, url_for
@@ -60,6 +75,27 @@ def show_user_profile(username):
 def show_post(postID):
     # show the post with the given id, the id is an integer
     return f'Post {postID}'
+
+@app.route('/parameter')   # http://127.0.0.1:5000/parameter?id=333
+def show_parameter():
+    # To access parameters submitted in the URL (?key=value) you can use the The Request Object's args attribute:
+    id = request.args.get('id', type=int)   # None if parameter is missing or type is not int.
+    # show the post with the given id, the id is an integer
+    return f"Parameter {id=}"
+
+
+@app.route("/userprofile")       # http://127.0.0.1:5000/userprofile
+def me_api():               
+    user = get_user()
+    return {
+        "username": user.username,
+        "house": user.house,
+        # Generate the URL for the image using the filename, assuming that the image file is located at "static/img/"
+        "image": url_for("static", filename= "img/" + user.img),
+    }
+
+def get_user():
+    return UserProfile("Potter", "Gryffindor", "potter.jpeg")
 
 # Web applications use different HTTP methods when accessing URLs. 
 # Option 1: You can use the methods argument of the route() decorator to handle different HTTP methods.
@@ -99,3 +135,10 @@ with app.test_request_context():
     print( url_for('signin') )                                  # /signin
     print( url_for('show_post', postID=1) )                    # /post/1
     print( url_for('show_user_profile', username='John Doe') )  # /user/John%20Doe
+
+class UserProfile:
+
+    def __init__(self, username, house, img):
+        self.username = username
+        self.house = house
+        self.img = img

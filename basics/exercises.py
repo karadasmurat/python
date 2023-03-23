@@ -4,19 +4,151 @@ from functools import reduce
 import json
 import math
 import random
+from typing import List
 
 from domain import Book, Author
 
 
 def main():
 
-    exercise10_1()
+    # exercise_draw_0(4)
+
+    # for word in ["", "a", "ab", "aa", "aba", "racecar"]:
+    #     print(word, is_palindrome(word))
+
+    # print(remove_first_and_last_items([1, 2, 3, 4]))
+    # check_duplicates_v1([1,2,3,2,4])
+    print("Frequencies:", count_letters_v2("KarAdas"))
+
+    # print(getBiggerOfTwo(-15, 10))
     # printOnesDigit(1357)
     # printDigits(1357)
     # sumEvenNumbers_v0()
     # tipCalculator()
     # fizzBuzzGame()
     # generatePassword()
+
+
+"""
+Write a function that draws a grid like the following, with n rows and n columns:
++ - - - - + - - - - +
+|         |         |
+|         |         |
+|         |         |
+|         |         |
++ - - - - + - - - - +
+|         |         |
+|         |         |
+|         |         |
+|         |         |
++ - - - - + - - - - +
+"""
+def exercise_draw_0(side_length: int):
+    top_bottom_pre  = "+ - - - - "
+    middle_pre      = "|         "
+    top_bottom_post  = "+"
+    middle_post      = "|"
+
+    for s in range(side_length):
+        print(top_bottom_pre * side_length + top_bottom_post)
+        for row in range(4):
+            print(middle_pre * side_length + middle_post)
+    print(top_bottom_pre * side_length + top_bottom_post)
+
+# Check if a string is a palindrome.
+# A palindrome is a word, phrase, number, or sequence of characters that reads the same backward as forward. 
+# Note that a palindrome must have more than one character.
+def is_palindrome(text: str):
+    if len(text) < 2:
+        return False
+    
+    left = 0                # pointer following left index
+    right = len(text)-1     # pointer following right index
+    res = True
+
+    while (left < right):
+        if text[left] != text[right]:
+            res = False
+            break           # immediately exit on the first ocurrence of negative result.
+        left +=1
+        right -= 1
+
+    return res
+
+# Write a function called middle that takes a list and returns a new list that contains all but the first and last elements. 
+# So middle([1,2,3,4]) should return [2,3].
+def remove_first_and_last_items(numbers: List[int]):
+    copy = numbers
+    copy.pop(0)     # remove the first item
+    copy.pop()      # remove the last item
+    return copy
+
+# Write a function that takes a list and returns True if there is any element that appears more than once. 
+# It should not modify the original list.
+def check_duplicates_v1(lst: List):
+    """
+    Returns True if there is any element that appears more than once in the list.
+    """
+    for i in range(len(lst)):
+        for j in range(i + 1, len(lst)):    # comparing each element of the list to all the elements that come after it
+            if lst[i] == lst[j]:
+                return True
+    return False
+
+def check_duplicates_v2(lst):
+    """
+    Returns True if there is any element that appears more than once in the list.
+    """
+    seen = set()        # keep track of which elements we have seen so far.
+    for item in lst:
+        if item in seen:    # linear as well
+            return True
+        seen.add(item)
+    return False
+
+
+
+# Suppose you are given a string and you want to count how many times each letter appears.
+def count_letters_v1(text: str):
+    """
+        There are several ways you could do it:
+        1. You could create a dictionary with characters as keys and counters as the corresponding values. 
+        The first time you see a character, you would add an item to the dictionary.
+        After that you would increment the value of an existing item.
+        2. You could create a list with 26 elements. Then you could hash the key - convert each character to
+        a number (using the built-in function ord), use the number as an index into the list, and increment the appropriate counter.
+    """
+    freq = dict()
+    for letter in text.lower():
+        if letter not in freq:
+            freq[letter] = 1
+        else:
+            freq[letter] += 1
+
+    return freq     # KarAdas -> {'k': 1, 'a': 3, 'r': 1, 'd': 1, 's': 1}
+
+def count_letters_v2(text: str):
+    """
+        There are several ways you could do it:
+        1. You could create a dictionary with characters as keys and counters as the corresponding values. 
+        The first time you see a character, you would add an item to the dictionary.
+        After that you would increment the value of an existing item.
+        2. You could create a list with 26 elements. Then you could hash the key - convert each character to
+        a number (using the built-in function ord), use the number as an index into the list, and increment the appropriate counter.
+    """
+    freq = [0] * 26
+
+    for letter in text.lower():
+        i = ord(letter) - ord('a')  # simple hash function for a character.
+        freq[i] += 1                # use the hash to set the value: list[hash(letter)]
+
+    return freq                     # KarAdas -> [3, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0]
+
+
+
+
+
+
 
 # Ask the user to enter three numbers. Add together the first two numbers and then multiply this total by the third. 
 # Display the answer as "The result is [answer]".
@@ -43,6 +175,9 @@ def exercise1():
     except ValueError:
         print("Invalid Input.")
 
+# Write a function to return the bigger of two integers
+def getBiggerOfTwo(x: int, y: int):
+    return x if x > y else y
 
 # Ask the user to enter their first name and then ask them to enter their surname in upper case.
 # Join them together with a space between and display the name and the number of chars in the whole name (without spaces).

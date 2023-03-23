@@ -69,6 +69,11 @@ def main():
     # Arbitrary Arguments
     sum_1 = add_arbitrary_num_of_args(1)            # unnamed args: (1,)
     sum_4 = add_arbitrary_num_of_args(1,2,3,4)      # unnamed args: (1, 2, 3, 4)
+    # To pass a list of integers to this function, 
+    # you can use the * operator to unpack the list and pass each element as a separate argument to the function. 
+    nums_to_sum = [1, 2, 3, 4, 5]
+    sum_5 = add_arbitrary_num_of_args(*nums_to_sum)
+
     say_hi_to_all(mom="BK", dad="MK")   # keyword args: {'mom': 'BK', 'dad': 'MK'}
 
 
@@ -97,6 +102,7 @@ def main():
     # Recursion
     # recursion_gone_wrong()  # RecursionError: maximum recursion depth exceeded
     countdown(5)
+    countdown_recursive(5)
     print(factorial(10))
     print(factorial_recursive(5))
     print(fibonacci(40))
@@ -254,14 +260,21 @@ def recursion_gone_wrong():
     recursion_gone_wrong()
 
 # Recursion
+
+def countdown(n):
+    while n > 0:
+        print(n)
+        n -= 1
+    print("Blastoff!")
+
 # It is legal for one function to call another; it is also legal for a function to call itself.
-def countdown(n: int):
+def countdown_recursive(n: int):
     if n <= 0:          # base case - no more recursive calls here!
         print("Blastoff!")
         return          
     else:
-        print(n)        # do something
-        countdown(n-1)  # recursive call - get nearer to base case
+        print(n)                    # do something
+        countdown_recursive(n-1)    # recursive call - get nearer to base case
 
 def factorial(n: int):
 
@@ -304,11 +317,11 @@ def fibonacci_memoization(n, memo={}):
         return memo[n]
     
     elif n == 0:
-        memo[0] = 0     # store the result in the memo dictionary before returning it.
+        memo[n] = 0     # store the result in the memo dictionary before returning it.
         return 0
     
     elif n == 1:
-        memo[1] = 1     # store the result in the memo dictionary before returning it.
+        memo[n] = 1     # store the result in the memo dictionary before returning it.
         return 1
     
     else:

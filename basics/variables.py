@@ -12,6 +12,7 @@ PEP stands for Python Enhancement Proposal, which is a community process
 
 import random
 import math
+from typing import List
 from util import printTitle
 from util import is_positive, is_even
 
@@ -41,10 +42,10 @@ def main():
     # number_basics()
     # bool_basics()
 
-    list_basics()
+    # list_basics()
     # tuple_basics()
     # set_basics()
-    # dict_basics()
+    dict_basics()
 
 def intro():
 
@@ -170,6 +171,14 @@ def string_basics():
 
     Strings may also be created from other objects using the str constructor.
 
+    Strings can be indexed, with the first character having index 0. 
+
+     +---+---+---+---+---+---+
+     | P | y | t | h | o | n |
+     +---+---+---+---+---+---+
+       0   1   2   3   4   5   
+      -6  -5  -4  -3  -2  -1
+
 
 
     """
@@ -190,6 +199,9 @@ def string_basics():
 
     #length of a string
     print(f"The length of string {name=} is {len(name)}")
+
+
+
     
     # number of digits, as the length of a string
     x = 123456
@@ -214,19 +226,14 @@ def string_basics():
     eff = 3 * 'A' + '+'
     print(eff)
     
-    # Strings can be indexed, with the first character having index 0. 
 
-    #  +---+---+---+---+---+---+
-    #  | P | y | t | h | o | n |
-    #  +---+---+---+---+---+---+
-    #   0   1   2   3   4   5   
-    #  -6  -5  -4  -3  -2  -1
-
-    # Python strings CAN'T be changed — they are immutable. 
-    # Therefore, assigning to an indexed position in the string results in an error
-    
+    # A string is a sequence of characters. 
+    # You can access the characters one at a time with the subscript operator: string[n]
     word = "Python 3"
     print("First char:", word[0], "Last char:", word[-1])
+    # Python strings CAN'T be changed — they are immutable. 
+    # Therefore, assigning to an indexed position in the string results in an error
+    # word[0] = 'J'   # TypeError: 'str' object does not support item assignment
 
     # slicing
     # characters from position 1 (included) to 3 (excluded)
@@ -266,6 +273,21 @@ def string_basics():
     currency = price_tag.split()[0]
     print(f"{currency=}")
 
+    # JOIN is the inverse of split.
+    # Concatenate any number of strings. The string whose method is called is inserted in between.
+    # Oftentimes you have a list of items and need to insert something between them.
+    # see shuffle_characters_of_a_string()
+    family = ["MK", "MSL", "BK"]
+    fstr = " & ".join(family)
+    print(type(fstr), fstr)    # <class 'str'> MK & MSL & BK
+
+    """
+                            ---  "delimiter".join(list)  -->
+            LIST of STRINGS                                     STRING (with delimiters)
+            ["a", "b", "c"]                                             "a,b,c"
+                            <--  "a,b,c".split(delimiter) ---
+    """
+
 
     # A nice benefit of using triple-quoted strings is that you can embed single and double quotes inside it without escaping them
     msg="""This string has double " and single quotes ' inside of it"""
@@ -299,16 +321,17 @@ def string_basics():
     if fname.startswith("202206"):  # True
         print("June records")
 
+    # SEARCH a (sub)string in another string:
+    # Option 1 - check if exists
+    if 'rec' in fname:
+        print("Substring found.")
+
+    # Option 2 - find the exact index
     # The .find() method allows you to find substrings inside other strings. 
     # It returns the index (offset starting at 0) of the matched substring. If no substring is found it returns -1:
-    print("great".find("eat"))      # 2
+    print(f"{fname.find('rec')=}")      # 7
 
-    # JOIN - Concatenate any number of strings. The string whose method is called is inserted in between.
-    # Oftentimes you have a list of items and need to insert something between them.
-    # see shuffle_characters_of_a_string()
-    family = ["MK", "MSL", "BK"]
-    fstr = " & ".join(family)
-    print(type(fstr), fstr)    # <class 'str'> MK & MSL & BK
+
 
     # lower() & upper()
     # The .lower method returns a copy of the string converted to lowercase.
@@ -436,6 +459,9 @@ def list_basics():
     # if item in list       : Search for an item, check if it exists
     # index(item)           : Returns the index of the first occurrence of the specified value.
 
+    # Note that most list methods MODIFY the argument (and return None!) while string methods return a new string and leave the original alone.
+    # Lists are mutable, but strings are not.
+
     printTitle("List Basics")
 
     # There are two ways to create empty lists
@@ -444,6 +470,11 @@ def list_basics():
 
     # You can provide the values in between the square brackets, using the literal syntax:
     members = ['Fred', 'Charles']
+
+    # Initialize a list with any size and a default value:
+    frequencies = [0] * 10
+    print("Frequencies initialized: ", frequencies)      # [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
 
     # lists can have items with the same value:
     scores = [70, 85, 70, 90, 70]
@@ -460,6 +491,7 @@ def list_basics():
     #List might contain items of different types, but usually the items all have the same type.
     hybridList = ["abc", 34, True, "male"]
 
+    # You can generate a list of sequential numbers with range().
     # Note that range does not materialize the list, but rather gives you an iterable that will return those numbers when iterated over. 
     # By passing the result into list you can see the numbers it would generate:
     # The “up to but not including” construct is more formally known as the "half-open interval" convention.
@@ -481,8 +513,9 @@ def list_basics():
     print(f"The last item: {squares[-1]}"); # 25
 
     
-    # ADD item to the END of a list:
-    squares.append(49)      # [1, 4, 9, 16, 25, 49]
+    # Insert item to the END of a list:
+    squares.append(49)              # [1, 4, 9, 16, 25, 49]
+    # squares = squares.append(49)  # WRONG!
 
     # INSERT an item at the specified index, and shift the rest:
     squares.insert(5, 36)   # [1, 4, 9, 16, 25, 36, 49]
@@ -492,10 +525,23 @@ def list_basics():
     fruits = ["banana", "apple", "strawberry", "grapes"]
     tropical = ["mango", "pineapple"]
 
-    # Append elements from any other iterable to the current list:
-    fruits.extend(tropical) # ['banana', 'apple', 'strawberry', 'grapes', 'mango', 'pineapple']
-    print(fruits)   
 
+    # The + operator concatenates lists:
+    a = [1, 2, 3]
+    b = [4, 5, 6]
+    c = [7, 8, 9]
+
+    d = a + b   # note that this is not an item by item addition! This is concatenation.
+    print(f"{a} + {b} is: {d}")     # [1, 2, 3, 4, 5, 6]
+
+    a += b          # note that this is not an item by item addition! This is concatenation.
+    print(f"{a=}")   # [1, 2, 3, 4, 5, 6]
+
+    # Append elements from any other iterable to the current list:
+    c.extend(b)     # Note that a is modified. [7, 8, 9, 4, 5, 6]
+    print(f"Extended list: {c}")   
+
+    fruits.extend(tropical)
 
     members.append('Amy')
 
@@ -506,8 +552,8 @@ def list_basics():
 
     # Remove by index - Option 1:
     # Remove and return value at a specific index (default -1, the last), raise IndexError if the index is out of range.
-    poppedFruit = fruits.pop();  
-    print(f"Removed: {poppedFruit}, fruits: {fruits}")  # Removed: pineapple, fruits: ['banana', 'apple', 'strawberry', 'grapes', 'mango']
+    lastFruit = fruits.pop();  
+    print(f"Removed: {lastFruit}, fruits: {fruits}")  # Removed: pineapple, fruits: ['banana', 'apple', 'strawberry', 'grapes', 'mango']
     
     poppedFruit = fruits.pop(2);
     print(f"Removed: {poppedFruit}, fruits: {fruits}")  # Removed: strawberry, fruits: ['banana', 'apple', 'grapes', 'mango']
@@ -581,6 +627,12 @@ def list_basics():
 
     members.sort()      # ascending by default.
     print(members)
+   
+    # Because sort modifies the argument returns None, the next operation you perform with t is likely to fail.
+    # Note that most list methods modify the argument while string methods return a new string and leave the original alone.
+    # Lists are mutable, but strings are not.
+    # t = t.sort()      # None !
+    # print(t.sort())   # None !
 
     # Sort descending
     # If you want elements sorted from largest to smallest, you can specify a reverse=True parameter.
@@ -683,6 +735,17 @@ def list_basics():
     # list comprehension:
     list_comprehension()  
 
+    # is that call by reference?
+    letters = ['c', 'b', 'a']
+    modify_list(letters)    # the list itself will be modified after the function call
+    print(letters)          # ['b', 'c']
+
+# is that call by reference?
+# void function, modifies the mutable argument - list!
+def modify_list(lst):
+    lst.pop()   # remove the last element from the list.
+    lst.sort()  # Note that most list methods modify the argument while string methods return a new string and leave the original alone.
+
 
 def iterate_list():
     students = ["Harry", "Hermione", "Ron"]
@@ -705,42 +768,50 @@ def iterate_list():
 def processList_FP():
     """
     In functional programming, computations are done by combining functions that take arguments and return a concrete value (or values) as a result. 
-    These functions don’t modify their input arguments and don’t change the program’s state. They just provide the result of a given computation. 
-    These kinds of functions are commonly known as pure functions.
+    These functions don't modify their input arguments and don't change the program's state. They just provide the result of a given computation. 
+    These kinds of functions are commonly known as "pure functions".
 
     Functional programming typically uses lists, and other iterables to represent the data along with a set of functions that operate on that data and transform it. 
     When it comes to processing data with a functional style, there are at least three commonly used techniques:
     
-    1. Mapping consists of applying a "transformation function" to an iterable to produce a "new iterable".
-    Items in the new iterable are produced by calling the transformation function on each item in the original iterable.
+    1. "Mapping" consists of applying a "transformation function" to an iterable to produce a "new iterable".
+    Items in the new iterable are produced by "calling the transformation function on each item" in the original iterable.
     
-    2. Filtering consists of applying a predicate or Boolean-valued function to an iterable to generate a new iterable. 
+    2. "Filtering" consists of applying a predicate or Boolean-valued function to an iterable to generate a new iterable. 
     Items in the new iterable are produced by filtering out any items in the original iterable that make the predicate function return false.
     
-    3. Reducing consists of applying a reduction function to an iterable to produce a single cumulative value.
+    3. "Reducing" consists of applying a reduction function to an iterable to produce a single cumulative value.
 
     """
 
     printTitle("Functional Programming Style")
 
     numbers = [1, 2, 3, 4, 5]
-    squared = []
+    squared_v0 = []
 
-    # v1 - loop over list, transform each item, append to a new list:
+    # v0 - loop over list, transform each item, append to a new list:
     for n in numbers:
-        squared.append(n*n)
+        squared_v0.append(n*n)
     
-    print(squared)  # [1, 4, 9, 16, 25]
+    print("Numbers:", numbers)
+    print("Mapped using a loop:", squared_v0)
 
-    # v2 - use built-in map function
+
+    # v1 - use built-in map function
     # Sometimes you might face situations in which you need to "perform the same operation on all the items" of an input iterable to build a new iterable. 
     # The quickest and most common approach to this problem is to use a Python for loop. However, you can also tackle this problem by using map()
     # The operation that map() performs is commonly known as a mapping because it maps every item in an input iterable to a new item in a resulting iterable.
     # The first argument to map() is a "transformation function". A common pattern is to use a lambda function as the first argument.
     # in Python 3.x, map() returns a map object, which is an iterator that yields items on demand - call list() to create the desired list object.
-    cubed = map(lambda x: x**3, numbers)
+    squared_v1 = map(lambda x: x**2, numbers)
     print("Numbers:", numbers)
-    print("Mapped:",list(cubed))
+    print("Mapped using built-in map():", list(squared_v1))
+
+    # v2 - list comprehension, pythonic way - like a combination of transformation function and loops
+    squared_v2 = [n * n for n in numbers]
+    print("Numbers:", numbers)
+    print("Mapped using List Comprehension:", squared_v2)
+
 
 
     # Filtering
@@ -898,16 +969,19 @@ def set_basics():
     
     
     # A set can be created with a literal syntax using { }
+    # Note that {} creates an empty DICT, not a set !
+    # empty_dict = {}
+    empty_set = set()   # NOT {} !
     digit_set = {0, 1, 2 ,3 ,4, 6, 7, 8, 9}
     primes_below_10 = {2, 3, 5, 7}
 
     # However, that doesn’t work for empty sets, as {} already means “empty dict.” 
     # In that case you’ll need to use set()
-    s = set()
-    s.add(1)       # s is now {1}
-    s.add(2)       # s is now {1, 2}
-    s.add(2)       # s is still {1, 2}
-    x = len(s)     # equals 2
+    s = set()       # empty set
+    s.add(1)        # s is now {1}
+    s.add(2)        # s is now {1, 2}
+    s.add(2)        # s is still {1, 2}
+    x = len(s)      # equals 2
 
     # find the distinct items in a collection
     # Sets can be specified by passing in a sequence into the set class
@@ -958,6 +1032,9 @@ def set_basics():
 def dict_basics():
 
     """
+    A dictionary is like a list, but more general. In a list, the indices have to be integers; in a dictionary they can be (almost) any type.
+    You can think of a dictionary as a mapping between a set of indices (which are called keys) and a set of values.
+
     It is best to think of a dictionary as a set of key: value pairs, with the requirement that the keys are UNIQUE (within one dictionary). 
 
     A pair of braces creates an empty dictionary: {}
@@ -981,6 +1058,7 @@ def dict_basics():
 
     """
     # A pair of braces creates an empty dictionary: {}
+    empty_dict = dict()
     empty = {}
     print(f"{empty=}: {type(empty)}")   # empty={}: <class 'dict'>
 
@@ -991,15 +1069,22 @@ def dict_basics():
     born = {"MK": 81, "MSL": 14, "BK": 83 }
     city_population = {"Antalya": 1430539, "Balikesir": 1069260, "Istanbul": 11076840, "Izmir": 3431204}
 
-
+    # The len function works on dictionaries; it returns the number of key-value pairs:
     car = {'year': 2019, 'make': 'Volkswagen', 'model': 'T-ROC', 'color': 'Orange'}
-    print(car)
+    print(len(car), car)
+    
+
 
     # Access an item using the key by performing a lookup with an index operation:
     print( f"{car['model']=}" )
 
     # !!! if you try to access a key that does not exist, Python will throw an exception:
     # print( car['imaginary_key'])    # KeyError
+
+    # Dictionaries have a method called get that takes a key and a default value. 
+    # If the key appears in the dictionary, get returns the corresponding value; otherwise it returns the default value.
+    default_val = car.get('nosuchkey', -1)
+    print("Default value for the non-existing key: ", default_val)  # -1
 
     # Adding a NEW key-value pair
     car['horsepower'] = 130
@@ -1010,10 +1095,10 @@ def dict_basics():
     print("delete the key 'color' and add 'horsepower':", car)       # {'year': 2019, 'make': 'Volkswagen', 'model': 'T-ROC', 'horsepower': 130}
 
     # IN operator
-    # check if a KEY is in the dictionary
+    # check if a KEY is in the dictionary (search the key)
     q_key = 'make'
     if q_key in car:       # True
-        print("key found! corresponding value is:", car[q_key])
+        print("key found! corresponding value is:", car[q_key])     # get the value using key
 
     # in also works with sequences. You can use the in statement with a list, set, or string to check for membership
     if 5 in [1, 2, 3, 4, 5]:
@@ -1099,6 +1184,18 @@ def dict_basics():
     print("Dictionary:", car)                               # {'year': 2019, 'make': 'Volkswagen', 'model': 'T-ROC'}
     print("List of keys:", [key for key in car])            # ['year', 'make', 'model']
     print("List of values:", [car[key] for key in car])     # [2019, 'Volkswagen', 'T-ROC']
+
+
+    """
+    Dictionary as a set of counters
+    Suppose you are given a string and you want to count how many times each letter appears.
+    There are several ways you could do it:
+        1. You could create a dictionary with characters as keys and counters as the corresponding values. 
+        The first time you see a character, you would add an item to the dictionary.
+        After that you would increment the value of an existing item.
+        2. You could create a list with 26 elements. Then you could hash the key - convert each character to
+        a number (using the built-in function ord), use the number as an index into the list, and increment the appropriate counter.
+    """
     
 
 

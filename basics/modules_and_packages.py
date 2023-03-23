@@ -84,6 +84,21 @@ print(x)
 
 # from exercises import menu  # we can import a function from a module !
 
+# naming conflicts 
+# The advantage of importing everything from the math module is that your code can be more concise.
+# The disadvantage is that there might be conflicts between names defined in different modules, or between a name from a module and one of your variables.
+print(x)    # defined both local and in modules: True
+
+from module1 import *
+
+print(get_name())   # "Module 1"
+print(x)            # defined both local and in modules: "Module 1"
+
+from module2 import *
+
+print(get_name())   # "Module 2"
+print(x)    # defined both local and in modules: "Module 2"
+
 
 
 # INSTALL a package
@@ -106,8 +121,9 @@ print(x)
 
 
 
-
 # import sub-directory
 # import mk01.mk0101;    mk01.mk0101.introduce()      # import dir.filename
 import mk01.mk0101 as mk
 mk.introduce()         # give an alias
+
+
