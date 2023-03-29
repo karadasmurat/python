@@ -1,0 +1,18 @@
+{
+    "questions": [{
+            "text": "What is the capital of France?",
+            "options": ["Paris", "Berlin", "Madrid", "Rome"],
+            "answer": "Paris"
+        },
+        {
+            "text": "What is the largest organ in the human body?",
+            "options": ["Brain", "Heart", "Skin", "Liver"],
+            "answer": "Skin"
+        },
+        {
+            "text": "Who wrote the novel '1984'?",
+            "options": ["George Orwell", "Aldous Huxley", "F. Scott Fitzgerald", "Ernest Hemingway"],
+            "answer": "George Orwell"
+        }
+    ]
+}
