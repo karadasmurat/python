@@ -1,3 +1,6 @@
+# Object-oriented programming (OOP) is a programming paradigm that is based on the concept of "objects", which can contain data and code that manipulates that data. 
+# In OOP, a programmer defines the data type of a data structure, and the kinds of operations (functions) that can be applied to the data structure.
+
 # Classes provide a means of bundling data and functionality together. 
 # One definition of “Object-Oriented Programming” is using structures to group together data (state) and methods (functions to alter state)
 

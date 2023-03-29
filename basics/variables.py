@@ -18,6 +18,8 @@ from util import is_positive, is_even
 
 from functools import reduce
 
+from domain import Department
+
 def main():
 
     # A variable name cannot be any of the Python keywords:
@@ -42,10 +44,10 @@ def main():
     # number_basics()
     # bool_basics()
 
-    # list_basics()
+    list_basics()
     # tuple_basics()
     # set_basics()
-    dict_basics()
+    # dict_basics()
 
 def intro():
 
@@ -902,6 +904,18 @@ def list_comprehension():
     # ------ version 2 ---------
     grades_F = [result['name'] for result in results if result['score'] < 60]
     print(f"{grades_F=}")
+
+
+    # How can i convert a list of objects to a list of dictionaries?
+    departments = list()
+    departments.append(Department("Department #1"))
+    departments.append(Department("Department #2"))
+    departments.append(Department("Department #3"))
+
+    departments_dict = [department.__dict__ for department in departments]
+    print("Mapping: ", departments)
+    print("To: ", departments_dict)
+
 
 
 def tuple_basics():

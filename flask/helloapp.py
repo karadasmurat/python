@@ -52,17 +52,42 @@ If you want to get hold of the resulting response object inside the view you can
 API with JSON
 
 """
-from flask import Flask, render_template, request, url_for
+import os
+import sys
+sys.path.append("../basics")  # add sibling directory to the system path
+from sqlite_basics import get_departments
+
+from flask import Flask, redirect, render_template, request, session, url_for
 from markupsafe import escape
+from dotenv import load_dotenv
+
 
 app = Flask(__name__)
+
+# The secret keys should be stored external to the source code, so that they are not commit to revision control.
+# set the SECRET_KEY configuration variable using an environment variable:
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+
+# To set the environment variable, you can use the export command in your terminal or command prompt:
+#       $ export SECRET_KEY='your_secret_key_here'
+
+# You can also set environment variables using a .env file in your project directory. (add to .git)
+# You can use a package like "python-dotenv" to load the variables from the file into your Flask application.
+# Load environment variables from .env file on the same directory as this script:
+basedir = os.path.abspath(os.path.dirname(__file__))
+load_dotenv(os.path.join(basedir, '.env'))
+
+
 app.config["DEBUG"] = True
 
 # Modern web applications use meaningful URLs to help users. 
 # Use the route() decorator to bind a function to a URL.
-@app.route("/")
+@app.route("/")                     # # http://127.0.0.1:5000/
 def index():
-    return "hello, there!"  # The default content type is HTML
+    if 'username' in session:
+        return f'Logged in as {session["username"]}'
+    
+    return 'Hello, there!\nYou are not logged in.' # The default content type is HTML
 
 # <username> in the route captures a value from the URL and passes it to the view function
 @app.route('/user/<username>')      # http://127.0.0.1:5000/user/potter
@@ -83,19 +108,46 @@ def show_parameter():
     # show the post with the given id, the id is an integer
     return f"Parameter {id=}"
 
-
+# APIs with JSON
 @app.route("/userprofile")       # http://127.0.0.1:5000/userprofile
-def me_api():               
+def get_user_profile():               
     user = get_user()
-    return {
-        "username": user.username,
-        "house": user.house,
-        # Generate the URL for the image using the filename, assuming that the image file is located at "static/img/"
-        "image": url_for("static", filename= "img/" + user.img),
-    }
 
+    # If you return a dict or list from a view, it will be converted to a JSON response.
+    # return {
+    #     "username": user.username,
+    #     "house": user.house,
+    #     # Generate the URL for the image using the filename, assuming that the image file is located at "static/img/"
+    #     "image": url_for("static", filename= "img/" + user.img)}
+    return user.__dict__
+
+# APIs with JSON - sqlite3
+@app.route("/departments")       # http://127.0.0.1:5000/departments
+def get_all_departments():               
+    departments = get_departments()
+
+    # If you return a dict or list from a view, it will be converted to a JSON response.
+    return [department.__dict__ for department in departments]
+
+
+# HTTP Methods
 def get_user():
     return UserProfile("Potter", "Gryffindor", "potter.jpeg")
+
+
+# Sessions
+# session object allows you to store information specific to a user from one request to the next. 
+# This is implemented on top of cookies for you and signs the cookies cryptographically. 
+# What this means is that the user could look at the contents of your cookie but not modify it, unless they know the secret key used for signing.
+
+# When a user starts a session with a Flask application, a session ID (or session key) is created and stored in a cookie on the client's browser. 
+# This session ID is used to identify the user's session on the server side. 
+# The actual session data, including any parameters or values that the user has set, is "stored on the server".
+# When the user sends subsequent requests to the Flask application, the server uses the session ID in the cookie to retrieve the corresponding session data from its storage. 
+# This allows Flask to keep track of the user's session even as they navigate between different pages or make multiple requests.
+# By default, Flask uses a secure and tamper-proof way to store the session ID in the cookie, using the session object's secret_key attribute. 
+# This helps to prevent attacks such as session hijacking or session fixation. 
+
 
 # Web applications use different HTTP methods when accessing URLs. 
 # Option 1: You can use the methods argument of the route() decorator to handle different HTTP methods.
@@ -103,18 +155,28 @@ def get_user():
 @app.route('/signin', methods=['GET', 'POST'])
 def signin():
     if request.method == 'POST':
-        return "do_the_signin()"
-    else:
-        return "show_the_signin_form()"     # http://127.0.0.1:5000/signin
+        # session['username'] = "anonymous"
+        session['username'] = request.form['username']
+        return redirect(url_for('index'))
+
+    else:                               # http://127.0.0.1:5000/signin
+        return '''<form method="POST" action="/signin">
+    <input type="text" name=username>
+    <input type="submit" value=Login>
+    </form>'''    
 
 # Option 2: You can also separate views for different HTTP Methods into different functions:
-@app.get('/login')                  # http://127.0.0.1:5000/login
+@app.get('/login')                      # http://127.0.0.1:5000/login
 def login_get():
-    return "show_the_login_form"
+    return '''<form method="POST">
+    <input type="text" name=username>
+    <input type="submit" value=Login>
+    </form>'''
 
 @app.post('/login')
 def login_post():
     return "do_the_login"
+
 
 # Rendering Templates
 # Generating HTML from within Python is not fun, and actually pretty cumbersome because you have to do the HTML escaping on your own to keep the application secure. 
@@ -126,6 +188,10 @@ def login_post():
 @app.route('/hi/<name>')            # http://127.0.0.1:5000/hi/Potter
 def hello(name = None):
     return render_template('welcome.html', name = name)   # templates/welcome.html
+
+
+
+
 
 
 # tell Flask to behave as though it’s handling a request even while we use a Python shell:

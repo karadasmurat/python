@@ -2,11 +2,16 @@ import turtle
 
 def main():
     t = turtle.Turtle()
+    turtle.title("Hello, there!")   # string that is shown in the titlebar of the turtle graphics window
     t.shape("turtle")
     t.color('gray', 'green') # pencolor, fillcolor
 
     # draw_pentagon(t)
     draw_star(t)
+
+    # screen = turtle.Screen()
+    # screen.exitonclick()
+    turtle.exitonclick()    # Bind bye() method to mouse clicks on the Screen.
 
 def draw_pentagon(t):
     for i in range(5):

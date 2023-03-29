@@ -7,12 +7,12 @@ class MenuItem:
 
     # MenuItem('Menu Item 1')           -> text = 'Menu Item 1'
     # MenuItem(object, 'Menu Item 2')   -> text = 'Menu Item 2' 
-    def __init__(self, value, text="default"):
+    def __init__(self, value: any, text="default"):
         self.value = value
         self.text = text if text != "default" else value
 
 class Car:
-    def __init__(self, make, model, year):
+    def __init__(self, make: str, model: str, year: int):
         self.make = make
         self.model = model
         self.year = year
@@ -34,7 +34,7 @@ class Car:
     # Called by str(object) and the built-in functions format() and print() 
     # to compute the “informal” or nicely printable string representation of an object.
     def __str__(self):
-        return f"Car('make':{self.make}, 'model': {self.model}, 'year':{self.year})" 
+        return f"Car(make={self.make!r}, model={self.model!r}, year={self.year})" 
 
 SQL_CREATE_TABLE_AUTHOR = """CREATE TABLE IF NOT EXISTS Author (
     AuthorID INTEGER NOT NULL,
@@ -57,7 +57,7 @@ class Author:
         return {'fullname':self.fullname} 
     
     def __str__(self):
-        return f"Author(fullname: {self.fullname})"
+        return f"Author(fullname={self.fullname!r})"
 
 SQL_CREATE_TABLE_BOOK = """CREATE TABLE IF NOT EXISTS Book (
     BookID INTEGER NOT NULL,
@@ -95,7 +95,7 @@ class Book:
 
     def __str__(self):
         # Note that author also has a __str__() method, which is called implicitly
-        return f"Book(title: {self.title}, author: {self.author}, ISBN: {self.ISBN}, Genres: {self.genres})"
+        return f"Book(title={self.title!r}, author={self.author}, ISBN={self.ISBN}, Genres={self.genres})"
     
     # Container’s __str__ uses contained objects’ __repr__
     def __repr__(self):
@@ -103,16 +103,19 @@ class Book:
 
 class Department:
 
-    def __init__(self, name):
+    def __init__(self, name: str):
         self.name = name
         self.id = -1         # default id, will be assigned by database.
 
     def __str__(self):
-        return f"Department(id: {self.id}, name: {self.name})"
+        # note !r
+        return f"Department(id={self.id} name={self.name!r})"   # Department(id=1 name='Technology')
     
     # Container’s __str__ uses contained objects’ __repr__
     def __repr__(self):
-        return self.__str__()
+        # In this case, __str__ is not a user friendly string, but does what __repr__ is supposed to do, so just redirect
+        return self.__str__()  
+
     
 class Employee:
 
@@ -123,7 +126,7 @@ class Employee:
         self.id = -1                    # default id, will be assigned by database.
 
     def __str__(self):
-        return f"Employee(id: {self.id}, lastname: {self.lastname}, salary: {self.salary}, department: {self.department})"
+        return f"Employee(id={self.id}, lastname={self.lastname!r}, salary={self.salary}, department={self.department})"
     
     # Container’s __str__ uses contained objects’ __repr__
     def __repr__(self):
@@ -131,7 +134,7 @@ class Employee:
     
 class HogwartsStudent:
 
-    def __init__(self, name, house):
+    def __init__(self, name: str, house: str):
         self.name = name
         self.house = house
 
@@ -139,11 +142,11 @@ class HogwartsStudent:
         return self.name + "," + self.house
     
     def __str__(self):
-        return f"Student('name':{self.name}, 'house': {self.house}" 
+        return f"Student(name={self.name!r}, house={self.house!r}" 
     
 class HogwartsHouse:
 
-    def __init__(self, name, mascot):
+    def __init__(self, name: str, mascot: str):
         self.name = name
         self.mascot = mascot
 
@@ -153,4 +156,4 @@ class HogwartsHouse:
         return cls(dict_obj['name'], dict_obj['mascot'])
 
     def __str__(self):
-        return f"House('name':{self.name}, 'mascot': {self.mascot}" 
+        return f"House(name={self.name!r}, mascot: {self.mascot!r}" 

@@ -128,6 +128,7 @@ Note that Employee.DepartmentID field will have the id (int) of the Department.D
 
 
 """
+import os
 import sqlite3
 from util import clear_terminal, show_menu # we can import a function from a module !
 from domain import * 
@@ -258,9 +259,18 @@ def mainOLD():
             print(employee)
 
 
+def get_db_abspath():
+
+    # Get the directory where the current script is located
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Construct the path to the database file
+    return os.path.join(script_dir, 'data/company.db')  # /Users/mk/dev/python/basics/data/company.db
+
 
 def get_departments():
-    with sqlite3.connect("data/company.db") as con :
+
+    with sqlite3.connect(get_db_abspath()) as con :
         # In order to execute SQL statements and fetch results from SQL queries, we will need to use a database cursor:
         cursor = con.cursor()
         cursor.execute("SELECT * FROM Department")
@@ -294,7 +304,7 @@ def get_departments():
         return departments
     
 def get_department_by_ID(id: int):
-    with sqlite3.connect("data/company.db") as con :
+    with sqlite3.connect(get_db_abspath()) as con :
         cursor = con.cursor()
         cursor.execute("SELECT * FROM Department WHERE DepartmentID = (?)", (id,))
 
@@ -306,7 +316,7 @@ def get_department_by_ID(id: int):
         return dept
     
 def update_department(department: Department, newName: str):
-    with sqlite3.connect("data/company.db") as con :
+    with sqlite3.connect(get_db_abspath()) as con :
 
         cursor = con.cursor()
         cursor.execute("UPDATE Department SET Name = ?  WHERE DepartmentID = ?", (newName, department.id))
@@ -323,7 +333,7 @@ def update_department(department: Department, newName: str):
 
 
 def get_employees():
-    with sqlite3.connect("data/company.db") as con :
+    with sqlite3.connect(get_db_abspath()) as con :
         cursor = con.cursor()
         cursor.execute("SELECT * FROM Employee")
 
@@ -348,7 +358,7 @@ def get_employees():
 def save_department(department: Department):
     print("Saving department", department)
 
-    with sqlite3.connect("data/company.db") as con :
+    with sqlite3.connect(get_db_abspath()) as con :
         cursor = con.cursor()
         cursor.execute(SQL_CREATE_TABLE_Department)
         
@@ -369,7 +379,7 @@ def save_department(department: Department):
 def save_employee(employee: Employee):
     print("Saving employee", employee)
 
-    with sqlite3.connect("data/company.db") as con :
+    with sqlite3.connect(get_db_abspath()) as con :
         cursor = con.cursor()
         cursor.execute(SQL_CREATE_TABLE_Employee)
         
@@ -401,7 +411,7 @@ def create_book():
     return Book(title, author, isbn, genres)
 
 def save_author(author: Author):
-    with sqlite3.connect("data/company.db") as con :
+    with sqlite3.connect(get_db_abspath()) as con :
         
         # In order to execute SQL statements and fetch results from SQL queries, we will need to use a database cursor:
         cursor = con.cursor()
@@ -415,7 +425,7 @@ def save_author(author: Author):
 
 def save_book(book):
     
-    with sqlite3.connect("data/company.db") as con :
+    with sqlite3.connect(get_db_abspath()) as con :
         
         # In order to execute SQL statements and fetch results from SQL queries, we will need to use a database cursor:
         cursor = con.cursor()

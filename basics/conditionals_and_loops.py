@@ -55,6 +55,8 @@ Use : and indentation
             else:
                 move()
 
+
+
 """
 
 import os
@@ -181,6 +183,8 @@ def loop_basics():
     for i in range(100, 110, 2):     # 100, 102, 104, 106, 108
         print("loop in range(100, 110, 2)", i)
 
+
+
     iterate_list()
 
     # Looping through a dictionary
@@ -216,6 +220,12 @@ def iterate_list():
     # v3 - older approach
     for i in range(len(students)):
         print(i+1, students[i])
+
+    # Nested loops:
+    my_list = [1, 2, 3, 4, 5]
+    for item1 in my_list:
+        for item2 in my_list:
+            print(item1, item2)
 
 def iterate_dict(dctnry):
     # Option 1:
