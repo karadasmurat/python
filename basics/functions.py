@@ -50,9 +50,10 @@ This function can be called in several ways:
 # In general, you should try to avoid global variables.
 capacity = 10
 
+
 def main():
     # Note that Python creates a new function object, then points a variable to it using the name of the function.
-    print (type(greet))     # <class 'function'>
+    print(type(greet))     # <class 'function'>
 
     # invoke functions by adding parentheses following the function name:
     greet()
@@ -63,19 +64,18 @@ def main():
 
     # scope_demo()
 
-    print( change_case("ThisIsCamelCased") )
-    print( change_case("ThisIsCamelCased", seperator="%") )
+    print(change_case("ThisIsCamelCased"))
+    print(change_case("ThisIsCamelCased", seperator="%"))
 
     # Arbitrary Arguments
     sum_1 = add_arbitrary_num_of_args(1)            # unnamed args: (1,)
-    sum_4 = add_arbitrary_num_of_args(1,2,3,4)      # unnamed args: (1, 2, 3, 4)
-    # To pass a list of integers to this function, 
-    # you can use the * operator to unpack the list and pass each element as a separate argument to the function. 
+    sum_4 = add_arbitrary_num_of_args(1, 2, 3, 4)      # unnamed args: (1, 2, 3, 4)
+    # To pass a list of integers to this function,
+    # you can use the * operator to unpack the list and pass each element as a separate argument to the function.
     nums_to_sum = [1, 2, 3, 4, 5]
     sum_5 = add_arbitrary_num_of_args(*nums_to_sum)
 
     say_hi_to_all(mom="BK", dad="MK")   # keyword args: {'mom': 'BK', 'dad': 'MK'}
-
 
     # basic built-in functions (https://docs.python.org/3/library/functions.html)
     # ------------------------
@@ -85,7 +85,7 @@ def main():
     print(f"{min(scores)=}\t{max(scores)=}\t{sum(scores)=}")
 
     # Note The behavior of round() for example, round(2.675, 2) gives 2.67 instead of the expected 2.68
-    # This is not a bug: it’s a result of the fact that most decimal fractions can’t be represented exactly as a float. 
+    # This is not a bug: it’s a result of the fact that most decimal fractions can’t be represented exactly as a float.
     num1, num2, num3 = [2.675, 0.5, -2.675]
     print(num1, round(num1), round(num1, 2))    # 2.675     3       2.67
     print(num2, round(num2), round(num2, 2))    # 0.5       0       0.5
@@ -97,46 +97,58 @@ def main():
     # function as an input to another function
     # higher_order_executor(multiply, 10, 2)
 
-    # lambda_basics()
+    lambda_basics()
 
     # Recursion
     # recursion_gone_wrong()  # RecursionError: maximum recursion depth exceeded
-    countdown(5)
-    countdown_recursive(5)
-    print(factorial(10))
-    print(factorial_recursive(5))
-    print(fibonacci(40))
-    print(fibonacci_memoization(40))
-
+    # countdown(5)
+    # countdown_recursive(5)
+    # print(factorial(10))
+    # print(factorial_recursive(5))
+    # print(fibonacci(40))
+    # print(fibonacci_memoization(40))
 
 
 # a function with no parameters
 def greet():
     ''''''
     # a string immediately after the :, this string is called a DOCSTRING, used solely for documentation.
-    # docstrings are invaluable to anyone trying to use your code - 
+    # docstrings are invaluable to anyone trying to use your code -
 
     print("Hi!")
 
 # a function with 2 parameters
+
+
 def greet_with(name, location):
     print(f"Hi! This is {name} from {location}")
+
 
 def add(x, y):
     return x + y
 
+
 def sub(x, y):
     return x - y
 
+
 def multiply(x, y):
     return x * y
+
 
 def divide(x, y):
     return x / y
 
 # accept a function object
+
+
 def higher_order_executor(f, x, y):
     return f(x, y)  # call function parameter
+
+
+def onSomething__higher_order_executor_noarg(f):
+    return f()  # call function without any parameters
+
 
 def scope_demo():
     x = 5               # Variables defined inside of a function or method will be local.
@@ -144,16 +156,16 @@ def scope_demo():
     capacity = 111      # Python will allow you to override variables in the global
     print(locals())     # {'x': 5, 'name': 'MK', 'capacity': 111}
 
-    #print(globals()) 
+    # print(globals())
     global_variables = globals()
     for key in global_variables:
         print(key, global_variables[key])       # capacity printed as 10!
 
 
-# Default parameters allow you to specify the default values for function parameters. 
+# Default parameters allow you to specify the default values for function parameters.
 # The default parameters are then OPTIONAL.
 # Note that “Default parameters must be declared after non-default parameters. Otherwise, SyntaxError
-def change_case(camel, seperator = "_"):
+def change_case(camel, seperator="_"):
     '''Take camel case string and return each word seperated by seperator'''
     other_case = camel[:1].lower()      # begin with the first letter lower case.
     for letter in camel[1:]:            # loop for letters from index 1 to the end
@@ -165,12 +177,12 @@ def change_case(camel, seperator = "_"):
 
 
 # Arbitrary Arguments, *args
-# If you do not know how many arguments that will be passed into your function, add a * before the parameter name in the function definition. 
+# If you do not know how many arguments that will be passed into your function, add a * before the parameter name in the function definition.
 # This way the function will receive a tuple of arguments.
 # You can access the tuple values via indexing or iteration in a for loop.
 def add_arbitrary_num_of_args(*args):
     print("unnamed args:", args)    # print tuple, i.e. (1,) or (1, 2, 3, 4)
-    sum=0
+    sum = 0
     for arg in args:
         sum += arg
 
@@ -180,17 +192,20 @@ def add_arbitrary_num_of_args(*args):
 # Arbitrary Keyword Arguments, **kwargs
 # If you do not know how many keyword arguments that will be passed into your function, add two asterisk: ** before the parameter name in the function definition.
 # This way the function will receive a dictionary of arguments
+
+
 def say_hi_to_all(**kwargs):
     print("keyword args:", kwargs)
     for key in kwargs:
-        #print(key, kwargs[key])
+        # print(key, kwargs[key])
         print(f"hi, {kwargs[key]}!")
-        
+
+
 def lambda_basics():
     """
 
     In functional programming, computations are done by combining functions that take arguments and return a concrete value (or values) as a result. 
-    These functions don’t modify their input arguments and don’t change the program’s state. They just provide the result of a given computation. 
+    These functions don't modify their input arguments and don't change the program's state. They just provide the result of a given computation. 
     These kinds of functions are commonly known as pure functions.
 
     Lambda expressions (sometimes called lambda forms) are used to create anonymous functions.
@@ -213,26 +228,38 @@ def lambda_basics():
     printTitle("lambda basics")
 
     print(doubleIt(10))             # regular function call
-    print( (lambda x: x * 2)(10) )  # define and then immediately call the lambda function
+    print((lambda x: x * 2)(10))  # define and then immediately call the lambda function
 
     # As a lambda function is an expression, it can be named:
-    f = lambda x: x * 2
+    # Note that this is not the main use, main use is anonymous in-place definition
+    def f(x): return x * 2
     print(f(3))                     # call a named lambda expression
 
     # Multiple arguments
     # The definition of the lambda lists the arguments with no parentheses
     full_name = lambda first, last, title="Mr.": f"Full name: {title} {first.title()} {last.title()}"
-    print( full_name("alan", "turing") )    # Mr. Alan Turing
+    print(full_name("alan", "turing"))    # Mr. Alan Turing
+
+    # how to pass a value to an event handler using lambda:
+    # normally, we cannot pass an arg to handler, since we only use its name to pass it as an argument to onSomething listener.
+    onSomething__higher_order_executor_noarg(handler)                        # Handling:  Default
+    onSomething__higher_order_executor_noarg(lambda x='item1': handler(x))   # Handling:  item1
+
+
+def handler(str="Default"):
+    print("Handling: ", str)
 
 
 def doubleIt(x):
-  return x * 2
+    return x * 2
 
-# Default Argument Values 
-# This function can be called in several ways: 
-#   giving only the mandatory argument: ask_ok('Do you really want to quit?') 
+# Default Argument Values
+# This function can be called in several ways:
+#   giving only the mandatory argument: ask_ok('Do you really want to quit?')
 #   giving one of the optional arguments: ask_ok('OK to overwrite the file?', 2)
 #   or even giving all arguments: ask_ok('OK to overwrite the file?', 2, 'Come on, only yes or no!')
+
+
 def ask_ok(prompt, retries=4, reminder='Please try again!'):
     while True:
         resp = input(prompt + " [Yes / No]").lower()
@@ -261,6 +288,7 @@ def recursion_gone_wrong():
 
 # Recursion
 
+
 def countdown(n):
     while n > 0:
         print(n)
@@ -268,28 +296,31 @@ def countdown(n):
     print("Blastoff!")
 
 # It is legal for one function to call another; it is also legal for a function to call itself.
+
+
 def countdown_recursive(n: int):
     if n <= 0:          # base case - no more recursive calls here!
         print("Blastoff!")
-        return          
+        return
     else:
         print(n)                    # do something
         countdown_recursive(n-1)    # recursive call - get nearer to base case
 
+
 def factorial(n: int):
 
     if n < 0:
-        #print("Factorial is not defined for negative integers.")
+        # print("Factorial is not defined for negative integers.")
         # return None
         raise ValueError("Factorial is not defined for negative integers.")
-        
+
     if n == 0:
         return 1
-    
+
     fact = 1
     for i in range(1, n+1):
         fact *= i
-    
+
     return fact
 
 
@@ -300,35 +331,36 @@ def factorial_recursive(n: int):
         return n * factorial_recursive(n-1)
 
 
-def fibonacci (n: int):
+def fibonacci(n: int):
     if n == 0:
         return 0
     elif n == 1:
         return 1
-    
+
     else:
         return fibonacci(n-1) + fibonacci(n-2)
-    
-# we can improve the efficiency of the Fibonacci function by using memoization, 
-# which is a technique that involves storing the results of expensive function calls and returning the cached result when the same inputs occur again. 
+
+# we can improve the efficiency of the Fibonacci function by using memoization,
+# which is a technique that involves storing the results of expensive function calls and returning the cached result when the same inputs occur again.
+
+
 def fibonacci_memoization(n, memo={}):
     if n in memo:       # return the cached result when the same inputs occur again
         print(n, "found in cache, will not compute again.")
         return memo[n]
-    
+
     elif n == 0:
         memo[n] = 0     # store the result in the memo dictionary before returning it.
         return 0
-    
+
     elif n == 1:
         memo[n] = 1     # store the result in the memo dictionary before returning it.
         return 1
-    
+
     else:
         result = fibonacci_memoization(n-1, memo) + fibonacci_memoization(n-2, memo)
         memo[n] = result
         return result
-
 
 
 if __name__ == '__main__':

@@ -1,17 +1,17 @@
-from day10 import add
-import os
-from prettytable import PrettyTable
-import mk01.mk0101 as mk
-from module2 import *
-from module1 import *
-from util import is_even
-import numpy as np
-import sys
-import random
-other_folder = os.path.join(os.getcwd(), '..', '100days')
-folder_abspath = os.path.abspath(other_folder)
-print(folder_abspath)
-sys.path.append(folder_abspath)  # add other directory to path
+"""
+When comparing Object Oriented and Procedure-Oriented styles in python, Turtle Graphics is a good example:
+The turtle module provides turtle graphics primitives, in both object-oriented and procedure-oriented ways.
+
+The procedural interface provides functions which are derived from the methods of the classes Screen and Turtle. 
+They have the same names as the corresponding methods. 
+A screen object is automatically created whenever a function derived from a Screen method is called. 
+
+# in this example, turtle prefix is NOT an object. it is the module name, from "import turtle"
+turtle.forward(50)  # function from procedural interface, default turtle. 
+
+star = turtle.Turtle()  # turtle instance creation
+star.forward(50)  # turtle instance method
+"""
 
 # $ which pip3
 # /Library/Frameworks/Python.framework/Versions/3.10/bin/pip3
@@ -31,6 +31,22 @@ sys.path.append(folder_abspath)  # add other directory to path
 # numpy      1.23.4
 # pip        22.3.1
 # setuptools 63.2.0
+
+
+from day10 import add
+import os
+from prettytable import PrettyTable
+import mk01.mk0101 as mk
+from module2 import *
+from module1 import *
+from util import is_even
+import numpy as np
+import sys
+import random
+other_folder = os.path.join(os.getcwd(), '..', '100days')
+folder_abspath = os.path.abspath(other_folder)
+print(folder_abspath)
+sys.path.append(folder_abspath)  # add other directory to path
 
 
 # absolute path of this script: /Users/mk/dev/python/basics/modules_and_packages.py

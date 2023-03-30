@@ -27,32 +27,35 @@ Programmers can also read and write data in dictionary form using the DictReader
 """
 
 
-
-# Python has a built in module that allows you to work with JSON data. 
+# Python has a built in module that allows you to work with JSON data.
 import json
 import csv
+import os
 
 
-# import domain         # domain.Car() 
+# import domain         # domain.Car()
 from domain import Car  # Car()
-from domain import HogwartsStudent 
+from domain import HogwartsStudent
 from domain import HogwartsHouse
+import util
 
 FILENAME = "data/names.txt"
 FILENAME_CSV = "data/cars.csv"
 FILENAME_CSV_WITH_HEADER = "data/grades.csv"
-   
+
 
 def main():
 
+    path_basics()
+
     # write_to_file_older_approach()
-    
+
     # Write
     # print("Please provide details to save: ")
     # name = input("Name? ")
     # write_to_file(FILENAME, name)
     # print(f"Saved: {name} to {FILENAME}.")
-    
+
     # Read
     # names = read_file(FILENAME)
     # print(names)
@@ -68,7 +71,7 @@ def main():
     #         house = HogwartsHouse.from_dict(row)
     #         print(house)
 
-    # Read csv file using csv DictReader()  
+    # Read csv file using csv DictReader()
     # houses = read_file_csv_dictreader("data/houses.csv")
     # print("List of students from csv file: ", students)
 
@@ -82,7 +85,6 @@ def main():
     # with open(filepath, "a") as file:
     #     file.write(student.to_csv() + "\n")
 
-    
     # Serialize object as a JSON formatted stream to a file
     make = input("Make? ")
     model = input("Model? ")
@@ -94,39 +96,41 @@ def main():
 
 
 def write_to_file_older_approach():
-    file = open("data/countries.txt","w")   # relative path from which python interpreter executed! 
-                                            # i.e. run "$ python files.py" under basisc folder 
-                                            # "$ python basics/files.py" gives different relative paths!
+    file = open("data/countries.txt", "w")   # relative path from which python interpreter executed!
+    # i.e. run "$ python files.py" under basisc folder
+    # "$ python basics/files.py" gives different relative paths!
     file.write("Italy\n")
     file.write("Germany\n")
     file.close()
+
 
 def write_to_file(fname, content, mode="a"):
     with open(fname, mode) as file:
         file.write(f"{content}\n")
 
+
 def write_to_file_json(fname, content, mode="w"):
     with open(fname, mode) as file:
-        json.dump(content, file) # Serialize obj as a JSON formatted stream to fp
+        json.dump(content, file)  # Serialize obj as a JSON formatted stream to fp
 
 
 def read_file(fname, mode="r"):
     ''' Return a list where items are the lines of the file.'''
 
     if "r" == mode:     # Reading text file
-        names=[]
+        names = []
         with open(fname) as file:   # open() opens file and returns a stream
             # In Python, it is easy to iterate over the lines in a file
             for line in file:
                 names.append(line.strip())
         return names
-    
+
     elif "r" == "rb":    # Reading binary file
         pass
 
 
-# The csv module implements classes to read and write tabular data in CSV format. 
-# The csv module’s reader and writer objects read and write sequences. 
+# The csv module implements classes to read and write tabular data in CSV format.
+# The csv module’s reader and writer objects read and write sequences.
 # Programmers can also read and write data in dictionary form using the DictReader and DictWriter classes.
 def read_file_csv_reader(fname):
     print(f"Using csv.reader() to read file: {fname} ...")
@@ -135,9 +139,10 @@ def read_file_csv_reader(fname):
         for row in reader:              # each row is a list of strings
             print(row)
 
+
 def read_file_csv_dictreader(fname, delimiter=','):
     ''' Using csv module, return a list of dictionaries (object notation) by auto unpacking each line
-    
+
     name,team
     Jordan,Bulls     -->   {"name": "Jordan", "team":"Bulls"} 
 
@@ -147,7 +152,7 @@ def read_file_csv_dictreader(fname, delimiter=','):
     students = []
     with open(fname) as file:
         reader = csv.DictReader(file, delimiter=delimiter)  # returned object is an iterator - when we iterate over reader, each row will be of type dict.
-        for row in reader:  
+        for row in reader:
             print(row)                                # each row is a dictionary
             # append each row (dict) to a list.
             students.append(row)
@@ -156,7 +161,7 @@ def read_file_csv_dictreader(fname, delimiter=','):
             # The first row of csv is containing column names - column names are the keys.
             # To print a cell, row['column_name']
             # print(row['Lastname'])
-            
+
     return students
 
 
@@ -171,21 +176,26 @@ def read_file_csv_custom(fname):
         for row in file:    # each row contains a comma separated values
             # Create a dict (object notation) from each line and append to a list.
             name, house = row.strip().split(',')
-            students.append({"name":name, "house":house})
+            students.append({"name": name, "house": house})
 
     return students
-
-
-
-
 
 
 def parse_JSON_str(json_str):
     '''return a dictionary from JSON string'''
     return json.loads(json_str)
-            
+
+
+def path_basics():
+
+    util.printTitle("Path Basics")
+    # absolute path of this script's directory: /Users/mk/dev/python/basics
+    print("Absolute path of this script's directory: ", os.getcwd())
+
+    # absolute path of this script: /Users/mk/dev/python/basics/modules_and_packages.py
+    current_path = os.path.abspath(__file__)
+    print("Current path of this script: ", current_path)
 
 
 if __name__ == '__main__':
     main()
-
