@@ -15,13 +15,15 @@ In addition you can specify if the file should be handled as binary or text mode
     "t" - Text - Default value. Text mode
     "b" - Binary - Binary mode (e.g. images)
 
+In simple terms, we use file.read() and file.write().
+
 Python 2.5 introduced the WITH statement. 
 The with statement is used with context managers to enforce conditions that occur before and after a block is executed. 
-The open function also serves as a context manager to ensure that 
-a file is opened before the block is entered and that it is closed when the block is exited.
+The open function also serves as a context manager 
+"to ensure that a file is opened before the block is entered and that it is closed when the block is exited."
 
 The csv module implements classes to read and write tabular data in CSV format. 
-The csv module’s reader and writer objects read and write sequences. 
+The csv module's reader and writer objects read and write sequences. 
 Programmers can also read and write data in dictionary form using the DictReader and DictWriter classes.
 
 """
@@ -31,6 +33,7 @@ Programmers can also read and write data in dictionary form using the DictReader
 import json
 import csv
 import os
+import pandas as pd
 
 
 # import domain         # domain.Car()
@@ -56,13 +59,15 @@ def main():
     # write_to_file(FILENAME, name)
     # print(f"Saved: {name} to {FILENAME}.")
 
-    # Read
+    # Read the entire contents of the file:
+    # names = read_file_at_once(FILENAME)
+    # print(names)
+
     # names = read_file(FILENAME)
     # print(names)
 
     # Read csv file using csv reader
-    # names = read_file_csv_reader(FILENAME_CSV)     # FileNotFoundError if No such file or directory
-    # print(names)
+    # read_file_csv_reader(FILENAME_CSV)     # FileNotFoundError if No such file or directory
 
     # Read csv file using csv DictReader(), and construct class instances (each line will be a dict)
     # with open("data/houses.csv") as csvfile:
@@ -74,6 +79,9 @@ def main():
     # Read csv file using csv DictReader()
     # houses = read_file_csv_dictreader("data/houses.csv")
     # print("List of students from csv file: ", students)
+
+    # Read csv using pandas
+    read_file_csv_pandas(FILENAME_CSV_WITH_HEADER)
 
     # Write a class instance to a file as a line - each attribute seperated by comma:
     # name = input("Enter name: ")
@@ -114,18 +122,31 @@ def write_to_file_json(fname, content, mode="w"):
         json.dump(content, file)  # Serialize obj as a JSON formatted stream to fp
 
 
+def read_file_at_once(fname):
+    ''' Return the contents of the file.'''
+
+    with open(fname) as file:   # open() opens file and returns a stream
+        # The read() method returns the specified number of bytes from the file.
+        # Default is -1 which means the whole file.
+        # it’s your problem if the file is twice as large as your machine’s memory.
+        data = file.read()
+
+    return data
+
+
 def read_file(fname, mode="r"):
     ''' Return a list where items are the lines of the file.'''
 
-    if "r" == mode:     # Reading text file
+    if mode == "r":     # Reading text file
         names = []
         with open(fname) as file:   # open() opens file and returns a stream
-            # In Python, it is easy to iterate over the lines in a file
+            # For reading lines from a file, you can loop over the file object.
+            # This is memory efficient, fast, and leads to simple code:
             for line in file:
                 names.append(line.strip())
         return names
 
-    elif "r" == "rb":    # Reading binary file
+    elif mode == "rb":    # Reading binary file
         pass
 
 
@@ -136,8 +157,8 @@ def read_file_csv_reader(fname):
     print(f"Using csv.reader() to read file: {fname} ...")
     with open(fname) as csvfile:
         reader = csv.reader(csvfile)    # returned object is an iterator - when we iterate over reader, each row will be of type dict.
-        for row in reader:              # each row is a list of strings
-            print(row)
+        for row in reader:              # each row is a list of strings:
+            print(row)                  # i.e. Volkswagen,T-ROC,2023  ->  ['Volkswagen', 'T-ROC', '2023']
 
 
 def read_file_csv_dictreader(fname, delimiter=','):
@@ -179,6 +200,13 @@ def read_file_csv_custom(fname):
             students.append({"name": name, "house": house})
 
     return students
+
+
+def read_file_csv_pandas(fname):
+    print(f"Using pandas to read file: {fname} ...")
+
+    df = pd.read_csv(fname)
+    print(df)
 
 
 def parse_JSON_str(json_str):
