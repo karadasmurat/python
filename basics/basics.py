@@ -17,6 +17,21 @@ programs. On the flip side, writing code in Python optimizes for developer time.
 Because Python code is interpreted and not compiled into native machine instructions, 
 code written for one platform will work on any other platform that has the Python interpreter installed.
 
+Why Python?
+-------------
+* High productivity - Python's overall strength for general-purpose software engineering.
+* Strong community and Libraries
+* Python has gone from a bleeding-edge or “at your own risk” scientific computing language to one of the most important languages for data science, machine
+learning, and general software development in academia and industry.
+
+Why Not Python?
+-----------------
+* As Python is an interpreted programming language, in general most Python code will run substantially slower than code written in a compiled language like Java or C++.
+As programmer time is often more valuable than CPU time, many are happy to make this trade-off. 
+In an application with very low latency or demanding resource utilization requirements (e.g., a high-frequency trading system), 
+the time spent programming in a lower-level (but also lower-productivity) language like C++ to achieve the maximum possible performance might be time well spent.
+
+* Python can be a challenging language for building highly concurrent, multithreaded applications, particularly applications with many CPU-bound threads. 
 
 On many systems Python comes pre-installed. 
 Try running the python command to start the Python interpreter to check and see if it is already installed:

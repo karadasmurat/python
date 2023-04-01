@@ -26,13 +26,88 @@ import random
 from turtle import Turtle, Screen
 from typing import List
 
+FONT = ("Courier", 16, "normal")
+COLORS = ["red", "orange", "yellow", "green", "blue", "purple"]
+MOVE_DISTANCE = 5
+
+
+class Car:
+    def __init__(self, position=(0, 0), wid=20, len=40) -> None:
+        self.position = position
+        self.width = wid
+        self.length = len
+        self.trtl = Turtle("square")
+        self.trtl.color(random.choice(COLORS))  # choose a random color from the list
+        self.trtl.shapesize(stretch_wid=wid/20, stretch_len=len/20)
+        self.trtl.penup()
+        self.trtl.goto(position)
+
+    def move_up(self):
+        print("UP")
+        new_y = self.trtl.ycor() + MOVE_DISTANCE
+        if new_y < 250:
+            self.trtl.goto(self.trtl.xcor(), new_y)
+
+    def move_down(self):
+        self.trtl.penup()
+        new_y = self.trtl.ycor() - MOVE_DISTANCE
+        if new_y > -250:
+            self.trtl.goto(self.trtl.xcor(), new_y)
+
+    def move_right(self):
+        print("RIGHT")
+        new_x = self.trtl.xcor() + MOVE_DISTANCE
+        if new_x < 250:
+            self.trtl.goto(new_x, self.trtl.ycor())
+
+    def move_left(self):
+        new_x = self.trtl.xcor() - MOVE_DISTANCE
+        if new_x < 250:
+            self.trtl.goto(new_x, self.trtl.ycor())
+
+    def X_West(self):
+        return self.trtl.xcor() - (self.length/2)
+
+    def X_East(self):
+        return self.trtl.xcor() + (self.length/2)
+
+    def Y_North(self):
+        return self.trtl.ycor() + (self.width/2)
+
+    def Y_South(self):
+        return self.trtl.ycor() - (self.width/2)
+
+    def is_collided_with(self, other):
+        """
+        West-damageable means west border of this is in between west-east borders of other
+        sagi (veya solu), digerinin sagi ve solu arasinda ise x eksende hasar olasiligi var.
+        yukarisi (veya asagisi), digerinin yukari ve asagisi arasinda ise y ekseninde hasar olasiligi var.
+        """
+        west_damageble = other.X_West() < self.X_West() and self.X_West() < other.X_East()
+        east_damageble = other.X_West() < self.X_East() and self.X_West() < other.X_East()
+
+        north_damageble = other.Y_South() < self.Y_North() and self.Y_North() < other.Y_North()
+        south_damageble = other.Y_South() < self.Y_South() and self.Y_South() < other.Y_North()
+
+        if (west_damageble):
+            print("west_damageble")
+        elif (east_damageble):
+            print("east_damageble")
+
+        if (north_damageble):
+            print("north_damageble")
+        elif (south_damageble):
+            print("south_damageble")
+
+        return (east_damageble or west_damageble) and (north_damageble or south_damageble)
+
+    def __str__(self) -> str:
+        return f"x1:{self.X_West()} , x2: {self.X_East()}"
+
 
 def main():
     # t = Turtle(shape="turtle")  # ObjectOriented way
     # t.color('gray', 'green')    # pencolor, fillcolor
-
-    # screen = Screen()  # # ObjectOriented way
-    # screen.title("Hello, there!")   # string that is shown in the titlebar of the turtle graphics window
 
     # draw_pentagon(t)
     # draw_star(t)
@@ -44,10 +119,51 @@ def main():
     # screen.onkey(lambda turtle=t: move(turtle), "m")
 
     # sketcher(t)
-    race()
+    # race()
+    collusion_detect()
 
-    # screen.exitonclick()
-    # screen.mainloop()
+
+def write(msg, trtl):
+    writer = trtl
+    writer.color("white")
+    writer.penup()
+    writer.hideturtle()
+
+    writer.clear()
+    writer.goto(280, 280)
+    writer.write(msg, align="right", font=FONT)
+
+
+def collusion_detect():
+
+    screen = Screen()  # # ObjectOriented way
+    screen.title("Hello, there!")   # string that is shown in the titlebar of the turtle graphics window
+    screen.bgcolor("black")
+    screen.tracer(0)
+
+    car2 = Car((100, 100), 40, 80)
+    car1 = Car((0, 60), 20, 40)
+    print(f"Check collusion: {car2.X_West()} < {car1.X_West()} < {car2.X_East()}")
+
+    logger = Turtle()
+
+    write(car2, logger)
+
+    screen.listen()
+    screen.onkey(car2.move_up, "Up")
+    screen.onkey(car2.move_down, "Down")
+    screen.onkey(car1.move_right, "Right")
+    screen.onkey(car1.move_left, "Left")
+
+    gameover = False
+    while not gameover:
+        if car1.is_collided_with(car2):
+            # write("Collusion (X AXIS)", logger)
+            print(f"Collusion !!!")
+
+        screen.update()
+
+    screen.exitonclick()
 
 
 def sketcher(trtl: Turtle):

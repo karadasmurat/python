@@ -426,6 +426,7 @@ def expect_swimmer(somethingThatCanSwim):
 
 def duck_typing():
     """
+    Often you may not care about the "type" of an object but rather only whether it has certain methods or behavior.
     Duck typing in computer programming is an application of the duck test to determine whether an object can be used for a particular purpose:
         "If it walks like a duck and it quacks like a duck, then it must be a duck"
 

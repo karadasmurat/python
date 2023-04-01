@@ -75,10 +75,17 @@ class Snake:
         return self.head.xcor() > 290 or self.head.xcor() < -290 or self.head.ycor() > 290 or self.head.ycor() < -290
 
     def collusion_with_tail(self):
-        for s in self.segments:
-            if s == self.head:
-                continue
-            elif self.head.distance(s) < 10:
+        # classic approach
+        # Note that we are comparing head to each segment, however segment[0] is head itself.
+        # for s in self.segments:
+        #     if s == self.head:
+        #         continue
+        #     elif self.head.distance(s) < 10:
+        #         return True
+
+        # with slicing - every element except index 0 (the first one, which is head)
+        for s in self.segments[1:]:
+            if self.head.distance(s) < 10:
                 return True
 
 

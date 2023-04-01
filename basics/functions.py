@@ -44,6 +44,39 @@ This function can be called in several ways:
         def ask_ok(prompt, retries=4, reminder='Please try again!'):
             pass
             
+
+Type Annotations
+Python is a dynamically typed language. That means that it in general it doesn't care about the types of objects we use, as long as we use them in valid ways:
+    
+    def add(a, b):
+        return a + b
+
+    assert add(10, 5) == 15, "+ is valid for numbers"
+    assert add([1, 2], [3]) == [1, 2, 3], "+ is valid for lists"
+    assert add("hi ", "there") == "hi there", "+ is valid for strings"
+
+    try:
+        add(10, "five")
+    except TypeError:
+        print("cannot add an int to a string")
+
+whereas in a statically typed language our functions and objects would have specific types.
+
+Type annotations is valid Python 3.6. The "typing" module contains many types. 
+However, these type annotations don't actually do anything. 
+You can still use the annotated add function to add strings, and the call to add(10, "five") will still raise the exact same TypeError
+
+    def add(a: int, b: int) -> int:
+        return a + b
+
+There are still (at least) four good reasons to use type annotations in your Python code:
+  * Having to think about the types in your code forces you to design cleaner functions and interfaces.
+  * Using types allows your editor to help you with things like autocomplete (Figure 2-1) and to get angry at type errors.
+  * Types are an important form of documentation.
+  * There are external tools (the most popular is mypy) that will inspect the type annotations, and let you know about type errors.
+
+
+            
 """
 
 # Global Scope
@@ -53,43 +86,43 @@ capacity = 10
 
 def main():
     # Note that Python creates a new function object, then points a variable to it using the name of the function.
-    print(type(greet))     # <class 'function'>
+    # print(type(greet))     # <class 'function'>
 
     # invoke functions by adding parentheses following the function name:
-    greet()
+    # greet()
 
     # greet_with("MK")       # TypeError: greet_with() missing 1 required positional argument: 'location'
-    greet_with("Madagaskar", "Alex")                # wrong order of positional arguments !
-    greet_with(location="Madagaskar", name="Alex")  # the same function signature, called using a keyword argument
+    # greet_with("Madagaskar", "Alex")                # wrong order of positional arguments !
+    # greet_with(location="Madagaskar", name="Alex")  # the same function signature, called using a keyword argument
 
     # scope_demo()
 
-    print(change_case("ThisIsCamelCased"))
-    print(change_case("ThisIsCamelCased", seperator="%"))
+    # print(change_case("ThisIsCamelCased"))
+    # print(change_case("ThisIsCamelCased", seperator="%"))
 
     # Arbitrary Arguments
-    sum_1 = add_arbitrary_num_of_args(1)            # unnamed args: (1,)
-    sum_4 = add_arbitrary_num_of_args(1, 2, 3, 4)      # unnamed args: (1, 2, 3, 4)
+    # sum_1 = add_arbitrary_num_of_args(1)            # unnamed args: (1,)
+    # sum_4 = add_arbitrary_num_of_args(1, 2, 3, 4)      # unnamed args: (1, 2, 3, 4)
     # To pass a list of integers to this function,
     # you can use the * operator to unpack the list and pass each element as a separate argument to the function.
-    nums_to_sum = [1, 2, 3, 4, 5]
-    sum_5 = add_arbitrary_num_of_args(*nums_to_sum)
+    # nums_to_sum = [1, 2, 3, 4, 5]
+    # sum_5 = add_arbitrary_num_of_args(*nums_to_sum)
 
-    say_hi_to_all(mom="BK", dad="MK")   # keyword args: {'mom': 'BK', 'dad': 'MK'}
+    # say_hi_to_all(mom="BK", dad="MK")   # keyword args: {'mom': 'BK', 'dad': 'MK'}
 
     # basic built-in functions (https://docs.python.org/3/library/functions.html)
     # ------------------------
 
-    scores = [80, 95, 99, 66, 88, 77]
-    print(f"{scores} LEN:{len(scores)}")
-    print(f"{min(scores)=}\t{max(scores)=}\t{sum(scores)=}")
+    # scores = [80, 95, 99, 66, 88, 77]
+    # print(f"{scores} LEN:{len(scores)}")
+    # print(f"{min(scores)=}\t{max(scores)=}\t{sum(scores)=}")
 
     # Note The behavior of round() for example, round(2.675, 2) gives 2.67 instead of the expected 2.68
     # This is not a bug: it’s a result of the fact that most decimal fractions can’t be represented exactly as a float.
-    num1, num2, num3 = [2.675, 0.5, -2.675]
-    print(num1, round(num1), round(num1, 2))    # 2.675     3       2.67
-    print(num2, round(num2), round(num2, 2))    # 0.5       0       0.5
-    print(num3, round(num3), round(num3, 2))    # -2.675    -3      -2.67
+    # num1, num2, num3 = [2.675, 0.5, -2.675]
+    # print(num1, round(num1), round(num1, 2))    # 2.675     3       2.67
+    # print(num2, round(num2), round(num2, 2))    # 0.5       0       0.5
+    # print(num3, round(num3), round(num3, 2))    # -2.675    -3      -2.67
 
     # Default Argument Values
     # ask_ok("Close File?");
@@ -97,7 +130,9 @@ def main():
     # function as an input to another function
     # higher_order_executor(multiply, 10, 2)
 
-    lambda_basics()
+    # lambda_basics()
+
+    type_annotations()
 
     # Recursion
     # recursion_gone_wrong()  # RecursionError: maximum recursion depth exceeded
@@ -107,6 +142,25 @@ def main():
     # print(factorial_recursive(5))
     # print(fibonacci(40))
     # print(fibonacci_memoization(40))
+
+
+def type_annotations():
+    '''
+    Python is a dynamically typed language. 
+    That means that it in general it doesn't care about the types of objects we use, as long as we use them in valid ways:
+    '''
+    print("add(x, y) is valid for integers: ", add(x=10, y=5))
+    print("add(x, y) is valid for strings: ", add(x="ten ", y="five"))
+    print("add(x, y) is valid for lists: ", add(x=[1, 2], y=[3]))
+
+    # NOT valid for int and str args:
+    # add(10, "five")  # TypeError: unsupported operand type(s) for +: 'int' and 'str'
+
+    # Type annotations is valid Python 3.6. However, these type annotations don't actually do anything.
+    # You can still use the annotated add function to add strings, and the call to add(10, "five") will still raise the exact same TypeError
+    add_typeannotated(10, 5)            # 15
+    add_typeannotated("ten", "five")    # tenfive
+    # add_typeannotated(10, "five")     # TypeError: unsupported operand type(s) for +: 'int' and 'str'
 
 
 # a function with no parameters
@@ -122,6 +176,15 @@ def greet():
 
 def greet_with(name, location):
     print(f"Hi! This is {name} from {location}")
+
+
+def add_typeannotated(a: int, b: int) -> int:
+
+    # Type annotations is valid Python 3.6. However, these type annotations don't actually do anything.
+    # You can still use the annotated add function to add strings, and the call to add(10, "five") will still raise the exact same TypeError
+
+    print(a+b)
+    return a + b
 
 
 def add(x, y):

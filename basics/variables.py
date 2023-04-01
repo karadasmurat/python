@@ -20,6 +20,7 @@ from functools import reduce
 
 from domain import Department
 
+
 def main():
 
     # A variable name cannot be any of the Python keywords:
@@ -31,23 +32,24 @@ def main():
     # “do not start with numbers”
     # 1st_num = 0 # SyntaxError
 
-
     # Note that variables do not need to be declared with any particular type, and can even change type after they have been set.
     x = 4               # variable x is int, Literal[4]
     print(x, type(x))   # 4 <class 'int'>
 
     x = "MK"            # variable x is now str, Literal['MK']
     print(x, type(x))   # MK <class 'str'>
- 
+
     # intro()
     # string_basics()
     # number_basics()
     # bool_basics()
+    # datetime_basics()
 
-    list_basics()
-    # tuple_basics()
+    # list_basics()
+    tuple_basics()
     # set_basics()
     # dict_basics()
+
 
 def intro():
 
@@ -58,7 +60,6 @@ def intro():
     # Snake Case
     my_variable_name = "Ron"
 
-
     # Create a variable named score and assign the value 50 to it.
     score = 50
 
@@ -66,16 +67,16 @@ def intro():
     c1 = c2 = c3 = "Black Pink"
 
     # Assign values to multiple variables in one line:
-    x, y, z = "Orange", "Banana", "Cherry";
+    x, y, z = "Orange", "Banana", "Cherry"
     print(f"{x=} {y=} {z=}")    # x='Orange' y='Banana' z='Cherry'
 
     # A. Identity
     name1 = "MK"
     list1 = ["SAT", "SUN"]
 
-    # It is possible for two variables to refer to the same object. 
-    # When you bind a variable to an existing variable, they both point to the same object. 
-    # Running id on either of the two variables will return the same id. 
+    # It is possible for two variables to refer to the same object.
+    # When you bind a variable to an existing variable, they both point to the same object.
+    # Running id on either of the two variables will return the same id.
     # Note that changing object through one variable is visible through the other this if the referred object is mutable
     name2 = name1
     list2 = list1
@@ -94,48 +95,44 @@ def intro():
     assert id(name1) == id(name2)       # OK - No AssertionError
 
     # you can take a variable and point it to a new object, or mutate the variable if it is mutable (i.e lists)
-    # pointing to a new immutable, you will see that the identity of the variable changes. 
+    # pointing to a new immutable, you will see that the identity of the variable changes.
     # changing the state of a mutable (i.e. list.append() will not change the identity
     name1 = "MSL"           # str is immutable. name1 will refer a new object, changing identity.
-    list1.append("FRI")     # list is mutable. identity will be the same.                 
+    list1.append("FRI")     # list is mutable. identity will be the same.
 
     print("name1:", id(name1), name1)   # name1: 4380884912 MSL
     print("name2:", id(name2), name2)   # name2: 4380654384 MK  (not affected)
     print("list1:", id(list1), list1)   # list1: 4381154432 ['SAT', 'SUN', 'FRI']
     print("list2:", id(list2), list2)   # list2: 4381154432 ['SAT', 'SUN', 'FRI']   (affected!)
 
-
     # B. Type
-    print(type(name1)) # <class 'str'>
+    print(type(name1))  # <class 'str'>
 
     # C. Mutability
     # Mutable objects can change their value in place.
     # In other words, you can alter their state, but their identity stays the same.
-    # Objects that are immutable do not allow you to change their value. 
+    # Objects that are immutable do not allow you to change their value.
     # Instead, you can change their variable reference to a new object, but this will change the identity of the variable as well.
-    # In Python, dictionaries and lists are mutable types. 
+    # In Python, dictionaries and lists are mutable types.
     # Strings, tuples, integers, and floats are immutable types.
-    
 
     code = "CODE01"
-    id_v0 = id(code);
-    print("code:", id_v0, code) # code: 4368368240 CODE01
+    id_v0 = id(code)
+    print("code:", id_v0, code)  # code: 4368368240 CODE01
 
     code = "CODE02"             # update the value of the variable
-    id_v1 = id(code);
-    print("code:", id_v1, code) # code: 4368368368 CODE02   (id changes!)
+    id_v1 = id(code)
+    print("code:", id_v1, code)  # code: 4368368368 CODE02   (id changes!)
 
-    assert id_v0 != id_v1;      # OK - No AssertionError
-    
+    assert id_v0 != id_v1      # OK - No AssertionError
 
     #                    +--------+
     #     name +--xxx--> |  "MK"  |  (X) will be garbage collected if not referenced by other
-    #          |         +--------+ 
+    #          |         +--------+
     #          |
     #          |         +--------+
     #          +-------> | "MSL"  |
-    #                    +--------+ 
-    
+    #                    +--------+
 
     score = 90
     id_initial = id(score)
@@ -151,9 +148,7 @@ def intro():
     if id_old == id(scores):                # True
         print("Appending to a list does not change its identity.")
 
-
-    
-    # Do integers and floats have methods? Yes, again, everything in Python is and object and objects have methods. 
+    # Do integers and floats have methods? Yes, again, everything in Python is and object and objects have methods.
     # dir() lists all the attributes of the object passed into it.
     # This is easy to verify by invoking dir on an integer (or a variable holding an integer):”
     print("\ndir(<int>):\n", dir(100))
@@ -162,7 +157,7 @@ def intro():
 def string_basics():
     """
     Text Sequence Type — str
-    Textual data in Python is handled with str objects, or strings. 
+    Textual data in Python is handled with str objects, or strings.
     Strings are immutable sequences of Unicode code points.
 
     String literals are written in a variety of ways:
@@ -173,12 +168,12 @@ def string_basics():
 
     Strings may also be created from other objects using the str constructor.
 
-    Strings can be indexed, with the first character having index 0. 
+    Strings can be indexed, with the first character having index 0.
 
      +---+---+---+---+---+---+
      | P | y | t | h | o | n |
      +---+---+---+---+---+---+
-       0   1   2   3   4   5   
+       0   1   2   3   4   5
       -6  -5  -4  -3  -2  -1
 
 
@@ -199,23 +194,19 @@ def string_basics():
     std = f"Hi! This is {name}, from {house}."    # Hi! This is Harry, from Gryffindor.
     print(std)
 
-    #length of a string
+    # length of a string
     print(f"The length of string {name=} is {len(name)}")
 
-
-
-    
     # number of digits, as the length of a string
     x = 123456
     x_str = str(x)  # casting (think of it as a constructor)
     digits = len(str(x))
-    print(f"{x=} {x_str=} {digits=}")     # x=123456 x_str='123456' digits=6  
+    print(f"{x=} {x_str=} {digits=}")     # x=123456 x_str='123456' digits=6
 
     # unicode
     # https://unicode.org/charts/nameslist/index.html
     print('\N{UPSIDE-DOWN FACE}')
     print("\U0001F60E")
-
 
     print("\"Yes\", they said.")
 
@@ -223,29 +214,19 @@ def string_basics():
     print("C:\test\new_folder")         # here \t \n means tab and newline!
     print(r"C:\test\new_folder")        # raw strings C:\test\new_folder
 
-
     # Strings can be concatenated (glued together) with the + operator, and repeated with *
     eff = 3 * 'A' + '+'
     print(eff)
-    
 
-    # A string is a sequence of characters. 
+    # A string is a sequence of characters.
     # You can access the characters one at a time with the subscript operator: string[n]
     word = "Python 3"
     print("First char:", word[0], "Last char:", word[-1])
-    # Python strings CAN'T be changed — they are immutable. 
+    # Python strings CAN'T be changed — they are immutable.
     # Therefore, assigning to an indexed position in the string results in an error
     # word[0] = 'J'   # TypeError: 'str' object does not support item assignment
 
-    # slicing
-    # characters from position 1 (included) to 3 (excluded)
-    # For non-negative indices, the length of a slice is the difference of the indices, if both are within bounds. 
-    # For example, the length of word[1:3] is 2.
-    print("slice using [1:3]:", word[1:3]) # yt
-    #First 3 chars
-    print("First 3 chars:", word[:3]) # Pyt
-    #Drop first 2 chars
-    print("Drop first 2 chars:", word[2:]) # thon
+    slicing_basics()
 
     greet = "hello, there!"
     greet = replaceFirstChar(greet, '@')
@@ -258,12 +239,12 @@ def string_basics():
 
     # split - return a list from a string, using a delimiter:
     nums_str = "one two three four five"
-    nums = nums_str.split() # Return a list of the words in the string, using sep=None as the delimiter string.
+    nums = nums_str.split()  # Return a list of the words in the string, using sep=None as the delimiter string.
     print(nums)     # ['one', 'two', 'three', 'four', 'five']
 
     # Notice that 'District of Columbia' has spaces
     states_str = 'Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware, District of Columbia, Florida, Georgia, Hawaii'
-    states = states_str.split(sep = ',')
+    states = states_str.split(sep=',')
     print(states)
 
     full_name = "Jordan-Michael"
@@ -290,11 +271,9 @@ def string_basics():
                             <--  "a,b,c".split(delimiter) ---
     """
 
-
     # A nice benefit of using triple-quoted strings is that you can embed single and double quotes inside it without escaping them
-    msg="""This string has double " and single quotes ' inside of it"""
+    msg = """This string has double " and single quotes ' inside of it"""
     print(msg)
-
 
     # Empty String
     # Since an empty string behaves as falsey, you can test whether the string has content
@@ -302,10 +281,10 @@ def string_basics():
     if not some_str:     # check empty string
         print(f"{some_str=} Missing str value")
 
-    if not bool(some_str): 
+    if not bool(some_str):
         print(f"{some_str=} Missing str value")
 
-    if len(some_str) == 0: 
+    if len(some_str) == 0:
         print(f"{some_str=} Missing str value")
 
     # Common String Methods
@@ -319,7 +298,7 @@ def string_basics():
     if xl.endswith('.xls'):         # True
         print("xls file")
 
-    fname="202206_rec.dat"
+    fname = "202206_rec.dat"
     if fname.startswith("202206"):  # True
         print("June records")
 
@@ -329,11 +308,9 @@ def string_basics():
         print("Substring found.")
 
     # Option 2 - find the exact index
-    # The .find() method allows you to find substrings inside other strings. 
+    # The .find() method allows you to find substrings inside other strings.
     # It returns the index (offset starting at 0) of the matched substring. If no substring is found it returns -1:
     print(f"{fname.find('rec')=}")      # 7
-
-
 
     # lower() & upper()
     # The .lower method returns a copy of the string converted to lowercase.
@@ -341,16 +318,45 @@ def string_basics():
 
     # strip()
     # The .strip method returns a new string that removes preceding and trailing whitespace (spaces, tabs,newlines).
-    input_str=" Jordan\nM. \n"
+    input_str = " Jordan\nM. \n"
     print(input_str, len(input_str))
     print(input_str.strip(), len(input_str.strip()))
 
     shuffle_characters_of_a_string("Hagrid")
 
 
+def slicing_basics():
+    # SLICING - like ranges, define open interval, the end is EXCLUDED!
+    # variable[begin=first : end=onePastLast] characters from position begin (included) to end (excluded)
+    # en bastan basliyorsa, ya da sona kadar gidiyorsa begin ve end bos kalabilir: Orn. "ilk 2" ya da "son 2" gibi
+    # [0]               - First char
+    # [0:2]   or [:2]     - First 2 chars
+    # [-2:-1] or [-2:]  - Last 2 chars
+    # For non-negative indices, the length of a slice is the difference of the indices, if both are within bounds.
+
+    word = "Python 3"
+
+    # For example, the length of word[1:3] is 2.
+    print("First 2 chars:", f"{word[0:2]!r}")       # 'Py'
+    # First 2 chars
+    print("First 2 chars:", f"{word[:2]!r}")        # 'Py'
+    # Last 2 chars
+    print("Last 2 chars:", f"{word[-2:]!r}")        # ' 3'
+
+    # Drop first 2 chars
+    print("Drop first 2 chars:", f"{word[2:]!r}")   # 'thon 3'
+
+    # Drop first char:
+    print("Drop first char: ", f"{word[1:]!r}")     # 'ython 3'
+    # Drop last char:
+    print("Drop last char:: ", f"{word[:-1]!r}")     # 'Python '
+
 # Q: replace the first letter with '_' character
+
+
 def replaceFirstChar(arg, c):
     return c + arg[1:]
+
 
 def shuffle_characters_of_a_string(arg):
     ''' We can first convert the string to a list of characters, shuffle the list using the shuffle() function from the random module, and then convert the shuffled list back to a string. '''
@@ -359,11 +365,12 @@ def shuffle_characters_of_a_string(arg):
     arg_shuffled = "".join(char_list)   # join chars in the list back into a string
     print(arg_shuffled)
 
+
 def number_basics():
 
     printTitle("Numbers")
 
-    # Do integers and floats have methods? Yes, again, everything in Python is and object and objects have methods. 
+    # Do integers and floats have methods? Yes, again, everything in Python is and object and objects have methods.
     # dir() lists all the attributes of the object passed into it.
     # This is easy to verify by invoking dir on an integer (or a variable holding an integer):”
     # print("\ndir(<int>):\n", dir(100))
@@ -381,7 +388,7 @@ def number_basics():
     y = x / 1   # <class 'float'>
     print(f"{x=}, {type(x)}, {y=}, {type(y)}")
 
-    #casting
+    # casting
     one_str = "1"               # str
     one_int = int(one_str)      # int
     print(f"{one_str=}, {type(one_str)}, {one_int=}, {type(one_int)}")
@@ -390,11 +397,10 @@ def number_basics():
     x = 123456
     x_str = str(x)  # casting (think of it as a constructor)
     digits = len(str(x))
-    print(f"{x=} {x_str=} {digits=}")     # x=123456 x_str='123456' digits=6  
-
+    print(f"{x=} {x_str=} {digits=}")     # x=123456 x_str='123456' digits=6
 
     # Formatting Integers, local unaware
-    fnum = 1_234_567        
+    fnum = 1_234_567
     print(fnum)         # 1234567
 
     num = 1000000
@@ -414,27 +420,33 @@ def number_basics():
 
 
 def bool_basics():
-    # In Python parlance, it is common to hear of objects behaving as “truthy” or “falsey” — 
-    # that means that non-boolean types can implicitly behave as though they were booleans. 
-    # In other words, Python lets you use any value where it expects a Boolean. 
-    # The following are all “falsy”: 
-        # False
-        # None
-        # []    (empty list)
-        # {}    (empty dict)
-        # ""    (empty string)
-        # set()
-        # 0
-        # 0.0
+    """
+    The two boolean values in Python are written as True and False.
+    Comparisons and other conditional expressions evaluate to either True or False.
+    Boolean values are combined with the and and or keywords
 
-    print('bool("")', bool(""))             # bool("") False - an empty string is “falsey”
-    print('bool("0")', bool("0"))           # bool("0") True - non-empty string behaves as "truthy"
-    print("bool('False')", bool('False'))   # bool('False') True - non-empty string behaves as "truthy"
+    In Python parlance, it is common to hear of objects behaving as “truthy” or “falsey” —
+    that means that non-boolean types can implicitly behave as though they were booleans.
+    In other words, Python lets you use any value where it expects a Boolean.
+    The following are all “falsy”:
+        False
+        None
+        []    (empty list)
+        {}    (empty dict)
+        ""    (empty string)
+        set()
+        0
+        0.0
+    """
 
+    # string to boolean
+    print(f"{bool('')=}")       # bool('')=False - an empty string is “falsey”
+    print(f"{bool('0')=}")      # Note! bool('0')=True - non-empty string behaves as "truthy"
+    print(f"{bool('False')=}")  # Note! bool('False')=True  non-empty string behaves as "truthy"
 
     # For numbers, zero coerces to False while other numbers have “truthy” behavior
-    print("bool(0)", bool(0))               # bool(0) False
-    print("bool(-1)", bool(-1))             # bool(-1) True
+    print(f"{bool(0)=}")        # bool(0)=False
+    print(f"{bool(-1)=}")       # Note! bool(-1)=True
 
     # Since an empty string behaves as falsey, you can test whether the string has content
     some_str = ""
@@ -445,6 +457,55 @@ def bool_basics():
     members = []
     if not members:                         # True - check empty list
         print(f"{members=} List is empty")  # members=[] List is empty
+
+
+def datetime_basics():
+    """
+    The built-in Python datetime module provides datetime, date, and time types.
+    The datetime type, as you may imagine, combines the information stored in date and time.
+
+    Since datetime.datetime is an immutable type, methods like these always produce new objects.
+    """
+
+    from datetime import datetime, date, time
+
+    birthday = date(2014, 6, 28)    # datetime.date(2014, 6, 28)
+    print(f"The birthday is on {birthday.day} of {birthday.month}")  # The birthday is on 28 of 6
+
+    # the strftime method of the datetime module is used to format a date or time object as a string.
+    # print the name of the month of the date object:
+    # %Y Four-digit year
+    # %y Two-digit year
+    # %m Two-digit month[01, 12]
+    # %b for the abbreviated month name, e.g. "Jun"
+    # %B for the full name of month, e.g. "June"
+    # %d Two-digit day[01, 31]
+    # %H Hour (24-hour clock) [00, 23]
+    # %I Hour (12-hour clock) [01, 12]
+    # %M Two-digit minute [00, 59]
+    # %S Second[00, 61](seconds 60, 61 account for leap seconds)
+    # %w Weekday as integer [0 (Sunday), 6]
+    # %A Full weekday name. (e.g., Monday)
+    # %U Week number of the year[00, 53] Sunday is considered the first day of the week, and days before the first Sunday of the year are “week 0”
+    # %W Week number of the year[00, 53] Monday is considered the first day of the week, and days before the first Monday of the year are “week 0”
+
+    # %F Shortcut for % Y-%m-%d (e.g., 2012-4-18)
+    # %D Shortcut for % m/%d/%y (e.g., 04/18/12)
+
+    print("The birthday is", birthday.strftime('%b %d, %Y'))    # Jun 28, 2014
+    print("Born on a", birthday.strftime('%A'))                 # Born on a Saturday
+
+    dt = datetime(2011, 10, 29, 20, 30, 21)
+    print(f"{dt.date()=}")      # datetime.date(2011, 10, 29)
+    print(f"{dt.time()=}")      # datetime.time(20, 30, 21)
+    print(f"{dt.hour=}")        # dt.hour = 20
+    print(f"{dt.isoformat()=}")  # '2011-10-29T20:30:21'
+
+    date1 = date(2023, 2, 1)
+    date2 = date(2023, 2, 2)
+
+    print(date2 - date1)
+
 
 def list_basics():
 
@@ -477,34 +538,32 @@ def list_basics():
     frequencies = [0] * 10
     print("Frequencies initialized: ", frequencies)      # [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-
     # lists can have items with the same value:
     scores = [70, 85, 70, 90, 70]
     # number of times x appears in the list.
     print(f"#70: {scores.count(70)}")   # 3
 
     # The number of items in a container - the built-in function len() also applies to lists
-    print("The number of scores:", len(scores)) # 5
+    print("The number of scores:", len(scores))  # 5
 
     # Some other built-in functions for iterables: min, max, sum
     print(f"{max(scores)=}, {min(scores)=}, {sum(scores)=}")    # max(scores)=90, min(scores)=70, sum(scores)=385
 
-
-    #List might contain items of different types, but usually the items all have the same type.
+    # List might contain items of different types, but usually the items all have the same type.
     hybridList = ["abc", 34, True, "male"]
 
     # You can generate a list of sequential numbers with range().
-    # Note that range does not materialize the list, but rather gives you an iterable that will return those numbers when iterated over. 
+    # Note that range does not materialize the list, but rather gives you an iterable that will return those numbers when iterated over.
     # By passing the result into list you can see the numbers it would generate:
     # The “up to but not including” construct is more formally known as the "half-open interval" convention.
-    nums = range(5)     
+    nums = range(5)
     print(type(nums), len(nums), list(nums))     # <class 'range'> 5 [0, 1, 2, 3, 4]
 
     even = list(range(0, 11, 2))
     print(even)     # [0, 2, 4, 6, 8, 10]
 
     squares = [1, 4, 9, 16, 25]
-    
+
     # Accessing Elements
     # You can refer to an element by its index (subscript) - uses "zero-based indexing"
     print("squares[0]:", squares[0])
@@ -512,9 +571,8 @@ def list_basics():
 
     # Negative indexing means start from the end
     # -1 refers to the last item, -2 refers to the second last item etc.
-    print(f"The last item: {squares[-1]}"); # 25
+    print(f"The last item: {squares[-1]}")  # 25
 
-    
     # Insert item to the END of a list:
     squares.append(49)              # [1, 4, 9, 16, 25, 49]
     # squares = squares.append(49)  # WRONG!
@@ -523,10 +581,8 @@ def list_basics():
     squares.insert(5, 36)   # [1, 4, 9, 16, 25, 36, 49]
     print(squares[5])       # 36
 
-    
     fruits = ["banana", "apple", "strawberry", "grapes"]
     tropical = ["mango", "pineapple"]
-
 
     # The + operator concatenates lists:
     a = [1, 2, 3]
@@ -541,7 +597,7 @@ def list_basics():
 
     # Append elements from any other iterable to the current list:
     c.extend(b)     # Note that a is modified. [7, 8, 9, 4, 5, 6]
-    print(f"Extended list: {c}")   
+    print(f"Extended list: {c}")
 
     fruits.extend(tropical)
 
@@ -554,12 +610,12 @@ def list_basics():
 
     # Remove by index - Option 1:
     # Remove and return value at a specific index (default -1, the last), raise IndexError if the index is out of range.
-    lastFruit = fruits.pop();  
+    lastFruit = fruits.pop()
     print(f"Removed: {lastFruit}, fruits: {fruits}")  # Removed: pineapple, fruits: ['banana', 'apple', 'strawberry', 'grapes', 'mango']
-    
-    poppedFruit = fruits.pop(2);
+
+    poppedFruit = fruits.pop(2)
     print(f"Removed: {poppedFruit}, fruits: {fruits}")  # Removed: strawberry, fruits: ['banana', 'apple', 'grapes', 'mango']
-    
+
     # poppedFruit = fruits.pop(333);  # IndexError: pop index out of range
 
     # Remove by index - Option 2:
@@ -574,16 +630,14 @@ def list_basics():
     assert len(vegetables) == 0     # OK
 
     # lists can be sliced:
-    print(squares[2:]) # [9, 16, 25, 36]
-
-
+    print(squares[2:])  # [9, 16, 25, 36]
 
     # empty list
     empty_list = []
 
     # Option 1: evaluating empty list object to False
     if not empty_list:
-        print(f"checked 'not <list_name>' -> empty: {empty_list=}")  
+        print(f"checked 'not <list_name>' -> empty: {empty_list=}")
 
     # Option 2: Checking whether the list size is equal to 0
     if len(empty_list) == 0:
@@ -593,19 +647,18 @@ def list_basics():
     if empty_list.__len__() == 0:
         print(f"checked '<list_name>.__len__() -> empty: {empty_list}")
 
-
     # Search for an item
     q_key = 'grapes'
     # q_key = 'aVeryDifferentFruit'
     # v1 - Membership Operator (in)
-    if q_key in fruits: 
+    if q_key in fruits:
         print(f"{q_key} is IN {fruits}")
 
     # v2 - index()
     # return the index of the first occurrence, raises a ValueError if there is no such item.
     try:
         found_index = fruits.index(q_key)
-        print(f"Index of first ocurrence {q_key} in {fruits}: {fruits.index(q_key)}") 
+        print(f"Index of first ocurrence {q_key} in {fruits}: {fruits.index(q_key)}")
     except ValueError:
         print(f"Value not found: {q_key}")
 
@@ -615,9 +668,9 @@ def list_basics():
 
     # SORTING
     # --------
-    # Every Python list has a sort method that sorts it "in place". 
+    # Every Python list has a sort method that sorts it "in place".
     # If you don’t want to mess up your list, you can use the "sorted()" function, which returns a new list.
-    # The list.sort() method sorts the list IN PLACE. 
+    # The list.sort() method sorts the list IN PLACE.
     # It DOESN'T return a new, sorted copy of the list, rather it updates the list with the items reordered
     #
     # list.sort(reverse=True|False, key=myFunc)
@@ -629,7 +682,7 @@ def list_basics():
 
     members.sort()      # ascending by default.
     print(members)
-   
+
     # Because sort modifies the argument returns None, the next operation you perform with t is likely to fail.
     # Note that most list methods modify the argument while string methods return a new string and leave the original alone.
     # Lists are mutable, but strings are not.
@@ -639,11 +692,11 @@ def list_basics():
     # Sort descending
     # If you want elements sorted from largest to smallest, you can specify a reverse=True parameter.
     cars = ['Ford', 'BMW', 'Mitsubishi', 'Volvo']
-    print( cars.sort(reverse = True) ) # prints None! (but mutates the list anyway) 
+    print(cars.sort(reverse=True))  # prints None! (but mutates the list anyway)
     print(cars)         # ['Volvo', 'Mitsubishi', 'Ford', 'BMW']
 
     # Sort the list by the length of the values:
-    cars.sort(key = lambda x: len(x))
+    cars.sort(key=lambda x: len(x))
     print(cars)         # ['BMW', 'Ford', 'Volvo', 'Mitsubishi']
 
     # Sort a list by dict value, i.e. newest to oldest
@@ -653,38 +706,35 @@ def list_basics():
         {'car': 'BMW', 'year': 2019},
         {'car': 'VW', 'year': 2011}
     ]
-    cars.sort(key = lambda x : x['year'], reverse=True)
+    cars.sort(key=lambda x: x['year'], reverse=True)
     print(cars)     # [{'car': 'BMW', 'year': 2019}, {'car': 'VW', 'year': 2011}, {'car': 'Ford', 'year': 2005}, {'car': 'Mitsubishi', 'year': 2000}]
 
-
-    # A more general option for sorting sequences is the sorted function. 
+    # A more general option for sorting sequences is the sorted function.
     # The sorted function works with any sequence. It returns a NEW list that is ordered
     old = [5, 3, -2, 1]
     nums_sorted = sorted(old)
     print(f"sorted({old}): {nums_sorted}")
-
-
 
     # Nested lists:
     # If the elements of a list are themselves type list, then we call this a nested list.
     #
     #   [[first_row], [second_row], [third_row]]    # members are like the rows of a 2-d matrix
     #
-    #   [[first_row], 
-    #    [second_row], 
+    #   [[first_row],
+    #    [second_row],
     #    [third_row]]
     #
     #
     #   [[00,01,02], [11,12,13], [21,22,23]]
-    #   
-    #   [[00,01,02], 
-    #    [11,12,13], 
+    #
+    #   [[00,01,02],
+    #    [11,12,13],
     #    [21,22,23]]
     #
     #    nested_list[0] is the first row.
     #    nested_list[0][0] is the first member of the first row.
-    #   
-    # To simplify, think of them as list of names, where name is a list of chars: [Harry, Hermione, Ron]  
+    #
+    # To simplify, think of them as list of names, where name is a list of chars: [Harry, Hermione, Ron]
     # class[0] = Harry (list of chars), the first element is the first list
     # class[1] = Hermione (list of chars), the second element is the second list
     # class[0][0] = H (first char of first name)
@@ -701,15 +751,14 @@ def list_basics():
         for column in row:
             print(column)
 
-    # Iterable Unpacking. 
+    # Iterable Unpacking.
     # Assign values to multiple variables from a single expression
     a, b, c = [10, 20, 30]
     print(f"{a=} {b=} {c=}")    # a=10 b=20 c=30
 
     team_info = ["Chicago Bulls", "Chicago"]
     team_name, team_city = team_info
-    print (f"{team_name} from {team_city}") # "Chicago Bulls from Chicago"
-
+    print(f"{team_name} from {team_city}")  # "Chicago Bulls from Chicago"
 
     # Send a list as an input to a function with arbitrary arguments *args:
     odd = [1, 3, 5, 7, 9]
@@ -719,23 +768,23 @@ def list_basics():
     # List unpacking - only first and second element. Remaining all elements to be captured in a list
     num = [2, 4, 6, 8, 10]
     a, b, *c = num
-    print(f"{a=} {b=} {c=}") # a=2 b=4 c=[6, 8, 10]
+    print(f"{a=} {b=} {c=}")  # a=2 b=4 c=[6, 8, 10]
 
     # Unpacking range object
     a, b, c = range(0, 3)
-    print(f"{a=} {b=} {c=}") # a=0 b=1 c=2
+    print(f"{a=} {b=} {c=}")  # a=0 b=1 c=2
 
     values = [10, 20, 30]
-    print(*values)     
+    print(*values)
 
     # Iterate over a list:
-    iterate_list()   
+    iterate_list()
 
     # Functional programming style processing
     processList_FP()
 
     # list comprehension:
-    list_comprehension()  
+    list_comprehension()
 
     # is that call by reference?
     letters = ['c', 'b', 'a']
@@ -744,6 +793,8 @@ def list_basics():
 
 # is that call by reference?
 # void function, modifies the mutable argument - list!
+
+
 def modify_list(lst):
     lst.pop()   # remove the last element from the list.
     lst.sort()  # Note that most list methods modify the argument while string methods return a new string and leave the original alone.
@@ -755,7 +806,7 @@ def iterate_list():
     # v1 - no access to indexes
     print("no access to indexes")
     for s in students:
-       print(s)
+        print(s)
 
     # v2 - access to indexes
     print("access to indexes - using enumerate(list)")
@@ -767,21 +818,22 @@ def iterate_list():
     for i in range(len(students)):
         print(i+1, students[i])
 
+
 def processList_FP():
     """
-    In functional programming, computations are done by combining functions that take arguments and return a concrete value (or values) as a result. 
-    These functions don't modify their input arguments and don't change the program's state. They just provide the result of a given computation. 
+    In functional programming, computations are done by combining functions that take arguments and return a concrete value (or values) as a result.
+    These functions don't modify their input arguments and don't change the program's state. They just provide the result of a given computation.
     These kinds of functions are commonly known as "pure functions".
 
-    Functional programming typically uses lists, and other iterables to represent the data along with a set of functions that operate on that data and transform it. 
+    Functional programming typically uses lists, and other iterables to represent the data along with a set of functions that operate on that data and transform it.
     When it comes to processing data with a functional style, there are at least three commonly used techniques:
-    
+
     1. "Mapping" consists of applying a "transformation function" to an iterable to produce a "new iterable".
     Items in the new iterable are produced by "calling the transformation function on each item" in the original iterable.
-    
-    2. "Filtering" consists of applying a predicate or Boolean-valued function to an iterable to generate a new iterable. 
+
+    2. "Filtering" consists of applying a predicate or Boolean-valued function to an iterable to generate a new iterable.
     Items in the new iterable are produced by filtering out any items in the original iterable that make the predicate function return false.
-    
+
     3. "Reducing" consists of applying a reduction function to an iterable to produce a single cumulative value.
 
     """
@@ -794,13 +846,12 @@ def processList_FP():
     # v0 - loop over list, transform each item, append to a new list:
     for n in numbers:
         squared_v0.append(n*n)
-    
+
     print("Numbers:", numbers)
     print("Mapped using a loop:", squared_v0)
 
-
     # v1 - use built-in map function
-    # Sometimes you might face situations in which you need to "perform the same operation on all the items" of an input iterable to build a new iterable. 
+    # Sometimes you might face situations in which you need to "perform the same operation on all the items" of an input iterable to build a new iterable.
     # The quickest and most common approach to this problem is to use a Python for loop. However, you can also tackle this problem by using map()
     # The operation that map() performs is commonly known as a mapping because it maps every item in an input iterable to a new item in a resulting iterable.
     # The first argument to map() is a "transformation function". A common pattern is to use a lambda function as the first argument.
@@ -814,18 +865,16 @@ def processList_FP():
     print("Numbers:", numbers)
     print("Mapped using List Comprehension:", squared_v2)
 
-
-
     # Filtering
-    # The first argument, function, must be a single-argument function. Typically, you provide a predicate (Boolean-valued) function to this argument. 
+    # The first argument, function, must be a single-argument function. Typically, you provide a predicate (Boolean-valued) function to this argument.
     # In other words, you provide a function that returns either True or False according to a specific condition.
-    # This function plays the role of a decision function, also known as a "filtering function", because it provides the criteria to filter out unwanted values from the input iterable and to keep those values that you want in the resulting iterable. 
+    # This function plays the role of a decision function, also known as a "filtering function", because it provides the criteria to filter out unwanted values from the input iterable and to keep those values that you want in the resulting iterable.
     # Note that the term unwanted values refers to those values that evaluate to false when filter() processes them using function.
-    print(is_positive(-3));    # False - unwanted, will be filtered.
+    print(is_positive(-3))    # False - unwanted, will be filtered.
 
     numbers = [-3, -2, -1, 0, 1, 2, 3]
     # Option 1 - filter()
-    positive_numbers = filter(is_positive, numbers) 
+    positive_numbers = filter(is_positive, numbers)
     print("Numbers:", numbers)
     print("Positives by filtering:", list(positive_numbers))
 
@@ -833,10 +882,9 @@ def processList_FP():
     positives = [n for n in numbers if n > 0]
     print("Positives by list comprehension:", positives)
 
-
     # use lambda function as a filtering function:
     scores = [60, 40, 90, 80, 30, 70]
-    passed = filter(lambda x: x>=60, scores)    # [60, 90, 80, 70]
+    passed = filter(lambda x: x >= 60, scores)    # [60, 90, 80, 70]
     print("Scores:", scores)
     print("Passed:", list(passed))
 
@@ -844,11 +892,11 @@ def processList_FP():
     # Python’s reduce() implements a mathematical technique commonly known as folding or reduction.
     # The idea behind Python’s reduce() is to take an existing function, apply it cumulatively to all the items in an iterable, and generate a single final value.
     # The first argument to Python’s reduce() is a two-argument function.
-    # The call to reduce() in the this example applies lambda function to the first two items in numbers (1 and 2) and gets 3 as the result. 
-    # Then reduce() calls lambda function using 3 and the next item in numbers (which is 3) as arguments, getting 6 as the result. 
+    # The call to reduce() in the this example applies lambda function to the first two items in numbers (1 and 2) and gets 3 as the result.
+    # Then reduce() calls lambda function using 3 and the next item in numbers (which is 3) as arguments, getting 6 as the result.
     # The process is repeated until numbers runs out of items and reduce() returns a final result of 15.
     numbers = [1, 2, 3, 4, 5]
-    total = reduce(lambda x,y: x+y, numbers)
+    total = reduce(lambda x, y: x+y, numbers)
     print("Numbers:", numbers)
     print("Total:", total)
 
@@ -858,8 +906,12 @@ def list_comprehension():
     printTitle("List Comprehension")
 
     # List comprehension offers a shorter syntax when you want to create a new list based on the values of an existing list.
-    # Frequently, you’ll want to transform a list into another list by choosing only certain elements, by transforming elements, or both.  
+    # Frequently, you’ll want to transform a list into another list by choosing only certain elements, by transforming elements, or both.
     # The Pythonic way to do this is with list comprehensions
+
+    # Also, you may want to create a list with n items,
+    # where you loop through range(n), and at each iteration dosomething() to return an item for that index.
+    # [doSomething() for _ in range(4)]
 
     scores = [33, 99, 44, 55, 88, 77, 22, 66]
     passed = [x for x in scores if x > 60]  # [99, 88, 77, 66]
@@ -871,10 +923,13 @@ def list_comprehension():
     print(f"{even_numbers=} {squares=} ")
 
     # Randomness
-    # The random module actually produces pseudorandom (that is, deterministic) numbers 
+    # The random module actually produces pseudorandom (that is, deterministic) numbers
     # based on an internal state that you can set with random.seed if you want to get reproducible results
     random.seed(123)  # this ensures we get the same results every time
 
+    # To choose a sample of elements with replacement (i.e., allowing duplicates),
+    # you can just make multiple calls to random.choice:
+    four_with_replacement = [random.choice(range(10)) for _ in range(4)]
     # Also, run a funtion n times and store results in a list
     four_uniform_randoms = [random.randint(1, 6) for _ in range(4)]     # [6, 6, 2, 3]
 
@@ -887,10 +942,10 @@ def list_comprehension():
     print(*first_5)     # *args *list_name
 
     results = [
-        {"name":"Bob", "score":33},
-        {"name":"Foo", "score":90},
-        {"name":"Bar", "score":85},
-        {"name":"Baz", "score":100}
+        {"name": "Bob", "score": 33},
+        {"name": "Foo", "score": 90},
+        {"name": "Bar", "score": 85},
+        {"name": "Baz", "score": 100}
     ]
 
     # filter the results
@@ -905,7 +960,6 @@ def list_comprehension():
     grades_F = [result['name'] for result in results if result['score'] < 60]
     print(f"{grades_F=}")
 
-
     # How can i convert a list of objects to a list of dictionaries?
     departments = list()
     departments.append(Department("Department #1"))
@@ -917,13 +971,11 @@ def list_comprehension():
     print("To: ", departments_dict)
 
 
-
 def tuple_basics():
-
     """
     Why the distinction between tuples and lists?
         * The main difference between the objects is mutability. As tuples are immutable, they are able to serve as keys in dictionaries.
-        * Tuples are used for returning multiple items from a function. 
+        * Tuples can be used for returning multiple items from a function.
         * Tuples are often used to represent a record of data such as the row of a database query, which may contain heterogeneous types of objects.
             person = ('Matt', '123 North 456 East', 24)
         * Tuples also use less memory than lists. If you have sequences that you are not mutating, consider using tuples to conserve memory.
@@ -934,11 +986,11 @@ def tuple_basics():
     # There are two ways to create an empty tuple: using either the tuple function or the literal syntax:
     empty = tuple()
     empty = ()
-    print(empty) # ()
-        
+    print(empty)  # ()
+
     # Create a tuple with one item in it:
     one = (1,)
-    print(one) # (1,)
+    print(one)  # (1,)
 
     # For tuples with only one item, you need to put a comma (,) following the item:
     d = (3)     # int
@@ -949,24 +1001,60 @@ def tuple_basics():
     # Because tuples are immutable you cannot append to them:
     # e.append(4)           # “AttributeError: 'tuple' object has no attribute 'append”
 
+    # The easiest way to create one is with a comma-separated sequence of values:
+    # When you’re defining tuples in more complicated expressions, it’s often necessary to enclose the values in parentheses
+    tuple01 = 1, 2, 3
+    tuple02 = (4, 5, 6)
+
+    # UNPACKING TUPLES
+    # If you try to assign to a tuple-like expression of variables, Python will attempt to unpack the value on the righthand side of the equals sign:
+    a, b, c = tuple02
+    print(f"{tuple02=}, {a=}, {b=}, {c=}")
+
+    # A common use of variable unpacking is iterating over sequences of tuples or lists:
+    print("Iterating over a sequence of tuples: ")
+    grades = [(66, 55, 77), (65, 54, 87), (89, 78, 56)]
+    for t in grades:
+        print(t)    # tuple
+
+    for math, sci, hist in grades:  # unpacking tuple in each iteration
+        print(f"{math=}, {sci=}, {hist=}")
+
+    # ZIP
+    # takes two or more iterables as arguments and returns (an iterator of) tuples.
+    # In other words, it pairs up elements from each iterable based on their position.
+    # Note that the zip() function stops pairing up elements as soon as it reaches the end of the shortest iterable.
+    print("Zipping ...")
+
+    names = ["Harry", "Hermione", "Ron", "Luna", "Cho", "Cedric", "Draco", "Ginny", "Dumbledore", "Hagrid"]  # Note Dumbledore and Hagrid
+    surnames = ["Potter", "Granger", "Weasley", "Lovegood", "Chang", "Diggory", "Malfoy",  "Weasley"]
+    houses = ["Gryffindor", "Gryffindor", "Gryffindor", "Ravenclaw", "Ravenclaw", "Hufflepuff", "Slytherin", "Gryffindor"]
+
+    students = zip(names, surnames, houses)  # [ ('Harry', 'Potter', 'Gryffindor'), ('Hermione', 'Granger', 'Gryffindor') ... ]
+    print(list(students))
+
+    # Creating dicts from sequences
+    # It’s common to occasionally end up with two sequences that you want to pair up element-wise in a dict.
+    # We can use the built-in zip() function to combine the two lists into a single iterator of tuples,
+    # and then pass that iterator to the dict() function to create a dictionary:
+    std_house = dict(zip(names, houses))
+    print(f"{std_house['Draco']=}")     # std_house['Draco'] = 'Slytherin'
 
     countries = ('Germany', 'France', 'Canada', 'Italy', 'Sweden')
     # Access items
     print("The first country is", countries[0])
-    
+
     # Search an item
     q = 'France'
     if q in countries:
         print(f"{q} is found!")
         q_index = countries.index('France')     # the index of the first occurrence of the specified value
         print(f"countries[{q_index}] = {q}")
-    
-    
 
     one = 1
     two = 2
 
-    # Tuple swap 
+    # Tuple swap
     (one, two) = (two, one)
     print(f"one: {one}, two: {two}")
 
@@ -976,20 +1064,19 @@ def tuple_basics():
 
 
 def set_basics():
-    # Set represents a collection of DISTINCT elements. 
+    # Set represents a collection of DISTINCT elements.
     # A set is an UNORDERED collection that DOESN'T contain duplicates.
     # Therefore, a set is great for removing duplicates, and
     # if the order is important, a set is not the data type to use.
-    
-    
+
     # A set can be created with a literal syntax using { }
     # Note that {} creates an empty DICT, not a set !
     # empty_dict = {}
     empty_set = set()   # NOT {} !
-    digit_set = {0, 1, 2 ,3 ,4, 6, 7, 8, 9}
+    digit_set = {0, 1, 2, 3, 4, 6, 7, 8, 9}
     primes_below_10 = {2, 3, 5, 7}
 
-    # However, that doesn’t work for empty sets, as {} already means “empty dict.” 
+    # However, that doesn’t work for empty sets, as {} already means “empty dict.”
     # In that case you’ll need to use set()
     s = set()       # empty set
     s.add(1)        # s is now {1}
@@ -1000,7 +1087,7 @@ def set_basics():
     # find the distinct items in a collection
     # Sets can be specified by passing in a sequence into the set class
     digits = [0, 1, 4, 2, 3, 3, 7, 5, 6, 9, 0, 8, 9]
-    print("A List can contain duplicates.", len(digits), digits) 
+    print("A List can contain duplicates.", len(digits), digits)
     digit_set = set(digits)
     print("A Set represents a collection of DISTINCT elements.", len(digit_set), digit_set)    # {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
 
@@ -1016,8 +1103,7 @@ def set_basics():
     even = digit_set - odd
     print(f"{even=}")
 
-    
-    first_five = set(range(5))          # {0, 1, 2, 3, 4} 
+    first_five = set(range(5))          # {0, 1, 2, 3, 4}
     two_to_six = set([2, 3, 4, 5, 6])
 
     # union (|)
@@ -1032,19 +1118,13 @@ def set_basics():
     in_one_or_the_other = first_five ^ two_to_six
     print(f"{in_one_or_the_other=}")    # {0, 1, 5, 6}
 
-
-
-
-
-
-    # Because sets must be able to compute a hash value for each item in the set, 
-    # sets can only contain items that are hashable. 
-    # In Python, mutable items are not hashable. 
-    # This means that you cannot hash a list or dictionary. 
+    # Because sets must be able to compute a hash value for each item in the set,
+    # sets can only contain items that are hashable.
+    # In Python, mutable items are not hashable.
+    # This means that you cannot hash a list or dictionary.
 
 
 def dict_basics():
-
     """
     A dictionary is like a list, but more general. In a list, the indices have to be integers; in a dictionary they can be (almost) any type.
     You can think of a dictionary as a mapping between a set of indices (which are called keys) and a set of values.
@@ -1071,31 +1151,37 @@ def dict_basics():
 
 
     """
-    # A pair of braces creates an empty dictionary: {}
+    # dict() or pair of braces creates an empty dictionary: {}
     empty_dict = dict()
     empty = {}
     print(f"{empty=}: {type(empty)}")   # empty={}: <class 'dict'>
 
     # A. think as the representation of a simple object (excel row)
     person = {'name': 'MK', 'born': 81, 'gender': 'M'}
-    
+
     # B. think as a collection of data for ONE attribute, i.e. 1 excel column
-    born = {"MK": 81, "MSL": 14, "BK": 83 }
+    born = {"MK": 81, "MSL": 14, "BK": 83}
     city_population = {"Antalya": 1430539, "Balikesir": 1069260, "Istanbul": 11076840, "Izmir": 3431204}
 
     # The len function works on dictionaries; it returns the number of key-value pairs:
     car = {'year': 2019, 'make': 'Volkswagen', 'model': 'T-ROC', 'color': 'Orange'}
     print(len(car), car)
-    
 
+    tweet = {
+        "user": "joelgrus",
+        "text": "Data Science is Awesome",
+        "retweet_count": 100,
+        "hashtags": ["#data", "#science", "#datascience", "#awesome", "#yolo"]
+    }
 
     # Access an item using the key by performing a lookup with an index operation:
-    print( f"{car['model']=}" )
+    print(f"{car['model']=}")           # 'T-ROC'
+    print(f"{tweet['hashtags'][0]=}")   # '#data'
 
     # !!! if you try to access a key that does not exist, Python will throw an exception:
     # print( car['imaginary_key'])    # KeyError
 
-    # Dictionaries have a method called get that takes a key and a default value. 
+    # Dictionaries have a method called get that takes a key and a default value.
     # If the key appears in the dictionary, get returns the corresponding value; otherwise it returns the default value.
     default_val = car.get('nosuchkey', -1)
     print("Default value for the non-existing key: ", default_val)  # -1
@@ -1104,7 +1190,7 @@ def dict_basics():
     car['horsepower'] = 130
 
     # Deleting keys
-    del(car['color'])
+    del (car['color'])
 
     print("delete the key 'color' and add 'horsepower':", car)       # {'year': 2019, 'make': 'Volkswagen', 'model': 'T-ROC', 'horsepower': 130}
 
@@ -1114,91 +1200,85 @@ def dict_basics():
     if q_key in car:       # True
         print("key found! corresponding value is:", car[q_key])     # get the value using key
 
-    # in also works with sequences. You can use the in statement with a list, set, or string to check for membership
+    # IN operator also works with SEQUENCES.
+    # You can use the in statement with a list, set, or string to check for membership
     if 5 in [1, 2, 3, 4, 5]:
         print("value found!")
-
-
 
     # Iterate over a dictionary
     # Option 1:
     # By default, when you iterate over a dictionary, you get back the KEYS
-    # Python will throw an Error, if you add to or remove from a dictionary while looping over it. 
+    # Python will throw an Error, if you add to or remove from a dictionary while looping over it.
     for key in person:
         print(key, person[key])
         # del person[key]     # RuntimeError: dictionary changed size during iteration
-    
-    # Option 2: 
+
+    # Option 2:
     # The key and corresponding value can be retrieved at the same time using the items() method.
     for k, v in person.items():
         print(k, v)
-    
-
 
     # NESTING Lists and Dictionaries
     # Sample 1 - list as a dict value {key: []}
-    travel_log={
-        "France": ["Paris", "Cannes"], 
-        "Germany": ["Berlin", "Hamburg", "Köln" ]
+    travel_log = {
+        "France": ["Paris", "Cannes"],
+        "Germany": ["Berlin", "Hamburg", "Köln"]
     }
     print(travel_log["Germany"])    # ['Berlin', 'Hamburg', 'Köln']
 
     countries = ['United States', 'Australia', 'Japan', 'India', 'Russia']
     countries_dict = {'country': countries}
     print(countries_dict)       # {'country': ['United States', 'Australia', 'Japan', 'India', 'Russia']}
-    
+
     # Sample 2 - dict as a dict value {key: {}}
-    europe = { 
-        'Spain': { 'capital':'madrid', 'population':46.77 },
-        'France': { 'capital':'paris', 'population':66.03 },
-        'Germany': { 'capital':'berlin', 'population':80.62 },
-        'Norway': { 'capital':'oslo', 'population':5.084 } 
-        }
+    europe = {
+        'Spain': {'capital': 'madrid', 'population': 46.77},
+        'France': {'capital': 'paris', 'population': 66.03},
+        'Germany': {'capital': 'berlin', 'population': 80.62},
+        'Norway': {'capital': 'oslo', 'population': 5.084}
+    }
     print(europe['Germany']['capital'])    # berlin
 
     # Sample 3 - A list of dicts: [{}, {}, {}]
     travel_list = [
-    {
-        "country": "France",
-        "visits": 12,
-        "cities": ["Paris", "Lille", "Dijon"]
-    },
-    {
-        "country": "Germany",
-        "visits": 5,
-        "cities": ["Berlin", "Hamburg", "Stuttgart"]
-    },
+        {
+            "country": "France",
+            "visits": 12,
+            "cities": ["Paris", "Lille", "Dijon"]
+        },
+        {
+            "country": "Germany",
+            "visits": 5,
+            "cities": ["Berlin", "Hamburg", "Stuttgart"]
+        },
     ]
 
     print(f"{travel_list[0]['cities']=}")   # ['Paris', 'Lille', 'Dijon']
 
     # Sample - dict as a dict value {key: {}}
     # Grades indexed by students:
-    grades_v1 = {'Mike': {'Math': 78, 'En': 70, 'Hist':71},
-              'Susan': {'Math': 88, 'En': 80, 'Hist':81},
-              'Tim': {'Math': 98, 'En': 90, 'Hist':91}}
+    grades_v1 = {'Mike': {'Math': 78, 'En': 70, 'Hist': 71},
+                 'Susan': {'Math': 88, 'En': 80, 'Hist': 81},
+                 'Tim': {'Math': 98, 'En': 90, 'Hist': 91}}
     print(f"Grades indexed by student: {grades_v1['Mike']['Math']=}")
-    
+
     # Grades indexed by courses:
-    grades_v2 = {'Math': {'Mike': 78, 'Susan': 88, 'Tim':98},
-                 'En': {'Mike': 70, 'Susan': 80, 'Tim':90},
-                 'Hist': {'Mike': 71, 'Susan': 81, 'Tim':91}}
+    grades_v2 = {'Math': {'Mike': 78, 'Susan': 88, 'Tim': 98},
+                 'En': {'Mike': 70, 'Susan': 80, 'Tim': 90},
+                 'Hist': {'Mike': 71, 'Susan': 81, 'Tim': 91}}
     print(f"Grades indexed by courses: {grades_v2['Math']['Mike']=}")
 
-
     cars = [
-         {"year":2019, "make": "Volkswagen", "model": "T-ROC"},
-         {"year":2007, "make": "Kia", "model": "Sorento"}
+        {"year": 2019, "make": "Volkswagen", "model": "T-ROC"},
+        {"year": 2007, "make": "Kia", "model": "Sorento"}
     ]
-    print(cars[0]['model'])     #T-ROC
-
+    print(cars[0]['model'])  # T-ROC
 
     # create 2 lists from the keys and values of a dict:
     car = cars[0]
     print("Dictionary:", car)                               # {'year': 2019, 'make': 'Volkswagen', 'model': 'T-ROC'}
     print("List of keys:", [key for key in car])            # ['year', 'make', 'model']
     print("List of values:", [car[key] for key in car])     # [2019, 'Volkswagen', 'T-ROC']
-
 
     """
     Dictionary as a set of counters
@@ -1210,18 +1290,16 @@ def dict_basics():
         2. You could create a list with 26 elements. Then you could hash the key - convert each character to
         a number (using the built-in function ord), use the number as an index into the list, and increment the appropriate counter.
     """
-    
 
 
 def arbitrary_arguments(*args):
     print(f"arguments: ", args)
 
 
-
-# When a Python interpreter reads a Python file, it first sets a few special variables. 
-# Python files are called modules and they are identified by the .py file extension. 
+# When a Python interpreter reads a Python file, it first sets a few special variables.
+# Python files are called modules and they are identified by the .py file extension.
 # A module can define functions, classes, and variables.
 # So when the interpreter runs a module, the __name__ variable will be set as  __main__ if the module that is being run is the main program.
 # But if the code is importing the module from another module, then the __name__  variable will be set to that module’s name.
-if __name__ == "__main__" :
+if __name__ == "__main__":
     main()
