@@ -61,7 +61,126 @@ def compare_time():
     print(f"Elapsed real time: {elapsed_real} seconds")
 
 
+def simple_nd():
+    print("N-Dimensional (Nested) Lists")
+    print("----------------------------")
+
+    """
+               Math  Sci  Hist  Econ
+     Harry       60   70    80    90
+     Ron         65   75    85    95
+     Hermione    69   79    89    99
+
+    """
+
+    # 1d python lists:
+    # no labels in the data structure, names of lists (kind of) represents row indexes:
+    scores_harry = [60, 70, 80, 90]
+    scores_ron = [65, 75, 85, 95,]
+    scores_hermione = [69, 79, 89, 99]
+
+    # create ndarray form python lists:
+    np_harry = np.array(scores_harry)
+    np_ron = np.array(scores_ron)
+    np_hermione = np.array(scores_hermione)
+
+    print(f"{np_harry=}, {np_harry.shape=}")    # array([60, 70, 80, 90]), np_harry.shape=(4,)
+
+    # 2d list, as a collection of lists:  [ list, list, list ]
+    # Shape is (rows, columns)
+    scores_Hogwarts = [scores_harry, scores_ron, scores_hermione]
+    scores_Beauxbatons = [[70, 71, 72, 73], [80, 81, 82, 83], [90, 91, 92, 93]]
+    scores_Durmstrang = [[20, 21, 22, 23], [30, 31, 32, 33], [40, 41, 42, 43]]
+
+    # create ndarray form python nested (2D) list: (list of lists)
+    np_Hogwarts = np.array(scores_Hogwarts)
+    np_Beauxbatons = np.array(scores_Beauxbatons)
+    np_Durmstrang = np.array(scores_Durmstrang)
+
+    print(f"{np_Hogwarts=}, {np_Hogwarts.shape=}")
+    """
+     array([[60, 70, 80, 90],
+          [65, 75, 85, 95],
+          [69, 79, 89, 99]])
+    """
+
+    # 3d list, as a list of 2d lists. [ 2dlist, 2dlist ]
+    # 3D lists are List of Lists of Lists.
+    # In other words, they are List of martices (tables) - where each matrix is a list of lists.)
+    # 3 okuldaki 3'er ogrencinin 4'er dersten notları - 3D
+    scores_all_schools = [scores_Hogwarts, scores_Beauxbatons, scores_Durmstrang]
+
+    # create ndarray form python nested (3D) list:
+    np_all_schools = np.array(scores_all_schools)
+
+    print(f"{np_all_schools=}")
+    """
+    array([[[60, 70, 80, 90],
+            [65, 75, 85, 95],
+            [69, 79, 89, 99]],
+
+           [[70, 71, 72, 73],
+            [80, 81, 82, 83],
+            [90, 91, 92, 93]],
+
+           [[20, 21, 22, 23],
+            [30, 31, 32, 33],
+            [40, 41, 42, 43]]])
+    """
+
+    # IN SUMMARY,
+    # 1D Lists are like rows
+    # 2D Lists are list of like tables, or matrices.
+    # 3D Lists are like list of tables.
+
+    # Option 2A - Think in terms of a dictionary
+    # A dictionary where keys are the "column names" and values are the lists:
+    # Note that column names are visible in this version. (vs. nested lists)
+    names = ['Harry', 'Ron', 'Hermione']
+    math = [60, 65, 69]
+    sci = [70, 75, 79]
+    hist = [80, 85, 89]
+    econ = [90, 95, 99]
+
+    scores_Hogwarts_dict = {'Name': names, 'Math': math, 'Sci': sci, 'Hist': hist, 'Econ': econ}
+
+    print(scores_Hogwarts_dict)
+    """
+    {
+     'Name': ['Ron', 'Harry', 'Hermione'], 
+     'Math': [65, 60, 69], 
+     'Sci': [65, 60, 69], 
+     'Hist': [65, 60, 69], 
+     'Econ': [65, 60, 69]
+     }
+    """
+
+    # Option 2B - Think in terms of a dictionary
+    # A dictionary with keys = row indexes an values are dictionaries where keys are columnnames:
+    scores_gryffindor_rowindexaskey = {
+        'Harry': {
+            'Math': 60,
+            'Sci': 70,
+            'Hist': 80,
+            'Econ': 90
+        },
+        'Ron': {
+            'Math': 65,
+            'Sci': 75,
+            'Hist': 85,
+            'Econ': 95
+        },
+        'Hermione': {
+            'Math': 69,
+            'Sci': 79,
+            'Hist': 89,
+            'Econ': 99
+        }
+    }
+
+
 compare_time()
+simple_nd()
 
 # Creating ndarrays
 # 1. The easiest way to create an array is to use the array() function. This accepts any sequence-like object(including other arrays)
@@ -286,11 +405,11 @@ np_city = np.column_stack((height, weight))
 print("City Statistics")
 print("Average weight:", np.mean(np_city[:, 1]))
 
+
 # Random Numbers
 # Set the seed
 np.random.seed(123)
 
-# Generate and print random float
-print(np.random.rand())
-# Use randint() to simulate a dice
-print(np.random.randint(1, 7))
+# Simulate coin flip, 5 rounds:
+draws = np.random.randint(low=0, high=2, size=5)      # array([0, 1, 0, 0, 0])
+print(f"{draws=}")

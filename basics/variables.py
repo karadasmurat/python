@@ -45,8 +45,8 @@ def main():
     # bool_basics()
     # datetime_basics()
 
-    # list_basics()
-    tuple_basics()
+    list_basics()
+    # tuple_basics()
     # set_basics()
     # dict_basics()
 
@@ -716,40 +716,7 @@ def list_basics():
     print(f"sorted({old}): {nums_sorted}")
 
     # Nested lists:
-    # If the elements of a list are themselves type list, then we call this a nested list.
-    #
-    #   [[first_row], [second_row], [third_row]]    # members are like the rows of a 2-d matrix
-    #
-    #   [[first_row],
-    #    [second_row],
-    #    [third_row]]
-    #
-    #
-    #   [[00,01,02], [11,12,13], [21,22,23]]
-    #
-    #   [[00,01,02],
-    #    [11,12,13],
-    #    [21,22,23]]
-    #
-    #    nested_list[0] is the first row.
-    #    nested_list[0][0] is the first member of the first row.
-    #
-    # To simplify, think of them as list of names, where name is a list of chars: [Harry, Hermione, Ron]
-    # class[0] = Harry (list of chars), the first element is the first list
-    # class[1] = Hermione (list of chars), the second element is the second list
-    # class[0][0] = H (first char of first name)
-    # matris halini de, aralarda '\n' ile basılmış isim listesi gibi düşün - an item in each row:
-
-    nested = [fruits, vegetables]
-    print(f"{nested=}")         # [['banana', 'apple', 'strawberry', 'grapes'], ['Spinach', 'Carrots', 'Broccoli']]
-    print(f"{nested[0]=}")      # ['banana', 'apple', 'strawberry', 'grapes']
-    print(f"{nested[0][0]=}")   # 'banana'
-
-    # Looping over a NESTED LIST
-    for row in nested:
-        print(row)  # yoklama defterindeki ogrenci isim listesi gibi, once satırlar, sonra harfler.
-        for column in row:
-            print(column)
+    ndimensional_lists()
 
     # Iterable Unpacking.
     # Assign values to multiple variables from a single expression
@@ -793,6 +760,93 @@ def list_basics():
 
 # is that call by reference?
 # void function, modifies the mutable argument - list!
+
+
+def ndimensional_lists():
+    printTitle("N-Dimensional Lists")
+
+    """
+    Lets assume there are 3 sudents (rows) and 4 courses (columns):
+
+               Math  Sci  Hist  Econ
+     Harry       60   70    80    90
+     Ron         65   75    85    95
+     Hermione    69   79    89    99
+
+    """
+
+    # 1d python lists:
+    # >>> notlar - 1D
+    # think of this collection as a single row in a table, with each cell as an item of the list.
+    # no labels in the data structure, names of lists (kind of) represents row indexes:
+    scores_harry = [60, 70, 80, 90]
+
+    scores_ron = [65, 75, 85, 95,]
+    scores_hermione = [69, 79, 89, 99]
+
+    # The collection of these rows can be visualized as a table (2D list)
+
+    # 2d list is simply as a colleciton (list) of lists:
+    # >>> 3 ogrencinin 4'er dersten notları - 2D
+    # [ list, list, list ], or [row0, row1, row2] where each row is a list.
+    #
+    #    [[first_row], [second_row], [third_row]]
+    #
+    # matris halini de, aralarda '\n' ile basılmış gibi dusunebiliriz:
+    # We can visualize this "nested" list as a 2-D matrix:
+    #
+    #    [[first_row],
+    #     [second_row],
+    #     [third_row]]
+    #
+    # In other words, a 2D list has r items, 2DList[0] = row0
+    # in each row, there are c columns. (row, column) gives us the "shape".
+    # In this case, there are 3 students as datarecords (rows): (3, 4)
+    #
+    scores_Hogwarts = [scores_harry, scores_ron, scores_hermione]
+
+    scores_Beauxbatons = [[70, 71, 72, 73], [80, 81, 82, 83], [90, 91, 92, 93]]
+    scores_Durmstrang = [[20, 21, 22, 23], [30, 31, 32, 33], [40, 41, 42, 43]]
+
+    print(f"{scores_Hogwarts=}")
+    """
+    [[60, 70, 80, 90],
+     [65, 75, 85, 95],
+     [69, 79, 89, 99]]
+    """
+
+    # 3d list, as a list of 2d lists. [ 2dlist, 2dlist ]
+    # 3D lists are List of Lists of Lists.
+    # In other words, they are List of martices (tables) - where each matrix is a list of lists.)
+    # >>> 3 okuldaki 3'er ogrencinin 4'er dersten notları - 3D
+    scores_all_schools = [scores_Hogwarts, scores_Beauxbatons, scores_Durmstrang]
+
+    print(f"{scores_all_schools=}")
+    """
+    [[[60, 70, 80, 90],
+      [65, 75, 85, 95],
+      [69, 79, 89, 99]],
+
+      [[70, 71, 72, 73],
+      [80, 81, 82, 83],
+      [90, 91, 92, 93]],
+
+      [[20, 21, 22, 23],
+      [30, 31, 32, 33],
+      [40, 41, 42, 43]]]
+    """
+
+    # Looping over a 2D list:
+    countries = [['TR', 90, 'Turkey', 'Ankara'], ["UK", 44, "United Kingdom", "London"]]
+    print(f"{countries=}")         # [['TR', 90, 'Turkey', 'Ankara'], ['UK', 44, 'United Kingdom', 'London']]
+    print(f"{countries[0]=}")      # ['TR', 90, 'Turkey', 'Ankara']
+    print(f"{countries[0][0]=}")   # 'TR'
+
+    # Looping over a NESTED LIST
+    for row in countries:
+        print(row)  # Like row by row in the table
+        for column in row:
+            print(column)   # Like cell by cell in the row.
 
 
 def modify_list(lst):
