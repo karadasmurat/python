@@ -1,0 +1,11 @@
+Desc,Lastname,Quiz,Midterm,Final,Grade
+"Empty string","",70,70,70,B
+Missing,,77,77,77,B
+"Sentinel NA",NA,77,77,77,B
+"space char", ,88,88,88,A
+Missing,Alfalfa,,80,90,A
+"sentinel NULL",John,NULL,50,50,D
+"space char",Tim, ,80,90,A
+zero,Mike,0,50,50,D
+negative,Alfred,-60,60,80,60
+"sentinel NaN",John,NULL,50,50,NaN
