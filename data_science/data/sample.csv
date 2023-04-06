@@ -1,0 +1,9 @@
+Name,Lastname,Gender,"Social Media","Education Level",Salary,Email,"Is Active",Country
+Alice,Smith,Female,Instagram,Bachelor's Degree,50000,alice.smith@example.com,Yes,USA
+Bob,Johnson,Male,LinkedIn,Master's Degree,80000,bob.johnson@example.com,Yes,USA
+Charlie,Wang,Male,Twitter,High School Diploma,20000,charlie.wang@example.com,No,China
+Diana,Lee,Female,Facebook,Associate's Degree,60000,diana.lee@example.com,Yes,Canada
+Ethan,Miller,Male,Reddit,Doctoral Degree,120000,ethan.miller@example.com,No,USA
+Fiona,Chen,Female,TikTok,Some College,35000,fiona.chen@example.com,Yes,China
+Greg,Williams,Male,YouTube,Professional Degree,100000,greg.williams@example.com,Yes,USA
+Hannah,Kim,Female,Snapchat,Some High School,15000,hannah.kim@example.com,No,Canada

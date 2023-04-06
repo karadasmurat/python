@@ -2,9 +2,10 @@ import random
 import csv
 
 all_words = []
-new_words=[]
+new_words = []
 categories = ("Eşya", "Hayvan", "İsim", "Şehir")
 MAX_LIVES = 3
+
 
 def main():
     # list of all the inputs from the player
@@ -19,17 +20,17 @@ def main():
     print("===========================================")
 
     magic_letter = first_word[-1]
-    while lives>0:
+    while lives > 0:
         # ask the user for a new word, in a random category
         category = random.choice(categories)
-        guess = input(f"{magic_letter} harfi ile başlayan {category}> ")
-        
+        guess = input(f"{magic_letter} harfi ile başlayan {category}> ").strip()
+
         if guess in history:
             print("Daha önce söylendi.")
             continue
         else:
             # print(guess)
-            if(is_correct(key=magic_letter, word=guess, category=category)):
+            if (is_correct(key=magic_letter, word=guess, category=category)):
                 score += 1
                 history.append(guess)
                 magic_letter = guess[-1].upper()
@@ -37,7 +38,7 @@ def main():
             else:
                 lives -= 1
                 print("Cevap hatalı gibi gözüküyor.\t", health_info(lives, score))
-        
+
         print("===========================================")
 
     # end of game
@@ -46,7 +47,6 @@ def main():
     if new_words:
         print("Learned new words, saving ...")
         write_to_file("data/words.csv", new_words)
-                
 
 
 def is_correct(word, key, category):
@@ -69,23 +69,23 @@ def is_correct(word, key, category):
     # 2.2 if not in csv, ask for confirmation, and append if confirmed.
     confirmation = input(f"\n\t{word.upper()} not found in the main repository. \n\tPlease confirm that the answer is true, in order to save it. \n\t[T]rue [F]alse :")
     if confirmation.upper() in ["T", "TRUE"]:
-        # TODO append csv
-        new_words.append({'category':category, 'word':word.upper()})
+        print("I will save this word after the game.")
+        new_words.append({'category': category, 'word': word.upper()})
         return True
     return False
 
 
 def health_info(lives, score):
-    return (f"{'🟢' * lives}{'🔴' * (MAX_LIVES-lives)}\t\t🌟 {score}") 
+    return (f"{'🟢' * lives}{'🔴' * (MAX_LIVES-lives)}\t\t🌟 {score}")
 
 
-def get_a_word(category = None):
+def get_a_word(category=None):
     global all_words
     all_words = read_csv("data/words.csv")
     return random.choice(all_words)
 
 
-def read_csv(fname, delimiter = ',', category = None):
+def read_csv(fname, delimiter=',', category=None):
 
     print(f"Reading from csv file: {fname} ...")
 
@@ -101,11 +101,13 @@ def read_csv(fname, delimiter = ',', category = None):
 
     return words
 
+
 def write_to_file(fname, words, mode="a"):
     with open(fname, mode) as file:
-        #file.write(f"{content}\n")
-        writer = csv.DictWriter(file, fieldnames = words[0].keys()) 
+        # file.write(f"{content}\n")
+        writer = csv.DictWriter(file, fieldnames=words[0].keys())
         writer.writerows(words)
+
 
 def print_score(score):
 
@@ -122,6 +124,7 @@ def print_score(score):
 """
 
     print(scoreboard)
+
 
 if __name__ == "__main__":
     main()
