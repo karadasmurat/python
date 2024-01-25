@@ -109,9 +109,8 @@ A neat feature of properties is that you can use them as regular attributes.
 #           return 'Hello ' + name
 
 """
-
+import math
 from abc import abstractmethod
-
 from domain import Book, Author
 
 
@@ -119,6 +118,16 @@ class MyClass:
     pass
 
 
+
+class Circle:
+    def __init__(self, r):
+        self.radius = r
+
+
+    def area(self):
+        """Calculates and returns the circle's area."""
+        return math.pi * self.radius**2
+   
 class Box:
 
     # Constructor
@@ -209,6 +218,7 @@ class Person:
 # Derived classes may override methods of their base classes.
 # (For C++ programmers: all methods in Python are effectively virtual.)
 
+ 
 class Employee:
     '''Base class for all employee types.'''
 
@@ -292,6 +302,7 @@ class SanitizedValues:
         return f"SanitizedValues(val={self._positive_value}, age={self.age})"
 
 
+
 def main():
 
     obj = MyClass()
@@ -363,12 +374,23 @@ def main():
 
     # Check variables while constructing
     # sv = SanitizedValues(-5, 44)    # ValueError: No negatives.
-    sv = SanitizedValues(33, 44)
-    sv._positive_value = -1      # Ooops! SanitizedValues(val=-1, age=44)
-    print(sv)
+    # sv = SanitizedValues(33, 44)
+    # sv._positive_value = -1      # Ooops! SanitizedValues(val=-1, age=44)
+    # print(sv)
 
-    sv.minutes = -1     # ValueError("Age cannot be negative.")
+    # sv.minutes = -1     # ValueError("Age cannot be negative.")
 
+    methodInvocationBasics()
+
+
+def methodInvocationBasics():
+
+    circle = Circle(10)
+    area1 = circle.area()       # 314.16
+
+    area2 = Circle.area(circle) # 314.16
+
+    print(f"{area1:.2f}, {area2:.2f}")
 
 def string_representation_of_objects():
     p = Person("John", "Steinbeck")

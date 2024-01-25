@@ -1235,10 +1235,34 @@ def dict_basics():
     # !!! if you try to access a key that does not exist, Python will throw an exception:
     # print( car['imaginary_key'])    # KeyError
 
+    # Nested dictionary
+    movie =   {
+        "title": "The Godfather",
+        "year": 1972,
+        "genres": ["Crime", "Drama"],
+        "ratings": {
+            "IMDB": 9.2,
+            "Rotten Tomatoes": 98
+        }
+    }
+    
+    print(movie["genres"])           # ['Crime', 'Drama']
+    print(movie["genres"][0])        # Crime
+    
+    print(movie["ratings"])          # {'IMDB': 9.2, 'Rotten Tomatoes': 98}
+    print(movie["ratings"]["IMDB"])  # 9.2
+
     # Dictionaries have a method called get that takes a key and a default value.
     # If the key appears in the dictionary, get returns the corresponding value; otherwise it returns the default value.
-    default_val = car.get('nosuchkey', -1)
-    print("Default value for the non-existing key: ", default_val)  # -1
+    author = {
+        'name': 'J.K. Rowling',
+        'age': 56,
+        'country': 'United Kingdom'
+    }
+
+    name = author.get('name', 'NA')
+    bookcnt = author.get('totalbooks', -1)
+    print(name, bookcnt)  # J.K. Rowling -1
 
     # Adding a NEW key-value pair
     car['horsepower'] = 130
