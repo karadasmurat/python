@@ -97,13 +97,16 @@ def intro():
     # you can take a variable and point it to a new object, or mutate the variable if it is mutable (i.e lists)
     # pointing to a new immutable, you will see that the identity of the variable changes.
     # changing the state of a mutable (i.e. list.append() will not change the identity
-    name1 = "MSL"           # str is immutable. name1 will refer a new object, changing identity.
+    # str is immutable. name1 will refer a new object, changing identity.
+    name1 = "MSL"
     list1.append("FRI")     # list is mutable. identity will be the same.
 
     print("name1:", id(name1), name1)   # name1: 4380884912 MSL
     print("name2:", id(name2), name2)   # name2: 4380654384 MK  (not affected)
-    print("list1:", id(list1), list1)   # list1: 4381154432 ['SAT', 'SUN', 'FRI']
-    print("list2:", id(list2), list2)   # list2: 4381154432 ['SAT', 'SUN', 'FRI']   (affected!)
+    # list1: 4381154432 ['SAT', 'SUN', 'FRI']
+    print("list1:", id(list1), list1)
+    # list2: 4381154432 ['SAT', 'SUN', 'FRI']   (affected!)
+    print("list2:", id(list2), list2)
 
     # B. Type
     print(type(name1))  # <class 'str'>
@@ -191,7 +194,8 @@ def string_basics():
     z = name + "," + house          # Harry,Gryffindor
 
     # You can insert a variable into a string using f-strings.
-    std = f"Hi! This is {name}, from {house}."    # Hi! This is Harry, from Gryffindor.
+    # Hi! This is Harry, from Gryffindor.
+    std = f"Hi! This is {name}, from {house}."
     print(std)
 
     # length of a string
@@ -239,7 +243,8 @@ def string_basics():
 
     # split - return a list from a string, using a delimiter:
     nums_str = "one two three four five"
-    nums = nums_str.split()  # Return a list of the words in the string, using sep=None as the delimiter string.
+    # Return a list of the words in the string, using sep=None as the delimiter string.
+    nums = nums_str.split()
     print(nums)     # ['one', 'two', 'three', 'four', 'five']
 
     # Notice that 'District of Columbia' has spaces
@@ -290,7 +295,8 @@ def string_basics():
     # Common String Methods
     # str.count()
     w = "internationalization"
-    print(f"Count of 'a' in {w}: {w.count('a')}")     # Count of 'a' in internationalization: 3
+    # Count of 'a' in internationalization: 3
+    print(f"Count of 'a' in {w}: {w.count('a')}")
 
     # str.endswith() & startswith()
     # If you have a variable holding a filename, you might want to check the extension.
@@ -361,8 +367,10 @@ def replaceFirstChar(arg, c):
 def shuffle_characters_of_a_string(arg):
     ''' We can first convert the string to a list of characters, shuffle the list using the shuffle() function from the random module, and then convert the shuffled list back to a string. '''
     char_list = list(arg)               # list of chars
-    random.shuffle(char_list)           # shuffle the list IN PLACE, and return None.
-    arg_shuffled = "".join(char_list)   # join chars in the list back into a string
+    # shuffle the list IN PLACE, and return None.
+    random.shuffle(char_list)
+    # join chars in the list back into a string
+    arg_shuffled = "".join(char_list)
     print(arg_shuffled)
 
 
@@ -380,7 +388,8 @@ def number_basics():
 
     f = 2.66666     # float
 
-    print(f"{f=}, {type(f)=}")              # f=2.66666, type(f)=<class 'float'>
+    # f=2.66666, type(f)=<class 'float'>
+    print(f"{f=}, {type(f)=}")
     print(f"{int(f)=}, {math.floor(f)=}")   # int(f)=2, math.floor(f)=2
     print(f"{round(f)=}, {round(f, 2)=}")   # round(f)=3, round(f, 2)=2.67
 
@@ -408,8 +417,10 @@ def number_basics():
 
     # Formatting Floats
     x = 12345.789
-    print(f"{x:.2f}")         # 12345.79      - 2 decimals + dot = 3 digits for decimal, 8 - 3 = 5 digits for whole part
-    print(f"{x:012.2f}")      # 000012345.79  - 12 digits including dot, 2 decimals and prefix padding 0.
+    # 12345.79      - 2 decimals + dot = 3 digits for decimal, 8 - 3 = 5 digits for whole part
+    print(f"{x:.2f}")
+    # 000012345.79  - 12 digits including dot, 2 decimals and prefix padding 0.
+    print(f"{x:012.2f}")
 
     import locale
     locale.setlocale(locale.LC_ALL, "en_US")
@@ -441,8 +452,10 @@ def bool_basics():
 
     # string to boolean
     print(f"{bool('')=}")       # bool('')=False - an empty string is “falsey”
-    print(f"{bool('0')=}")      # Note! bool('0')=True - non-empty string behaves as "truthy"
-    print(f"{bool('False')=}")  # Note! bool('False')=True  non-empty string behaves as "truthy"
+    # Note! bool('0')=True - non-empty string behaves as "truthy"
+    print(f"{bool('0')=}")
+    # Note! bool('False')=True  non-empty string behaves as "truthy"
+    print(f"{bool('False')=}")
 
     # For numbers, zero coerces to False while other numbers have “truthy” behavior
     print(f"{bool(0)=}")        # bool(0)=False
@@ -470,7 +483,8 @@ def datetime_basics():
     from datetime import datetime, date, time
 
     birthday = date(2014, 6, 28)    # datetime.date(2014, 6, 28)
-    print(f"The birthday is on {birthday.day} of {birthday.month}")  # The birthday is on 28 of 6
+    # The birthday is on 28 of 6
+    print(f"The birthday is on {birthday.day} of {birthday.month}")
 
     # the strftime method of the datetime module is used to format a date or time object as a string.
     # print the name of the month of the date object:
@@ -493,7 +507,8 @@ def datetime_basics():
     # %D Shortcut for % m/%d/%y (e.g., 04/18/12)
 
     print("The birthday is", birthday.strftime('%b %d, %Y'))    # Jun 28, 2014
-    print("Born on a", birthday.strftime('%A'))                 # Born on a Saturday
+    print("Born on a", birthday.strftime('%A')
+          )                 # Born on a Saturday
 
     dt = datetime(2011, 10, 29, 20, 30, 21)
     print(f"{dt.date()=}")      # datetime.date(2011, 10, 29)
@@ -536,7 +551,8 @@ def list_basics():
 
     # Initialize a list with any size and a default value:
     frequencies = [0] * 10
-    print("Frequencies initialized: ", frequencies)      # [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    # [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    print("Frequencies initialized: ", frequencies)
 
     # lists can have items with the same value:
     scores = [70, 85, 70, 90, 70]
@@ -547,7 +563,8 @@ def list_basics():
     print("The number of scores:", len(scores))  # 5
 
     # Some other built-in functions for iterables: min, max, sum
-    print(f"{max(scores)=}, {min(scores)=}, {sum(scores)=}")    # max(scores)=90, min(scores)=70, sum(scores)=385
+    # max(scores)=90, min(scores)=70, sum(scores)=385
+    print(f"{max(scores)=}, {min(scores)=}, {sum(scores)=}")
 
     # List might contain items of different types, but usually the items all have the same type.
     hybridList = ["abc", 34, True, "male"]
@@ -557,7 +574,8 @@ def list_basics():
     # By passing the result into list you can see the numbers it would generate:
     # The “up to but not including” construct is more formally known as the "half-open interval" convention.
     nums = range(5)
-    print(type(nums), len(nums), list(nums))     # <class 'range'> 5 [0, 1, 2, 3, 4]
+
+    print(type(nums), len(nums), list(nums))  # <class 'range'> 5 [0, 1, 2, 3, 4]
 
     even = list(range(0, 11, 2))
     print(even)     # [0, 2, 4, 6, 8, 10]
@@ -589,10 +607,12 @@ def list_basics():
     b = [4, 5, 6]
     c = [7, 8, 9]
 
-    d = a + b   # note that this is not an item by item addition! This is concatenation.
+    # note that this is not an item by item addition! This is concatenation.
+    d = a + b
     print(f"{a} + {b} is: {d}")     # [1, 2, 3, 4, 5, 6]
 
-    a += b          # note that this is not an item by item addition! This is concatenation.
+    # note that this is not an item by item addition! This is concatenation.
+    a += b
     print(f"{a=}")   # [1, 2, 3, 4, 5, 6]
 
     # Append elements from any other iterable to the current list:
@@ -611,10 +631,12 @@ def list_basics():
     # Remove by index - Option 1:
     # Remove and return value at a specific index (default -1, the last), raise IndexError if the index is out of range.
     lastFruit = fruits.pop()
-    print(f"Removed: {lastFruit}, fruits: {fruits}")  # Removed: pineapple, fruits: ['banana', 'apple', 'strawberry', 'grapes', 'mango']
+    # Removed: pineapple, fruits: ['banana', 'apple', 'strawberry', 'grapes', 'mango']
+    print(f"Removed: {lastFruit}, fruits: {fruits}")
 
     poppedFruit = fruits.pop(2)
-    print(f"Removed: {poppedFruit}, fruits: {fruits}")  # Removed: strawberry, fruits: ['banana', 'apple', 'grapes', 'mango']
+    # Removed: strawberry, fruits: ['banana', 'apple', 'grapes', 'mango']
+    print(f"Removed: {poppedFruit}, fruits: {fruits}")
 
     # poppedFruit = fruits.pop(333);  # IndexError: pop index out of range
 
@@ -658,13 +680,15 @@ def list_basics():
     # return the index of the first occurrence, raises a ValueError if there is no such item.
     try:
         found_index = fruits.index(q_key)
-        print(f"Index of first ocurrence {q_key} in {fruits}: {fruits.index(q_key)}")
+        print(
+            f"Index of first ocurrence {q_key} in {fruits}: {fruits.index(q_key)}")
     except ValueError:
         print(f"Value not found: {q_key}")
 
     # total number of occurrences
     multi_n = [1, 2, 1, 3, 1, 4, 2, 1, 3]
-    print(f"Total num. of ocurrences '1' in {multi_n}: {multi_n.count(1)}")     # 4
+    # 4
+    print(f"Total num. of ocurrences '1' in {multi_n}: {multi_n.count(1)}")
 
     # SORTING
     # --------
@@ -692,7 +716,8 @@ def list_basics():
     # Sort descending
     # If you want elements sorted from largest to smallest, you can specify a reverse=True parameter.
     cars = ['Ford', 'BMW', 'Mitsubishi', 'Volvo']
-    print(cars.sort(reverse=True))  # prints None! (but mutates the list anyway)
+    # prints None! (but mutates the list anyway)
+    print(cars.sort(reverse=True))
     print(cars)         # ['Volvo', 'Mitsubishi', 'Ford', 'BMW']
 
     # Sort the list by the length of the values:
@@ -707,7 +732,8 @@ def list_basics():
         {'car': 'VW', 'year': 2011}
     ]
     cars.sort(key=lambda x: x['year'], reverse=True)
-    print(cars)     # [{'car': 'BMW', 'year': 2019}, {'car': 'VW', 'year': 2011}, {'car': 'Ford', 'year': 2005}, {'car': 'Mitsubishi', 'year': 2000}]
+    # [{'car': 'BMW', 'year': 2019}, {'car': 'VW', 'year': 2011}, {'car': 'Ford', 'year': 2005}, {'car': 'Mitsubishi', 'year': 2000}]
+    print(cars)
 
     # A more general option for sorting sequences is the sorted function.
     # The sorted function works with any sequence. It returns a NEW list that is ordered
@@ -730,7 +756,8 @@ def list_basics():
     # Send a list as an input to a function with arbitrary arguments *args:
     odd = [1, 3, 5, 7, 9]
     print(*odd)                 # *args vs *list_name       1 3 5 7 9
-    arbitrary_arguments(*odd)   # arguments:  (1, 3, 5, 7, 9) -> unpack a list as a tuple ?
+    # arguments:  (1, 3, 5, 7, 9) -> unpack a list as a tuple ?
+    arbitrary_arguments(*odd)
 
     # List unpacking - only first and second element. Remaining all elements to be captured in a list
     num = [2, 4, 6, 8, 10]
@@ -755,7 +782,8 @@ def list_basics():
 
     # is that call by reference?
     letters = ['c', 'b', 'a']
-    modify_list(letters)    # the list itself will be modified after the function call
+    # the list itself will be modified after the function call
+    modify_list(letters)
     print(letters)          # ['b', 'c']
 
 # is that call by reference?
@@ -819,7 +847,8 @@ def ndimensional_lists():
     # 3D lists are List of Lists of Lists.
     # In other words, they are List of martices (tables) - where each matrix is a list of lists.)
     # >>> 3 okuldaki 3'er ogrencinin 4'er dersten notları - 3D
-    scores_all_schools = [scores_Hogwarts, scores_Beauxbatons, scores_Durmstrang]
+    scores_all_schools = [scores_Hogwarts,
+                          scores_Beauxbatons, scores_Durmstrang]
 
     print(f"{scores_all_schools=}")
     """
@@ -837,8 +866,10 @@ def ndimensional_lists():
     """
 
     # Looping over a 2D list:
-    countries = [['TR', 90, 'Turkey', 'Ankara'], ["UK", 44, "United Kingdom", "London"]]
-    print(f"{countries=}")         # [['TR', 90, 'Turkey', 'Ankara'], ['UK', 44, 'United Kingdom', 'London']]
+    countries = [['TR', 90, 'Turkey', 'Ankara'],
+                 ["UK", 44, "United Kingdom", "London"]]
+    # [['TR', 90, 'Turkey', 'Ankara'], ['UK', 44, 'United Kingdom', 'London']]
+    print(f"{countries=}")
     print(f"{countries[0]=}")      # ['TR', 90, 'Turkey', 'Ankara']
     print(f"{countries[0][0]=}")   # 'TR'
 
@@ -851,7 +882,8 @@ def ndimensional_lists():
 
 def modify_list(lst):
     lst.pop()   # remove the last element from the list.
-    lst.sort()  # Note that most list methods modify the argument while string methods return a new string and leave the original alone.
+    # Note that most list methods modify the argument while string methods return a new string and leave the original alone.
+    lst.sort()
 
 
 def iterate_list():
@@ -971,7 +1003,8 @@ def list_comprehension():
     passed = [x for x in scores if x > 60]  # [99, 88, 77, 66]
     print(passed)
 
-    even_numbers = [x for x in range(5) if x % 2 == 0]  # [0, 2, 4]     (x For x in iF format)
+    # [0, 2, 4]     (x For x in iF format)
+    even_numbers = [x for x in range(5) if x % 2 == 0]
     squares = [x * x for x in range(5)]                 # [0, 1, 4, 9, 16]
 
     print(f"{even_numbers=} {squares=} ")
@@ -985,7 +1018,8 @@ def list_comprehension():
     # you can just make multiple calls to random.choice:
     four_with_replacement = [random.choice(range(10)) for _ in range(4)]
     # Also, run a funtion n times and store results in a list
-    four_uniform_randoms = [random.randint(1, 6) for _ in range(4)]     # [6, 6, 2, 3]
+    four_uniform_randoms = [random.randint(
+        1, 6) for _ in range(4)]     # [6, 6, 2, 3]
 
     print(f"{four_uniform_randoms=}")
 
@@ -1080,11 +1114,15 @@ def tuple_basics():
     # Note that the zip() function stops pairing up elements as soon as it reaches the end of the shortest iterable.
     print("Zipping ...")
 
-    names = ["Harry", "Hermione", "Ron", "Luna", "Cho", "Cedric", "Draco", "Ginny", "Dumbledore", "Hagrid"]  # Note Dumbledore and Hagrid
-    surnames = ["Potter", "Granger", "Weasley", "Lovegood", "Chang", "Diggory", "Malfoy",  "Weasley"]
-    houses = ["Gryffindor", "Gryffindor", "Gryffindor", "Ravenclaw", "Ravenclaw", "Hufflepuff", "Slytherin", "Gryffindor"]
+    names = ["Harry", "Hermione", "Ron", "Luna", "Cho", "Cedric", "Draco",
+             "Ginny", "Dumbledore", "Hagrid"]  # Note Dumbledore and Hagrid
+    surnames = ["Potter", "Granger", "Weasley", "Lovegood",
+                "Chang", "Diggory", "Malfoy",  "Weasley"]
+    houses = ["Gryffindor", "Gryffindor", "Gryffindor", "Ravenclaw",
+              "Ravenclaw", "Hufflepuff", "Slytherin", "Gryffindor"]
 
-    students = zip(names, surnames, houses)  # [ ('Harry', 'Potter', 'Gryffindor'), ('Hermione', 'Granger', 'Gryffindor') ... ]
+    # [ ('Harry', 'Potter', 'Gryffindor'), ('Hermione', 'Granger', 'Gryffindor') ... ]
+    students = zip(names, surnames, houses)
     print(list(students))
 
     # Creating dicts from sequences
@@ -1102,7 +1140,8 @@ def tuple_basics():
     q = 'France'
     if q in countries:
         print(f"{q} is found!")
-        q_index = countries.index('France')     # the index of the first occurrence of the specified value
+        # the index of the first occurrence of the specified value
+        q_index = countries.index('France')
         print(f"countries[{q_index}] = {q}")
 
     one = 1
@@ -1143,7 +1182,8 @@ def set_basics():
     digits = [0, 1, 4, 2, 3, 3, 7, 5, 6, 9, 0, 8, 9]
     print("A List can contain duplicates.", len(digits), digits)
     digit_set = set(digits)
-    print("A Set represents a collection of DISTINCT elements.", len(digit_set), digit_set)    # {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+    print("A Set represents a collection of DISTINCT elements.", len(
+        digit_set), digit_set)    # {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
 
     # To check for membership, use the in operation.
     # in is a very fast operation on sets.
@@ -1215,10 +1255,12 @@ def dict_basics():
 
     # B. think as a collection of data for ONE attribute, i.e. 1 excel column
     born = {"MK": 81, "MSL": 14, "BK": 83}
-    city_population = {"Antalya": 1430539, "Balikesir": 1069260, "Istanbul": 11076840, "Izmir": 3431204}
+    city_population = {"Antalya": 1430539, "Balikesir": 1069260,
+                       "Istanbul": 11076840, "Izmir": 3431204}
 
     # The len function works on dictionaries; it returns the number of key-value pairs:
-    car = {'year': 2019, 'make': 'Volkswagen', 'model': 'T-ROC', 'color': 'Orange'}
+    car = {'year': 2019, 'make': 'Volkswagen',
+           'model': 'T-ROC', 'color': 'Orange'}
     print(len(car), car)
 
     tweet = {
@@ -1236,7 +1278,7 @@ def dict_basics():
     # print( car['imaginary_key'])    # KeyError
 
     # Nested dictionary
-    movie =   {
+    movie = {
         "title": "The Godfather",
         "year": 1972,
         "genres": ["Crime", "Drama"],
@@ -1245,10 +1287,10 @@ def dict_basics():
             "Rotten Tomatoes": 98
         }
     }
-    
+
     print(movie["genres"])           # ['Crime', 'Drama']
     print(movie["genres"][0])        # Crime
-    
+
     print(movie["ratings"])          # {'IMDB': 9.2, 'Rotten Tomatoes': 98}
     print(movie["ratings"]["IMDB"])  # 9.2
 
@@ -1270,13 +1312,15 @@ def dict_basics():
     # Deleting keys
     del (car['color'])
 
-    print("delete the key 'color' and add 'horsepower':", car)       # {'year': 2019, 'make': 'Volkswagen', 'model': 'T-ROC', 'horsepower': 130}
+    # {'year': 2019, 'make': 'Volkswagen', 'model': 'T-ROC', 'horsepower': 130}
+    print("delete the key 'color' and add 'horsepower':", car)
 
     # IN operator
     # check if a KEY is in the dictionary (search the key)
     q_key = 'make'
     if q_key in car:       # True
-        print("key found! corresponding value is:", car[q_key])     # get the value using key
+        print("key found! corresponding value is:",
+              car[q_key])     # get the value using key
 
     # IN operator also works with SEQUENCES.
     # You can use the in statement with a list, set, or string to check for membership
@@ -1306,7 +1350,8 @@ def dict_basics():
 
     countries = ['United States', 'Australia', 'Japan', 'India', 'Russia']
     countries_dict = {'country': countries}
-    print(countries_dict)       # {'country': ['United States', 'Australia', 'Japan', 'India', 'Russia']}
+    # {'country': ['United States', 'Australia', 'Japan', 'India', 'Russia']}
+    print(countries_dict)
 
     # Sample 2 - dict as a dict value {key: {}}
     europe = {
@@ -1354,9 +1399,12 @@ def dict_basics():
 
     # create 2 lists from the keys and values of a dict:
     car = cars[0]
-    print("Dictionary:", car)                               # {'year': 2019, 'make': 'Volkswagen', 'model': 'T-ROC'}
-    print("List of keys:", [key for key in car])            # ['year', 'make', 'model']
-    print("List of values:", [car[key] for key in car])     # [2019, 'Volkswagen', 'T-ROC']
+    # {'year': 2019, 'make': 'Volkswagen', 'model': 'T-ROC'}
+    print("Dictionary:", car)
+    # ['year', 'make', 'model']
+    print("List of keys:", [key for key in car])
+    # [2019, 'Volkswagen', 'T-ROC']
+    print("List of values:", [car[key] for key in car])
 
     """
     Dictionary as a set of counters
