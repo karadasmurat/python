@@ -13,12 +13,12 @@ PEP stands for Python Enhancement Proposal, which is a community process
 import random
 import math
 from typing import List
-from util import printTitle
-from util import is_positive, is_even
+from basics.util import printTitle
+from basics.util import is_positive, is_even
 
 from functools import reduce
 
-from domain import Department
+from domain.domain import Department
 
 
 def main():
@@ -376,22 +376,21 @@ def shuffle_characters_of_a_string(arg):
 
 def number_basics():
 
-    printTitle("Numbers")
+    printTitle("Variables - Numbers")
 
     # Do integers and floats have methods? Yes, again, everything in Python is and object and objects have methods.
     # dir() lists all the attributes of the object passed into it.
     # This is easy to verify by invoking dir on an integer (or a variable holding an integer):”
     # print("\ndir(<int>):\n", dir(100))
 
-    x = 1234        # int
-    print(f"{x=}, {type(x)=}")              # x=1234, type(x)=<class 'int'>
+    x = 1234
+    print(type(x), x)  # <class 'int'> 1234
 
-    f = 2.66666     # float
-
-    # f=2.66666, type(f)=<class 'float'>
-    print(f"{f=}, {type(f)=}")
-    print(f"{int(f)=}, {math.floor(f)=}")   # int(f)=2, math.floor(f)=2
-    print(f"{round(f)=}, {round(f, 2)=}")   # round(f)=3, round(f, 2)=2.67
+    f = 2.66666
+    print(type(f), f)  # <class 'float'> 2.66666
+    print(int(f), math.floor(f))   # 2 2
+    print(round(f), round(f, 2), round(f, ndigits=2),
+          round(number=f, ndigits=2))   # 3 2.67 2.67 2.67
 
     x = 10      # <class 'int'>
     y = x / 1   # <class 'float'>
@@ -575,7 +574,8 @@ def list_basics():
     # The “up to but not including” construct is more formally known as the "half-open interval" convention.
     nums = range(5)
 
-    print(type(nums), len(nums), list(nums))  # <class 'range'> 5 [0, 1, 2, 3, 4]
+    # <class 'range'> 5 [0, 1, 2, 3, 4]
+    print(type(nums), len(nums), list(nums))
 
     even = list(range(0, 11, 2))
     print(even)     # [0, 2, 4, 6, 8, 10]

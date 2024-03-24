@@ -6,13 +6,16 @@ import time
 import urllib.parse
 import pandas as pd
 import math
+from urllib.parse import urlencode
 
 # url_hemen = "https://www.migros.com.tr/rest/hemen/search/screens/money-indirimli-market-urunleri-dt-5?reid=1710176183071000028"
 url_hemen = "https://www.migros.com.tr/rest/hemen/products/search?discount-type=MCC&sayfa=1&sirala=cok-satanlar&reid=1710176183071000028"
 url_hemen_part1 = "https://www.migros.com.tr/rest/hemen/products/search?discount-type=MCC&sayfa="
 url_hemen_part2 = "&sirala=cok-satanlar"
 
-cookie_sahibinden = "st=ac8fe03a2726c481da9aa2f881e456a1bcb60af5dbdcc72bb1f030d1d3d01537380b954b02fda9696cd1013f979e499761e061afd785f49fd; vid=245; cdid=u85EKjH9iqeOwYDn65f7d417; csss=JIxey7FvSKONsAEJThVtc0GS7mzyfwvr3D6y1FhDQ2jAJklfk4g0PfkhbyF3vQro8gBLNJEhsKuAhudXwlZ_dA; csls=B0VA_8_jusZTL20-BXI_ua14Dr0tITKKVUMkwws87-i-A3cHFAYXH85TBpMkH-GnAGRjVtAySZ4JHd1QSt54pQ; csid=8u0zj7zFJNTytsG7QVsO4H69eXGOMLV43dxoKNrATzRXPIfbdYNMmx5jfaQ8WgyW_74lZ6GhIJchkqyZjvaRsDWO2TP9dK0OnW2dr-u7Y70C2CCwYdBOPwi03fGDuButpkFPXJ_ouD0Yx2q7ZRFBssW0s87yRxEWbIsEXjfUGqU5uqjhyaV_bEhy53X87qPKiGD1YqfH01tS9EEN4EYnz5y3NYyYjP0bgShflFQcw2GThj9pzAQfcwgp6YJ7_wd8_f73rhjwbeqHxxfPu34HkKNvxTQ_tLG343YA-pmf2cZfngUg_1EbUC98wxW1LYc5xQ6G_dvJHAZpIxVh3og0X9i4hSEvrPhgPg1fE-NuRi8sSSCc5aRbNMZKeW4LKPLo; __cf_bm=fcvYndCW4pxiNpK.E6IQtn8yxjMdkbsGGI5NT.dVHRs-1710740503-1.0.1.1-qBAaL1GlaS0PuooVdLN5bSUBPluRYzfveVo6.GFcUZfibpGA9tDcn8KNE_I_seGwaS59J5ONv3pZQ2OqDZwusA; __cflb=0H28vudCb12J6LVB9qNjWurRvgFyPgDAXSkiei82kK5; nwsh=std; showPremiumBanner=false; dp=1920*1080-landscape; MS1=; geoipCity=istanbul; geoipIsp=turkcell_superonline; __ssid=147f3c2928c3c271d6c9d176e622341; cf_clearance=g4HVbFBSJiWQT0GJSFrMCz6b3YIkEybutnYrvr1BtL0-1710740511-1.0.1.1-wgZ9CrNDDELBsBuQM8gKHnrwMvPLGYp6KXMqOeZH9BGJ1uYps9AZTBtR_CCKQUvd4sFp7o7SXsnYRj_GsPhOig; _gcl_au=1.1.2071832485.1710740511; __gads=ID=ba5825e8e2ef16a8:T=1710740511:RT=1710740511:S=ALNI_MZxZbbgvOTtZJm4ldM7wZDHPl-Alw; __gpi=UID=00000d74f66a2f6a:T=1710740511:RT=1710740511:S=ALNI_MZ6W_qAvv9HzWUtC1sX2k3CdGDrSw; __eoi=ID=bdf30dfb8cc254db:T=1710740511:RT=1710740511:S=AA-Afjaw7zixnKwHc2F4iCPx_3Mn; _ga_CVPS3GXE1Z=GS1.1.1710740503.4.1.1710740514.49.0.0; _ga=GA1.2.2010616745.1710740512; _gid=GA1.2.1334290083.1710740514; _tt_enable_cookie=1; _ttp=3TdjYJtFkEAMUidSyX2TacRKrnY; _dc_gtm_UA-235070-1=1; OptanonConsent=isGpcEnabled=0&datestamp=Mon+Mar+18+2024+08%3A42%3A06+GMT%2B0300+(GMT%2B03%3A00)&version=202310.2.0&browserGpcFlag=0&isIABGlobal=false&consentId=1ccdb54a-761f-4cc9-8c2b-1e0ab65c4f2f&interactionCount=1&landingPath=https%3A%2F%2Fwww.sahibinden.com%2Farazi-suv-pickup-kia-sorento-2.5-crdi%3Fa277_max%3D2007%26pagingSize%3D50%26a277_min%3D2007&groups=C0004%3A0%2CC0001%3A1%2CC0003%3A0%2CC0002%3A0&hosts=H131%3A0%2CH108%3A0%2CH97%3A0%2CH110%3A0%2CH76%3A0%2CH77%3A0%2CH147%3A0%2CH78%3A0%2CH98%3A0%2CH79%3A0%2CH106%3A0%2CH58%3A0%2CH174%3A0%2CH8%3A0%2CH80%3A0%2CH67%3A0%2CH27%3A0%2CH14%3A0%2CH82%3A0%2CH83%3A0%2CH99%3A0%2CH10%3A0%2CH31%3A0%2CH114%3A0%2CH84%3A0%2CH175%3A0%2CH176%3A0%2CH115%3A0%2CH117%3A0%2CH100%3A0%2CH87%3A0%2CH88%3A0%2CH119%3A0%2CH89%3A0%2CH3%3A1%2CH4%3A0%2CH90%3A0%2CH91%3A0%2CH102%3A0%2CH5%3A0%2CH140%3A0%2CH93%3A0%2CH103%3A0%2CH94%3A0%2CH61%3A0%2CH36%3A0%2CH141%3A0%2CH122%3A0%2CH96%3A0%2CH104%3A0%2CH125%3A0%2CH105%3A1%2CH142%3A0&genVendors="
+COOKIE_SAHIBINDEN = "st=ae2dd4d990048486694e1a43f299e30eded4de64abad7cd37de07873629ed757016ed5936dd930b0e6bce35046457a5565dcd26049dc8c605; vid=846; cdid=G4ayfs4tzhY441MA65feb6d0; csss=fovznyyk7Xcfr899uS5y0bxFHbO_WfUjlmac3QpYInvogVs68uJqn7UIKd2dQAf0TFsUDBYnYJMY1ztWzpeurA; csls=tSiIWsc46GFEeZVBH1HGg-6fyK9mFGpHIbDFu8DuXraqjpVnzc_76WjC63v1w_zEvUJTWk1_kZJmzlyS4djjOw; csid=i168lz8RlGXZLt3ObQtN7ZDTef8OncUOnjii-kmAFkcThgjvAypKvy6xPeSHL-p1Nz3sUMvOChPbgu03t9LuPBsnsWvaNJmILkg0kEvckpAigaBqVeEU2_kn3belCUWp7xy3odJIRaWYrjn43KkZIIikmnw3udd3W4UJGTwy3DSHAXXAncu5JOrwlGjYPSuUuBMb_MF7kHBC2V9g3HxRwnoMkXkZQX7CXJo0ypxB29BfmVmahyH-SMQ2rPvhkW60LMSRTPAgKibMTEPS0_6Cy2FC1udfUaHgxILI0J8YItPGEp9dxcSFvZjjWo_gR4twCKV_2S-HHYs7kQUzoaWxy8RZDYGXIsnJly_RkU4sFjCEsZnyXEV8KCBDVV7HNF11; __cf_bm=q7Idr82sFHNI7tWQD9KxLVxbGF8nPAp72uTpluzYLdg-1711191760-1.0.1.1-qqgmZM5iMlZHM8hgyZ4K7DQSxzX7fkAZ8SZx2cJQYRyQa_p78mka3Vw1CodYVjZ3aDrZk8r4q36XnFKwkKsTtQ; __cflb=0H28vudCb12J6LVB9qNjWurRvgFyPgDAgwVd35Ma7J3; nwsh=std; MS1=; showPremiumBanner=false; _gcl_au=1.1.1627568293.1711191767; dp=1920*1080-landscape; geoipCity=istanbul; geoipIsp=turkcell_superonline; __ssid=02a16ca876219880136f2308f52bdfc; cf_clearance=pXfJ190T02nr1JP7oJtNsxAZQduGtpmdQWPwTazFXQs-1711191767-1.0.1.1-8gvDOw168TgfjJbKX4e6QJFhNHomrO.HbJlEonv1vM3nDP0qkFzGyRu2btRRxBmnSH4eFdy3pxWOzfpcCCYeBg; __gads=ID=f09185997e935248:T=1711191767:RT=1711191767:S=ALNI_MbEr2l4Y3TqXusoSSWhEHZt8mHkYQ; __gpi=UID=00000d8114ee0254:T=1711191767:RT=1711191767:S=ALNI_MYBnXg1r2gJHzOfxAn-nYHzG2pjTw; __eoi=ID=fd44d5bd90a3bfb3:T=1711191767:RT=1711191767:S=AA-AfjbsHBL6qgf5ZANBu9T8Parp; _gid=GA1.2.1277905064.1711191769; _dc_gtm_UA-235070-1=1; _ga_CVPS3GXE1Z=GS1.1.1711191735.3.1.1711191768.27.0.0; _ga=GA1.1.1430915538.1711191767; _tt_enable_cookie=1; _ttp=9lYx0P2DKd8ShPjUrN5inWAqhqj; _gali=div-gpt-ad-1343223117871-0; OptanonConsent=isGpcEnabled=0&datestamp=Sat+Mar+23+2024+14%3A02%3A57+GMT%2B0300+(GMT%2B03%3A00)&version=202310.2.0&browserGpcFlag=0&isIABGlobal=false&consentId=4b25e9e5-6191-4529-b5d7-bbd14628bba4&interactionCount=1&landingPath=https%3A%2F%2Fwww.sahibinden.com%2Farazi-suv-pickup-kia-sorento-2.5-crdi%3Fa277_max%3D2008%26pagingSize%3D50%26a277_min%3D2006&groups=C0004%3A0%2CC0001%3A1%2CC0003%3A0%2CC0002%3A0&hosts=H131%3A0%2CH108%3A0%2CH97%3A0%2CH110%3A0%2CH76%3A0%2CH77%3A0%2CH147%3A0%2CH78%3A0%2CH98%3A0%2CH79%3A0%2CH106%3A0%2CH58%3A0%2CH174%3A0%2CH8%3A0%2CH80%3A0%2CH67%3A0%2CH27%3A0%2CH14%3A0%2CH82%3A0%2CH83%3A0%2CH99%3A0%2CH10%3A0%2CH31%3A0%2CH114%3A0%2CH84%3A0%2CH175%3A0%2CH176%3A0%2CH115%3A0%2CH117%3A0%2CH100%3A0%2CH87%3A0%2CH88%3A0%2CH119%3A0%2CH89%3A0%2CH3%3A1%2CH4%3A0%2CH90%3A0%2CH91%3A0%2CH102%3A0%2CH5%3A0%2CH140%3A0%2CH93%3A0%2CH103%3A0%2CH94%3A0%2CH61%3A0%2CH36%3A0%2CH141%3A0%2CH122%3A0%2CH96%3A0%2CH104%3A0%2CH125%3A0%2CH105%3A1%2CH142%3A0&genVendors="
+USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
+NUMBER_SEPERATOR = ""  # "_"
 
 
 class Product:
@@ -145,10 +148,7 @@ def hemen():
 
 def get_soup(url):
     # security issues - may get 403
-    hdrs = {
-        "Cookie": cookie_sahibinden,
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
-    }
+    hdrs = {"Cookie": COOKIE_SAHIBINDEN, "User-Agent": USER_AGENT}
     res = requests.get(url, headers=hdrs)
 
     # DEBUG response
@@ -191,21 +191,38 @@ def process_sahibinden(soup, cars):
             year = tr.contents[5].text.strip()
 
             # Python 3.6 now supports PEP515, and so you can use _ for float and integer literal readability improvement.
-            km = tr.contents[7].text.strip().replace(".", "_")
+            km = tr.contents[7].text.strip().replace(".", NUMBER_SEPERATOR)
             price = tr.contents[11].text.strip().split()[0].replace(
-                ".", "_")  # "620.000 TL" -> 620_000
-            cars.append({"year": year, "km": km, "price": price})
+                ".", NUMBER_SEPERATOR)  # "620.000 TL" -> 620_000
+            pubdate = tr.contents[13].text.strip().replace("\n\n", " ")
+            cars.append({"year": year, "km": km,
+                        "price": price, "date": pubdate})
 
     # print(len(cars), cars)
 
 
-def get_url(offset, size=50):
-    return f"https://www.sahibinden.com/arazi-suv-pickup-kia-sorento-2.5-crdi?a277_max=2007&&pagingOffset={offset}&pagingSize={size}&a277_min=2007"
+def get_url(url, qparams):
+
+    # f"https://www.sahibinden.com/arazi-suv-pickup-kia-sorento-2.5-crdi?a277_min={YEAR_MIN}&a277_max={YEAR_MAX}&pagingOffset={offset}&pagingSize={size}"
+
+    encoded_url = f"{url}?{urlencode(qparams)}"
+    print("DEBUG: ", encoded_url)
+    return encoded_url
+
+
+def get_next_page(url, qparams):
+    qparams["pagingOffset"] = int(
+        qparams["pagingOffset"])+50 if qparams["pagingOffset"] else 50
+    return get_url(url, qparams)
 
 
 def sahibinden():
-    paging_size = 50
-    url = get_url(offset=0, size=paging_size)
+    PAGING_SIZE = 50
+    params = {'a277_min': 2006, "a277_max": 2008,
+              "pagingOffset": 0, "pagingSize": PAGING_SIZE}
+
+    url = get_url(
+        url=f"https://www.sahibinden.com/arazi-suv-pickup-kia-sorento-2.5-crdi", qparams=params)
     cars = []
 
     soup = get_soup(url)
@@ -221,13 +238,14 @@ def sahibinden():
 
     process_sahibinden(soup, cars)
 
-    pageCount = math.ceil(cnt / paging_size)
+    pageCount = math.ceil(cnt / PAGING_SIZE)
     # print(f"DEBUG: results: {cnt} pageSize: {paging_size} pageCount: {pageCount}")
 
     # get all pages one by one for the resultset
     for i in range(pageCount-1):
-        url = url = get_url(offset=(i+1)*paging_size, size=paging_size)
-        # print("DEBUG: Visiting next page: ", url)
+        # url = get_url(offset=(i+1)*PAGING_SIZE, size=PAGING_SIZE)
+        url = get_next_page(url, params)
+        print("DEBUG: Visiting next page: ", url)
         soup = get_soup(url)
         process_sahibinden(soup, cars)
         time.sleep(0.5)
@@ -235,6 +253,8 @@ def sahibinden():
     # pandas DataFrame from a list of dictionaries
     df = pd.DataFrame.from_dict(cars)
     print(df)
+    df.to_csv("sahibinden_kia_2006-2008_202403.csv",
+              encoding='utf-8', index=False)
 
 
 def coin_stats():

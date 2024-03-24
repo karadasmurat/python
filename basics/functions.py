@@ -214,7 +214,8 @@ def onSomething__higher_order_executor_noarg(f):
 
 
 def scope_demo():
-    x = 5               # Variables defined inside of a function or method will be local.
+    # Variables defined inside of a function or method will be local.
+    x = 5
     name = "MK"
     capacity = 111      # Python will allow you to override variables in the global
     print(locals())     # {'x': 5, 'name': 'MK', 'capacity': 111}
@@ -230,7 +231,8 @@ def scope_demo():
 # Note that “Default parameters must be declared after non-default parameters. Otherwise, SyntaxError
 def change_case(camel, seperator="_"):
     '''Take camel case string and return each word seperated by seperator'''
-    other_case = camel[:1].lower()      # begin with the first letter lower case.
+    other_case = camel[:1].lower(
+    )      # begin with the first letter lower case.
     for letter in camel[1:]:            # loop for letters from index 1 to the end
         if letter.isupper():
             other_case += seperator
@@ -264,6 +266,17 @@ def say_hi_to_all(**kwargs):
         print(f"hi, {kwargs[key]}!")
 
 
+# *args is used as a parameter to send a non-keyworded variable-length argument list to functions
+# **kwargs is used to pass a keyworded, variable-length argument dictionary to functions
+# names args and kwargs is conventionally used, though not enforced by the language
+def magic(*args, **kwargs):
+    print("unnamed args:", type(args), args)
+    print("keyword args:", type(kwargs), kwargs)
+
+    for k in kwargs:
+        print(f"{k}={kwargs[k]}")
+
+
 def lambda_basics():
     """
 
@@ -291,7 +304,8 @@ def lambda_basics():
     printTitle("lambda basics")
 
     print(doubleIt(10))             # regular function call
-    print((lambda x: x * 2)(10))  # define and then immediately call the lambda function
+    # define and then immediately call the lambda function
+    print((lambda x: x * 2)(10))
 
     # As a lambda function is an expression, it can be named:
     # Note that this is not the main use, main use is anonymous in-place definition
@@ -305,8 +319,10 @@ def lambda_basics():
 
     # how to pass a value to an event handler using lambda:
     # normally, we cannot pass an arg to handler, since we only use its name to pass it as an argument to onSomething listener.
-    onSomething__higher_order_executor_noarg(handler)                        # Handling:  Default
-    onSomething__higher_order_executor_noarg(lambda x='item1': handler(x))   # Handling:  item1
+    onSomething__higher_order_executor_noarg(
+        handler)                        # Handling:  Default
+    onSomething__higher_order_executor_noarg(
+        lambda x='item1': handler(x))   # Handling:  item1
 
 
 def handler(str="Default"):
@@ -413,15 +429,18 @@ def fibonacci_memoization(n, memo={}):
         return memo[n]
 
     elif n == 0:
-        memo[n] = 0     # store the result in the memo dictionary before returning it.
+        # store the result in the memo dictionary before returning it.
+        memo[n] = 0
         return 0
 
     elif n == 1:
-        memo[n] = 1     # store the result in the memo dictionary before returning it.
+        # store the result in the memo dictionary before returning it.
+        memo[n] = 1
         return 1
 
     else:
-        result = fibonacci_memoization(n-1, memo) + fibonacci_memoization(n-2, memo)
+        result = fibonacci_memoization(
+            n-1, memo) + fibonacci_memoization(n-2, memo)
         memo[n] = result
         return result
 

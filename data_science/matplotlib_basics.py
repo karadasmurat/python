@@ -1,4 +1,4 @@
-from matplotlib import pyplot as plt
+import matplotlib.pyplot as plt
 import csv
 
 
@@ -10,12 +10,19 @@ def plot_line():
 
     # create a line chart, years on x-axis, gdp on y-axis
     # plt.plot(years, gdp)
-    plt.plot(years, gdp, color='green', marker='o', linestyle='solid')
+
+    # note that there is a **kwargs parameter in plot function
+    plt.plot(years, gdp, color='green', marker='o',
+             linestyle='solid', label='gdp series')
 
     # add a title
     plt.title("Nominal GDP")
     # add a label to the y-axis
     plt.ylabel("Billions of $")
+    
+    # Because we've assigned label(s) to series, we can get a legend for free 
+    # (loc=9 means "top center")
+    plt.legend(loc=9)
 
     # Display the plot
     plt.show()
