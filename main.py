@@ -1,4 +1,5 @@
 import data_science.matplotlib_basics as mpbasics
+import basics.basics as basics
 import basics.web_scraping as scraping
 import basics.sequences as seq
 import basics.functions as func
@@ -6,6 +7,9 @@ import basics.variables as vars
 
 
 def main():
+
+    basics.main()
+
     # vars.number_basics()
 
     # func.magic()
@@ -17,7 +21,7 @@ def main():
     # scraping.hemen()
     # scraping.xml_get_unblocked(basics.web_scraping.url_hemen)
     # scraping.coin_stats()
-    scraping.sahibinden()
+    # scraping.sahibinden()
 
 
 if __name__ == "__main__":

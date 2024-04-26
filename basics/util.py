@@ -1,6 +1,7 @@
 import os
 from typing import List
-from domain.domain import MenuItem
+# define the absolute path:
+from domain.General import MenuItem
 
 
 def clear_terminal():
