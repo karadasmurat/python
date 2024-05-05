@@ -177,18 +177,22 @@ In other words, Python, unlike those other languages, uses two things to denote 
 #   x = is_even(10)                 # no <modulename> prefix
 
 import random
-import util
+import domain.Wizard as Wiz
 
 # Global Variable
 my_global_var = 100
 
 
 def main():
+    print("Hello, there!")
     print("__name__ : ", __name__)
+
+    # import from another (sibling) directory
+    Wiz.Wizard
 
     # print_basics()
     # input_basics()
-    operator_basics()
+    # operator_basics()
     # random_basics()
 
 

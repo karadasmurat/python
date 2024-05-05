@@ -6,7 +6,7 @@ import math
 import random
 from typing import List
 
-from domain import Book, Author
+from domain.Library import Book, Author  # import classes
 
 
 def main():
@@ -18,7 +18,7 @@ def main():
 
     # print(remove_first_and_last_items([1, 2, 3, 4]))
     # check_duplicates_v1([1,2,3,2,4])
-    print("Frequencies:", count_letters_v2("KarAdas"))
+    # print("Frequencies:", count_letters_v2("KarAdas"))
 
     # print(getBiggerOfTwo(-15, 10))
     # printOnesDigit(1357)
@@ -27,6 +27,9 @@ def main():
     # tipCalculator()
     # fizzBuzzGame()
     # generatePassword()
+    # right_justify("MK", -1)
+    # grid(4, 2)
+    char_count("Hello", "l")
 
 
 """
@@ -43,11 +46,13 @@ Write a function that draws a grid like the following, with n rows and n columns
 |         |         |
 + - - - - + - - - - +
 """
+
+
 def exercise_draw_0(side_length: int):
-    top_bottom_pre  = "+ - - - - "
-    middle_pre      = "|         "
-    top_bottom_post  = "+"
-    middle_post      = "|"
+    top_bottom_pre = "+ - - - - "
+    middle_pre = "|         "
+    top_bottom_post = "+"
+    middle_post = "|"
 
     for s in range(side_length):
         print(top_bottom_pre * side_length + top_bottom_post)
@@ -55,13 +60,43 @@ def exercise_draw_0(side_length: int):
             print(middle_pre * side_length + middle_post)
     print(top_bottom_pre * side_length + top_bottom_post)
 
+# version 2 - draw a grid
+# row ends are drawn last
+# bottom line is drawn last last
+
+
+def grid(r=1, c=1):
+    base = "+ - - - "
+    base_end = "+"
+    mid = "|       "
+    mid_end = "|"
+
+    print("grid!")
+
+    for row in range(r):
+        for col in range(c):
+            print(base, end="")
+        print(base_end)
+
+        for i in range(3):
+            for col in range(c):
+                print(mid, end="")
+            print(mid_end)
+
+    for col in range(c):
+        print(base, end="")
+    print(base_end)
+
+
 # Check if a string is a palindrome.
-# A palindrome is a word, phrase, number, or sequence of characters that reads the same backward as forward. 
+# A palindrome is a word, phrase, number, or sequence of characters that reads the same backward as forward.
 # Note that a palindrome must have more than one character.
+
+
 def is_palindrome(text: str):
     if len(text) < 2:
         return False
-    
+
     left = 0                # pointer following left index
     right = len(text)-1     # pointer following right index
     res = True
@@ -69,31 +104,38 @@ def is_palindrome(text: str):
     while (left < right):
         if text[left] != text[right]:
             res = False
-            break           # immediately exit on the first ocurrence of negative result.
-        left +=1
+            # immediately exit on the first ocurrence of negative result.
+            break
+        left += 1
         right -= 1
 
     return res
 
-# Write a function called middle that takes a list and returns a new list that contains all but the first and last elements. 
+# Write a function called middle that takes a list and returns a new list that contains all but the first and last elements.
 # So middle([1,2,3,4]) should return [2,3].
+
+
 def remove_first_and_last_items(numbers: List[int]):
     copy = numbers
     copy.pop(0)     # remove the first item
     copy.pop()      # remove the last item
     return copy
 
-# Write a function that takes a list and returns True if there is any element that appears more than once. 
+# Write a function that takes a list and returns True if there is any element that appears more than once.
 # It should not modify the original list.
+
+
 def check_duplicates_v1(lst: List):
     """
     Returns True if there is any element that appears more than once in the list.
     """
     for i in range(len(lst)):
-        for j in range(i + 1, len(lst)):    # comparing each element of the list to all the elements that come after it
+        # comparing each element of the list to all the elements that come after it
+        for j in range(i + 1, len(lst)):
             if lst[i] == lst[j]:
                 return True
     return False
+
 
 def check_duplicates_v2(lst):
     """
@@ -105,7 +147,6 @@ def check_duplicates_v2(lst):
             return True
         seen.add(item)
     return False
-
 
 
 # Suppose you are given a string and you want to count how many times each letter appears.
@@ -127,6 +168,7 @@ def count_letters_v1(text: str):
 
     return freq     # KarAdas -> {'k': 1, 'a': 3, 'r': 1, 'd': 1, 's': 1}
 
+
 def count_letters_v2(text: str):
     """
         There are several ways you could do it:
@@ -140,17 +182,14 @@ def count_letters_v2(text: str):
 
     for letter in text.lower():
         i = ord(letter) - ord('a')  # simple hash function for a character.
-        freq[i] += 1                # use the hash to set the value: list[hash(letter)]
+        # use the hash to set the value: list[hash(letter)]
+        freq[i] += 1
 
-    return freq                     # KarAdas -> [3, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0]
-
-
-
-
+    # KarAdas -> [3, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0]
+    return freq
 
 
-
-# Ask the user to enter three numbers. Add together the first two numbers and then multiply this total by the third. 
+# Ask the user to enter three numbers. Add together the first two numbers and then multiply this total by the third.
 # Display the answer as "The result is [answer]".
 def exercise0():
     a = int(input("Enter the first number "))
@@ -158,9 +197,11 @@ def exercise0():
     c = int(input("Enter the multiplier "))
     print("The result is", (a + b) * c)
 
-# Ask the user to enter a number between 10 and 20 (inclusive). 
-# If they enter a number within this range, display the message “Thanks, 
+# Ask the user to enter a number between 10 and 20 (inclusive).
+# If they enter a number within this range, display the message “Thanks,
 # If not in range, or is not a number, display “Invalid Input”.
+
+
 def exercise1():
     '''Try to parse user input to int, and then check the range.'''
     n = 0
@@ -171,46 +212,55 @@ def exercise1():
             print("Thanks.")
         else:
             print("Input not in range.")
-    
+
     except ValueError:
         print("Invalid Input.")
 
 # Write a function to return the bigger of two integers
+
+
 def getBiggerOfTwo(x: int, y: int):
     return x if x > y else y
+
+# Write a compare function that returns 1 the first parameter is greater than the second, and -1 otherwise.
+
+
+def compare(x, y):
+    return 1 if x > y else -1
 
 # Ask the user to enter their first name and then ask them to enter their surname in upper case.
 # Join them together with a space between and display the name and the number of chars in the whole name (without spaces).
 #   "Hi, <Surname> <Name>. You have <total> characters in your full name."
+
+
 def exercise2():
     fname = input("What is your name? ")
     lname = input("What is your name? ")
     print(f"Hi, {lname.capitalize()} {fname.capitalize()}. You have {len(lname+fname)} characters in your full name.")
 
 
-
 # Ask the user to type in their name and then tell them how many vowels are in their name.
 def exercise2_1():
-    vowels = ['a', 'e','i','o','u']
+    vowels = ['a', 'e', 'i', 'o', 'u']
     vowel_cnt = 0
-    name = input("Tell me your name, and I will tell you how many vowels it contains:  ").lower()
+    name = input(
+        "Tell me your name, and I will tell you how many vowels it contains:  ")
     for letter in name:
-        if letter in vowels:
+        if letter.lower() in vowels:
             vowel_cnt += 1
-    
+
     print(f"Your name has", vowel_cnt, "vowels.")
 
 
-
-# Create a program that will ask the user to enter a word and change it into Pig Latin. 
-# Pig Latin takes the first consonant of a word, moves it to the end of the word and adds on an “ay”. 
-# If a word begins with a vowel you just add “way” to the end. 
-# For example, banana becomes ananabay, and aadvark becomes aadvarkway. 
+# Create a program that will ask the user to enter a word and change it into Pig Latin.
+# Pig Latin takes the first consonant of a word, moves it to the end of the word and adds on an “ay”.
+# If a word begins with a vowel you just add “way” to the end.
+# For example, banana becomes ananabay, and aadvark becomes aadvarkway.
 def exercise3():
     pig_latin_word = ""
-    vowels = ['a', 'e','i','o','u']
+    vowels = ['a', 'e', 'i', 'o', 'u']
     word = input("Enter a word, and I will translate it to Pig Latin: ")
-    if len(word) == 0: 
+    if len(word) == 0:
         print("I need some characters to translate!")
     elif word[0] in vowels:
         pig_latin_word = word + "way"
@@ -247,6 +297,8 @@ def exercise6():
         print(letter)
 
 # Ask the user to enter a number between 1 and 10 and then display the times table for that number.
+
+
 def exercise7():
     n = int(input("Enter a number, and I will give you times table for that number: "))
     for i in range(1, 11):
@@ -254,7 +306,7 @@ def exercise7():
 
 
 # Ask the user to enter a number and then enter another number. Add these two numbers together.
-# Then ask if they want to add another number. 
+# Then ask if they want to add another number.
 # If yes, keep asking a new number and adding it to the sum. Display the total at the end.
 def exercise8():
     print("Welcome to Mega Adder!")
@@ -272,8 +324,10 @@ def exercise8():
 
     print("\nDone. The sum is: ", sum)
 
+
 def basket_info(items):
     print("Here is the basket: ", items)
+
 
 def menu(menuItems):
     print()
@@ -292,24 +346,29 @@ def menu(menuItems):
 
     return menuItems[selected-1]
 
+
 def auto_tune():
     return ['DMAX', 'TLC', 'TRT BELGESEL', 'Bloomberg', 'CNN International']
 
 # Write a program to store tv channels list.
 # The users can auto tune (reset) / Delete / Move / Rename a channel as much as they want.
+
+
 def exercise9():
     channels = auto_tune()
     print(channels)
 
     while True:
-        op = menu(['Auto Tune', 'Delete channel', 'Move a channel', 'Rename a channel', 'Quit'])
+        op = menu(['Auto Tune', 'Delete channel',
+                  'Move a channel', 'Rename a channel', 'Quit'])
 
         if op == 'Auto Tune':
             channels = auto_tune()
             print("✅ Auto Tune complete. Channels:", channels)
 
         elif op == 'Delete channel':
-            item_to_remove = input("\nWhich channel would you like to remove? ")
+            item_to_remove = input(
+                "\nWhich channel would you like to remove? ")
             if item_to_remove in channels:
                 channels.remove(item_to_remove)
                 print("✅ Deleted. Channels:", channels)
@@ -321,18 +380,22 @@ def exercise9():
             # To move, first remove the item (by pop or remove) and then insert into the new position.
             item_to_move = input("\nWhich channel would you like to move? ")
             if item_to_move in channels:
-                new_index = int(input(f"\nEnter new number [1 - {len(channels)}]: "))
+                new_index = int(
+                    input(f"\nEnter new number [1 - {len(channels)}]: "))
                 channels.remove(item_to_move)               # remove the item
-                channels.insert(new_index-1, item_to_move)  # insert into the new position (move)
+                # insert into the new position (move)
+                channels.insert(new_index-1, item_to_move)
                 print("✅ Moved. Channels:", channels)
 
         elif op == 'Rename a channel':
-            # Check if the name we want to update exists in the list using the in keyword or the index() method. 
+            # Check if the name we want to update exists in the list using the in keyword or the index() method.
             # If the name exists, we can update it by finding its current index, and setting the value at that index.
-            item_to_rename = input("\nWhich channel would you like to rename? ")
+            item_to_rename = input(
+                "\nWhich channel would you like to rename? ")
             if item_to_rename in channels:
                 new_name = input(f"\nEnter new name: ")
-                i = channels.index(item_to_rename)  # find the index of the value
+                # find the index of the value
+                i = channels.index(item_to_rename)
                 channels[i] = new_name              # set value at the index
                 print("✅ Renamed. Channels:", channels)
 
@@ -342,13 +405,16 @@ def exercise9():
 # Write a program to organize books.
 # The user can 'Browse Books', 'Add Book', 'Remove Book'
 # Save information in a json formatted file.
+
+
 def exercise10_1():
     print("Welcome to the Book List App")
 
     books = get_books()
 
     while True:
-        op = menu(['Browse Books', 'Add Book', 'Remove Book', 'Search Title', 'Quit'])
+        op = menu(['Browse Books', 'Add Book',
+                  'Remove Book', 'Search Title', 'Quit'])
 
         if op == 'Browse Books':
             books = get_books()
@@ -378,8 +444,8 @@ def exercise10_1():
                 print("We already have that book.")
 
         elif op == 'Remove Book':
-            # In Python, it is not easy to directly delete a record from a .csv file. 
-            # Instead we read the file into a temporary list, make the changes on this list 
+            # In Python, it is not easy to directly delete a record from a .csv file.
+            # Instead we read the file into a temporary list, make the changes on this list
             # and then overwrite the original file with the temporary list.
 
             q = input("\nISBN: ")
@@ -411,49 +477,51 @@ def exercise10_1():
             books = get_books()
             q = input("Title: ").lower()
             # search_results = filter(lambda book: q in book.title.lower(), books)
-            search_results = [book for book in books if q in book.title.lower()]
-            if(len(search_results) > 0):
+            search_results = [
+                book for book in books if q in book.title.lower()]
+            if (len(search_results) > 0):
                 print(len(search_results), "books found.")
                 print(search_results)
             else:
                 print(q, "not found.")
 
-        
         elif op == 'Quit':
             break
         else:
             print("Not a valid menu option. Please try again.")
 
+
 def get_books():
     with open("data/books.json") as file:
         books = []
-        data = json.load(file)  # whole contents of file as a dict type, in this case [{book1}, {book2}]
-        
-        # return data 
+        # whole contents of file as a dict type, in this case [{book1}, {book2}]
+        data = json.load(file)
+
+        # return data
 
         # construct a list of books from a list of dictionaries:
         for book_dict in data:
             book = Book.from_dict(book_dict)
             books.append(book)
 
-        return books    
-    
+        return books
+
+
 def find_book_by_ISBN(books, q):
     for book in books:
         if book['ISBN'] == q:
             return book
 
 
-    
 def save_books(data):
     with open("data/books.json", "w") as file:
-        json.dump(data, file, indent=4)  # whole contents of file as a dict type.
-
+        # whole contents of file as a dict type.
+        json.dump(data, file, indent=4)
 
 
 # Write a program to store groceries list.
-# The user can add/remove items as much as they want. 
-# After they enter an item, ask them if they want to add/remove another. 
+# The user can add/remove items as much as they want.
+# After they enter an item, ask them if they want to add/remove another.
 # If they do, allow them to add more names until they answer “no”.
 # In the end, print the final list.
 def exercise10():
@@ -487,12 +555,12 @@ def exercise10():
 
     shopping_list.sort()  # Note that .sort() returns None!
     print(shopping_list)
-    print(f"🛒 You have {len(shopping_list)} items in the list: ", shopping_list)
+    print(
+        f"🛒 You have {len(shopping_list)} items in the list: ", shopping_list)
 
 
-
-# Make a maths quiz that asks five questions by randomly generating two whole numbers to make the question (e.g. [num1] + [num2]). 
-# Ask the user to enter the answer. If they get it right add a point to their score. 
+# Make a maths quiz that asks five questions by randomly generating two whole numbers to make the question (e.g. [num1] + [num2]).
+# Ask the user to enter the answer. If they get it right add a point to their score.
 # At the end of the quiz, print the score
 def exercise11():
     number_of_questions = 5
@@ -512,13 +580,15 @@ def exercise11():
 
     print(f"\nYou got {score} out of {number_of_questions}")
 
+
 def get_question():
-        a = random.randint(1, 10)
-        b = random.randint(1, 10)
+    a = random.randint(1, 10)
+    b = random.randint(1, 10)
 
-        q = f"{a} * {b} = "
+    q = f"{a} * {b} = "
 
-        return {'q': q, 'answer': a*b}
+    return {'q': q, 'answer': a*b}
+
 
 class Circle:
     simple_title = "Circle"
@@ -531,6 +601,8 @@ class Circle:
 
     def area(self):
         return math.pi * self.radius ** 2
+
+
 class Rectangle:
     simple_title = "Rectangle"
 
@@ -549,9 +621,10 @@ class Rectangle:
 # Welcome to the generic area calculator!
 #   [1] Circle
 #   [2] Rectangle
-# Enter your choice: 
+# Enter your choice:
 # Depending on the choice, ask for dimensions of the shape, and display the area:
 #   i.e. "The area of this Rectangle is : 6"
+
 
 def exercise12():
     # menu = Enum('Menu', ['Circle', 'Rectangle'])
@@ -559,8 +632,10 @@ def exercise12():
     options = [Circle(0), Rectangle(0, 0)]
     selected_shape = print_options(options)
     selected_shape.update()
-    area = selected_shape.area() # Note that there is no if-else here, we are using interface.
+    # Note that there is no if-else here, we are using interface.
+    area = selected_shape.area()
     print(f"The area of this {selected_shape.simple_title} is : {area}")
+
 
 def print_options(option_list):
     print("\nWelcome to the generic area calculator!\n")
@@ -580,11 +655,13 @@ def print_options(option_list):
     return option_list[selected-1]
 
 
-#Write a program that prints ones digit of an n-digit number
+# Write a program that prints ones digit of an n-digit number
 def printOnesDigit(n):
     print(n % 10)
 
 # Write a program that prints each digit of an n-digit number
+
+
 def printDigits(n):
     ''' Convert the number into a string, and iterate over characters'''
     n_str = str(n)
@@ -592,11 +669,14 @@ def printDigits(n):
         print(digit)
 
 # Write a program to sum all the even numbers between 1 and 100
+
+
 def sumEvenNumbers_v0():
     sum = 0
     for n in range(2, 101, 2):
-            sum += n
+        sum += n
     print(sum)
+
 
 def sumEvenNumbers_v1():
     sum = 0
@@ -605,9 +685,10 @@ def sumEvenNumbers_v1():
             sum += n
     print(sum)
 
+
 def sumEvenNumbers_v2():
     ''' use built-in filter() to get even numbers, and use built-in sum() '''
-    evens = filter(lambda x: x%2==0, range(1, 101))
+    evens = filter(lambda x: x % 2 == 0, range(1, 101))
     print(sum(evens))
 
 
@@ -618,7 +699,7 @@ def sumEvenNumbers_v2():
 # And if the number is divisible by both 3 and 5 e.g. 15 then instead of the number it should print "FizzBuzz"
 def fizzBuzzGame():
     for i in range(1, 101):
-        if i % 15 == 0: 
+        if i % 15 == 0:
             print("FizzBuzz")
         elif i % 3 == 0:
             print("Fizz")
@@ -645,27 +726,27 @@ def tipCalculator():
         except ValueError:
             print("Invalid Input. Please try again.")
 
-
     share = round(((1+tip/100) * bill) / people, 2)
 
     print("Each person should pay", share)
 
 
-
 # Write a password generator
 def generatePassword():
 
-    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y',
+               'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
     numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
 
     print("Welcome to the PyPassword Generator!")
-    nr_letters= int(input("How many letters would you like in your password?\n")) 
+    nr_letters = int(
+        input("How many letters would you like in your password?\n"))
     nr_symbols = int(input(f"How many symbols would you like?\n"))
     nr_numbers = int(input(f"How many numbers would you like?\n"))
 
-    #Eazy Level - Order not randomised:
-    #e.g. 4 letter, 2 symbol, 2 number = JduE&!91
+    # Eazy Level - Order not randomised:
+    # e.g. 4 letter, 2 symbol, 2 number = JduE&!91
     suggested_pwd = ""
     for i in range(nr_letters):
         suggested_pwd += random.choice(letters)
@@ -676,20 +757,17 @@ def generatePassword():
 
     print("Here is your password:", suggested_pwd)
 
+    # Hard Level - Order of characters randomised:
+    # e.g. 4 letter, 2 symbol, 2 number = g^2jk8&P
 
-    #Hard Level - Order of characters randomised:
-    #e.g. 4 letter, 2 symbol, 2 number = g^2jk8&P
-
-    # We can first convert the string to a list of characters, 
-    # shuffle the list using the shuffle() function from the random module, 
+    # We can first convert the string to a list of characters,
+    # shuffle the list using the shuffle() function from the random module,
     # and then convert the shuffled list back to a string.
     pwd_list = list(suggested_pwd)  # list of chars
-    random.shuffle(pwd_list)        # shuffle the list IN PLACE, and return None.
+    # shuffle the list IN PLACE, and return None.
+    random.shuffle(pwd_list)
     pwd_str = "".join(pwd_list)     # join chars in the list back into a string
-    print("Here is shuffled:", pwd_str )
-
-
-
+    print("Here is shuffled:", pwd_str)
 
 
 # write a function that checks whether if the number passed into it is a prime number or not.
@@ -706,11 +784,59 @@ def prime_checker(number):
             is_prime = False
             break   # break immediately after composite detection
 
-    if is_prime: 
+    if is_prime:
         print("It's a prime number.")
     else:
         print("It's not a prime number.")
 
+
+# Write a function named right_justify that takes a string named s as a parameter and prints the string with enough leading spaces (char specified by user, default '*')
+# Overall length is specified by user (Default 20)
+def right_justify(word, space=20):
+    word_length = len(word)
+
+    if word_length > space:
+        space = word_length
+
+    print("DEBUG", word, word_length, space)
+
+    for i in range(space-word_length):
+        print("*", end="")
+
+    print(word)
+
+# write a program that counts the number of times a given letter aappears in a given string:
+
+
+def char_count(s, c):
+    freq = 0
+    for char in s:
+        if char == c:
+            freq += 1
+
+    print(f"{c} appears {freq} times in {s}")
+    return freq
+
+
+# Find the most frequent letter in a string.
+def most_freq_letter_of(s):
+    freq = {}
+    for char in s:
+        try:
+            freq[char.lower()] += 1
+        except KeyError:
+            freq[char.lower()] = 1
+
+    print("DEBUG", freq)
+
+    freq_max_letter = ''
+    freq_max = 0
+    for key in freq:
+        if freq[key] > freq_max:
+            freq_max = freq[key]
+            freq_max_letter = key
+
+    print(f"Most frequent letter in {s} is {freq_max_letter} ({freq_max})")
 
 
 if __name__ == "__main__":

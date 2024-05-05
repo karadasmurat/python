@@ -18,7 +18,7 @@ from basics.util import is_positive, is_even
 
 from functools import reduce
 
-from domain.domain import Department
+from domain.Library import Department
 
 
 def main():

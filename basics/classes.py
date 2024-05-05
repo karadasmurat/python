@@ -111,30 +111,32 @@ A neat feature of properties is that you can use them as regular attributes.
 """
 import math
 from abc import abstractmethod
-from domain import Book, Author
+# Wizard class is defined in a module with the same name: Wizard.py
+import domain.Wizard
+from domain.Library import Book, Author  # import classes
 
 
 class MyClass:
     pass
 
 
-
 class Circle:
     def __init__(self, r):
         self.radius = r
 
-
     def area(self):
         """Calculates and returns the circle's area."""
         return math.pi * self.radius**2
-   
+
+
 class Box:
 
     # Constructor
     def __init__(self, capacity):
         # define instance variables in the constructor body
         self.capacity = capacity
-        self.size = 0               # default initialization, not using constructor parameters.
+        # default initialization, not using constructor parameters.
+        self.size = 0
 
     def load(self, amount):
         if self.size + amount <= self.capacity:
@@ -160,7 +162,8 @@ class Person:
     # Many classes like to create objects with instances customized to a specific initial state.
     # Therefore a class may define a special method named __init__()
     # The attributes that are unique to an instance are put in the constructor.
-    def __init__(self, name: str, surname: str):  # signature is like a function out of this class, taking self as argument
+    # signature is like a function out of this class, taking self as argument
+    def __init__(self, name: str, surname: str):
         self.name = name        # instance variable unique to each instance
         self.surname = surname
 
@@ -178,7 +181,8 @@ class Person:
     def __repr__(self):
         # note !r {self.name!r}
         # return f"Person(name={self.name}, surname={self.surname})"    # i.e, Person(name=John, surname=Steinbeck)
-        return f"Person(name={self.name!r}, surname={self.surname!r})"  # i.e, Person(name='John', surname='Steinbeck')
+        # i.e, Person(name='John', surname='Steinbeck')
+        return f"Person(name={self.name!r}, surname={self.surname!r})"
 
 
 # INHERITANCE
@@ -218,7 +222,7 @@ class Person:
 # Derived classes may override methods of their base classes.
 # (For C++ programmers: all methods in Python are effectively virtual.)
 
- 
+
 class Employee:
     '''Base class for all employee types.'''
 
@@ -302,12 +306,12 @@ class SanitizedValues:
         return f"SanitizedValues(val={self._positive_value}, age={self.age})"
 
 
-
 def main():
 
     obj = MyClass()
     # dir() returns a list of all the members in the specified object.
-    print(dir(obj))     # We have not declared any members in MyClass, so where is the list coming from?
+    # We have not declared any members in MyClass, so where is the list coming from?
+    print(dir(obj))
     # This is because every class you create in Python implicitly derives from "object".
 
     # Create a new instance of the class and assign this object to the local a variable box01.
@@ -343,13 +347,17 @@ def main():
     # print(car1.model)     # AttributeError: 'Car' object has no attribute 'model'
 
     car3 = SimpleCar()
-    function_from_outside_class(car3, "Volvo", "XC60")  # not a method in the a class definition!
-    print(f"{car3.make=}, {car3.model=}")   # Note that class definition does not mention make or model attributes!
+    # not a method in the a class definition!
+    function_from_outside_class(car3, "Volvo", "XC60")
+    # Note that class definition does not mention make or model attributes!
+    print(f"{car3.make=}, {car3.model=}")
 
     car4 = SimpleCar()
     car5 = SimpleCar()
-    SimpleCar.setYear(car4, 2022)  # Option 1 - a method in the class definition, called by "class name" and "instance as argument"
-    car5.setYear(2007)      # Option 2 - as the method is called on instance, the first variable is automatically assigned as that instance, car5.
+    # Option 1 - a method in the class definition, called by "class name" and "instance as argument"
+    SimpleCar.setYear(car4, 2022)
+    # Option 2 - as the method is called on instance, the first variable is automatically assigned as that instance, car5.
+    car5.setYear(2007)
     print(f"{car4.year=} {car5.year=}")
 
     # person1 = Person()    # Person.__init__() missing 2 required positional arguments
@@ -364,6 +372,11 @@ def main():
     print(person1.__class__)        # <class '__main__.Person'>
     print(person1.name.__class__)   # <class 'str'>
     print(person1.say_hi.__class__)  # <class 'method'>
+
+    # Notice syntax: package.module.class()
+    # Wizard class is defined in a module (Wizard.py) under a package (domain)
+    wizz1 = domain.Wizard.Wizard("Potter", "Gryffindor")
+    print(wizz1)
 
     string_representation_of_objects()
 
@@ -388,9 +401,10 @@ def methodInvocationBasics():
     circle = Circle(10)
     area1 = circle.area()       # 314.16
 
-    area2 = Circle.area(circle) # 314.16
+    area2 = Circle.area(circle)  # 314.16
 
     print(f"{area1:.2f}, {area2:.2f}")
+
 
 def string_representation_of_objects():
     p = Person("John", "Steinbeck")
@@ -422,15 +436,20 @@ def serialization_basics():
     # So, if you have a simple object and just need to quickly convert it into a dictionary, using __dict__ may be sufficient.
     # However, if you need more control over the serialization process or want a more explicit approach, creating a to_dict() method may be a better option.
 
+    print("Serialization Basics")
+    print("--------------------")
+
     p = Person('Harry', 'Potter')
     print(p.__dict__)   # {'name': 'Harry', 'surname': 'Potter'}
 
     p.city = 'London'
-    print(p.__dict__)   # {'name': 'Harry', 'surname': 'Potter', 'city': 'London'}
+    # {'name': 'Harry', 'surname': 'Potter', 'city': 'London'}
+    print(p.__dict__)
 
     print(p.to_dict())  # {'customNewAttribute': 'MK', 'surname': 'Potter'}
 
-    book = Book("Of Mice and Men", Author("John Steinbeck"), "1111", ['Literary Fiction', 'Historical Fiction'])
+    book = Book("Of Mice and Men", Author("John Steinbeck"),
+                "1111", ['Literary Fiction', 'Historical Fiction'])
     print(book.__dict__)
 
 

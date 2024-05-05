@@ -1,3 +1,4 @@
+# be careful with imports - Wizard class is defined in a module with the same name: Wizard.py
 class Wizard:
 
     def __init__(self, name, house):
