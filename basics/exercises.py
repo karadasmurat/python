@@ -839,5 +839,20 @@ def most_freq_letter_of(s):
     print(f"Most frequent letter in {s} is {freq_max_letter} ({freq_max})")
 
 
+# Write a function called middle that takes a list and returns a new list that contains all but the first and last elements.
+# So middle([1, 2, 3, 4]) should return [2, 3]
+def middle(scores):
+    return scores[1:-1]
+
+# Write a function called has_duplicates that takes a list and
+# returns True if there is any element that appears more than once.
+
+
+def has_duplicates(arg):
+
+    uniq = set(arg)
+    return len(arg) > len(uniq)
+
+
 if __name__ == "__main__":
     main()
