@@ -1,4 +1,6 @@
+import data_science.numpy_basics as npbasics
 import data_science.matplotlib_basics as mpbasics
+import data_science.pandas_basics as pdbasics
 import basics.fundamentals
 import basics.web_scraping as scraping
 import basics.sequences as seq
@@ -22,13 +24,17 @@ def main():
 
     # seq.basics()
     # mpbasics.plot_line()
-    # mpbasics.plot_bar()
+
+    # npbasics.main()
+    # pdbasics.main()
+    mpbasics.main()
+
     # scraping.hemen()
     # scraping.xml_get_unblocked(basics.web_scraping.url_hemen)
     # scraping.coin_stats()
     # scraping.sahibinden()
 
-    basics.exercises.main()
+    # basics.exercises.main()
 
 
 if __name__ == "__main__":

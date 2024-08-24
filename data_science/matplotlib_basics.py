@@ -1,3 +1,5 @@
+import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 import csv
 
@@ -19,8 +21,8 @@ def plot_line():
     plt.title("Nominal GDP")
     # add a label to the y-axis
     plt.ylabel("Billions of $")
-    
-    # Because we've assigned label(s) to series, we can get a legend for free 
+
+    # Because we've assigned label(s) to series, we can get a legend for free
     # (loc=9 means "top center")
     plt.legend(loc=9)
 
@@ -42,6 +44,19 @@ def plot_bar():
     plt.xticks(range(len(movies)), movies)
 
     # Display the plot
+    plt.show()
+
+
+def simulate_dice_rolls():
+    # Simulate n rolls of 2 dice with the shape (n, 2) 
+    # integers between 0 (inclusive) and 7 (exclusive):
+    values = np.random.default_rng().integers(low=1, high=7, size=(360, 2))
+    # print(values)
+
+    sums = values.sum(axis=1)
+    # print(sums)
+
+    plt.hist(sums, bins=11)
     plt.show()
 
 
@@ -103,3 +118,7 @@ def REFACTOR():
                ["60M", "70M", "80M", "90M"])
     plt.grid(True)
     plt.show()
+
+
+def main():
+    simulate_dice_rolls()
