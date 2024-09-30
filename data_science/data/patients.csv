@@ -1,0 +1,5 @@
+patient_id,height_cm,weight_kg,systolic_bp,diastolic_bp
+1,175,70,120,80
+2,160,65,130,90
+3,180,80,-999,-999
+4,172,75,115,75
